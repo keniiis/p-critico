@@ -1,8 +1,9 @@
-
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
+
+import sitemap from '@astrojs/sitemap';
 
 // Plugin personalizado para guardar datos localmente sin necesitar backend
 function localAdminApi() {
@@ -76,10 +77,17 @@ function localAdminApi() {
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://paralajecritico.vercel.app',
   vite: {
     plugins: [
         tailwindcss(),
         localAdminApi()
     ]
-  }
+  },
+
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/admin')
+    })
+  ]
 });
