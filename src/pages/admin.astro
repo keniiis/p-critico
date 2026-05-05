@@ -1,0 +1,323 @@
+---
+import Layout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+// Esta página solo debería estar accesible en entorno local por seguridad
+const isDev = import.meta.env.DEV;
+---
+
+<Layout title="Admin Panel - Paralaje Crítico">
+    <Navbar />
+
+    <main class="grow pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-margin">
+            
+            {!isDev ? (
+                <div class="glass-panel p-12 text-center rounded-3xl border border-red-500/20 max-w-3xl mx-auto">
+                    <span class="material-symbols-outlined text-5xl text-red-400 mb-6">gpp_bad</span>
+                    <h1 class="font-display-lg text-3xl text-on-surface mb-4">Acceso Denegado</h1>
+                    <p class="text-tertiary">El panel de administración solo está disponible en el entorno de desarrollo local (npm run dev).</p>
+                </div>
+            ) : (
+                <>
+                    <header class="mb-16 text-center max-w-3xl mx-auto">
+                        <div class="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-primary-container font-label-caps text-[11px] tracking-widest uppercase mb-6">
+                            <span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
+                            Paralaje Crítico CMS
+                        </div>
+                        <h1 class="font-display-lg text-5xl text-on-surface text-gradient mb-6 leading-tight">Gestor de Contenido</h1>
+                        <p class="text-tertiary font-body-lg text-lg mb-8">Rellena el formulario para publicar una nueva película en el catálogo.</p>
+                        
+                        <!-- Pestañas de Navegación -->
+                        <div class="flex items-center justify-center gap-4">
+                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Reseñas</a>
+                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Noticias</a>
+                        </div>
+                    </header>
+
+                    <form id="review-form" class="space-y-12">
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                            <!-- Columna Izquierda (Datos Básicos) -->
+                            <div class="lg:col-span-7 space-y-12">
+                                <!-- Sección: Info Básica -->
+                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
+                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Información General</h2>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Título de la Película</label>
+                                            <input required type="text" name="title" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: Oppenheimer" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Subtítulo / Frase gancho</label>
+                                            <input required type="text" name="subtitle" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: El destructor de mundos" />
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Estrellas (0-5)</label>
+                                            <input required type="number" step="0.1" name="rating" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="4.5" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Año</label>
+                                            <input required type="text" name="year" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="2023" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Duración</label>
+                                            <input required type="text" name="duration" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="180 min" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Fecha Pub.</label>
+                                            <input required type="text" name="date" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="JULIO 21, 2023" />
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Director</label>
+                                            <input required type="text" name="director" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Christopher Nolan" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Género</label>
+                                            <input required type="text" name="genre" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Drama / Histórico" />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Sección: Contenido -->
+                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-tertiary"></div>
+                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Redacción de la Crítica</h2>
+                                    
+                                    <div class="mb-8">
+                                        <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Cuerpo del artículo (Separa párrafos con doble ENTER)</label>
+                                        <textarea required name="fullReview" rows="14" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-6 py-5 text-on-surface focus:outline-none focus:border-primary-container transition-colors leading-relaxed text-base" placeholder="Escribe tu análisis aquí..."></textarea>
+                                    </div>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Nota Final (0 a 10)</label>
+                                            <input required type="text" name="finalScore" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-container transition-colors font-bold text-primary-container text-lg" placeholder="8.5" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Tu Firma (Autor)</label>
+                                            <input required type="text" name="author" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" value="Paralaje Crítico" />
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <!-- Columna Derecha (Imágenes y Análisis Técnico) -->
+                            <div class="lg:col-span-5 space-y-12">
+                                <!-- Sección: Imágenes -->
+                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-secondary-container"></div>
+                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Archivos Multimedia</h2>
+                                    <div class="space-y-8">
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Cabecera (Hero) - Panorámica</label>
+                                            <input required type="text" name="heroImage" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-mono text-sm" placeholder="/images/reviews/tu-imagen.jpg" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Póster (Tarjeta) - Vertical</label>
+                                            <input required type="text" name="posterImage" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-mono text-sm" placeholder="/images/reviews/tu-poster.jpg" />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Sección: Disponibilidad -->
+                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-[#3b82f6]"></div>
+                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Disponibilidad</h2>
+                                    
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-4">Plataformas donde verla</label>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" name="platform_cines" class="w-5 h-5 rounded border-white/20 bg-surface-container-high text-primary-container focus:ring-primary-container focus:ring-offset-background" />
+                                            <span class="text-on-surface text-sm group-hover:text-primary-container transition-colors">Cines</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" name="platform_netflix" class="w-5 h-5 rounded border-white/20 bg-surface-container-high text-primary-container focus:ring-primary-container focus:ring-offset-background" />
+                                            <span class="text-on-surface text-sm group-hover:text-primary-container transition-colors">Netflix</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" name="platform_max" class="w-5 h-5 rounded border-white/20 bg-surface-container-high text-primary-container focus:ring-primary-container focus:ring-offset-background" />
+                                            <span class="text-on-surface text-sm group-hover:text-primary-container transition-colors">Max</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" name="platform_disney" class="w-5 h-5 rounded border-white/20 bg-surface-container-high text-primary-container focus:ring-primary-container focus:ring-offset-background" />
+                                            <span class="text-on-surface text-sm group-hover:text-primary-container transition-colors">Disney+</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" name="platform_appletv" class="w-5 h-5 rounded border-white/20 bg-surface-container-high text-primary-container focus:ring-primary-container focus:ring-offset-background" />
+                                            <span class="text-on-surface text-sm group-hover:text-primary-container transition-colors">Apple TV</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer group">
+                                            <input type="checkbox" name="platform_prime" class="w-5 h-5 rounded border-white/20 bg-surface-container-high text-primary-container focus:ring-primary-container focus:ring-offset-background" />
+                                            <span class="text-on-surface text-sm group-hover:text-primary-container transition-colors">Prime Video</span>
+                                        </label>
+                                    </div>
+                                    <div class="mt-8">
+                                        <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Texto Resumen (Ej: "Cines / Max")</label>
+                                        <input type="text" name="streaming" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Cines / Netflix" />
+                                    </div>
+                                </section>
+
+                                <!-- Sección: Análisis Técnico (Desglose) -->
+                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-[#4ade80]"></div>
+                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Desglose del Puntaje</h2>
+                                    
+                                    <div class="space-y-10">
+                                        <!-- Fotografía -->
+                                        <div>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <span class="material-symbols-outlined text-tertiary text-xl">movie_filter</span>
+                                                <label class="block text-on-surface font-label-caps text-[11px] uppercase tracking-widest grow">Fotografía</label>
+                                                <input required type="number" step="0.1" name="score_foto" class="w-20 bg-surface-container-high border border-white/10 rounded-lg px-3 py-2 text-on-surface text-center focus:outline-none focus:border-primary-container text-sm font-bold" placeholder="9.0" />
+                                            </div>
+                                            <textarea required name="desc_foto" rows="3" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-sm leading-relaxed" placeholder="Análisis visual..."></textarea>
+                                        </div>
+                                        
+                                        <!-- Actuación -->
+                                        <div>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <span class="material-symbols-outlined text-tertiary text-xl">groups</span>
+                                                <label class="block text-on-surface font-label-caps text-[11px] uppercase tracking-widest grow">Actuación</label>
+                                                <input required type="number" step="0.1" name="score_actuacion" class="w-20 bg-surface-container-high border border-white/10 rounded-lg px-3 py-2 text-on-surface text-center focus:outline-none focus:border-primary-container text-sm font-bold" placeholder="9.5" />
+                                            </div>
+                                            <textarea required name="desc_actuacion" rows="3" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-sm leading-relaxed" placeholder="Interpretaciones..."></textarea>
+                                        </div>
+
+                                        <!-- Banda Sonora -->
+                                        <div>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <span class="material-symbols-outlined text-tertiary text-xl">audiotrack</span>
+                                                <label class="block text-on-surface font-label-caps text-[11px] uppercase tracking-widest grow">Banda Sonora</label>
+                                                <input required type="number" step="0.1" name="score_sonido" class="w-20 bg-surface-container-high border border-white/10 rounded-lg px-3 py-2 text-on-surface text-center focus:outline-none focus:border-primary-container text-sm font-bold" placeholder="9.2" />
+                                            </div>
+                                            <textarea required name="desc_sonido" rows="3" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-sm leading-relaxed" placeholder="Música y mezcla..."></textarea>
+                                        </div>
+
+                                        <!-- Guion -->
+                                        <div>
+                                            <div class="flex items-center gap-4 mb-4">
+                                                <span class="material-symbols-outlined text-tertiary text-xl">auto_stories</span>
+                                                <label class="block text-on-surface font-label-caps text-[11px] uppercase tracking-widest grow">Guion</label>
+                                                <input required type="number" step="0.1" name="score_guion" class="w-20 bg-surface-container-high border border-white/10 rounded-lg px-3 py-2 text-on-surface text-center focus:outline-none focus:border-primary-container text-sm font-bold" placeholder="8.5" />
+                                            </div>
+                                            <textarea required name="desc_guion" rows="3" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-sm leading-relaxed" placeholder="Narrativa y diálogos..."></textarea>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                        <!-- Botón Submit -->
+                        <div class="pt-6 max-w-lg mx-auto">
+                            <button type="submit" id="submit-btn" class="w-full py-4 bg-primary-container hover:bg-white text-background font-label-caps uppercase tracking-widest rounded-xl transition-all font-bold text-lg flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">save</span>
+                                Publicar Reseña
+                            </button>
+                            <p id="status-msg" class="text-center mt-4 text-sm font-bold opacity-0 transition-opacity"></p>
+                        </div>
+                    </form>
+                </>
+            )}
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<script>
+    const form = document.getElementById('review-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const statusMsg = document.getElementById('status-msg') as HTMLParagraphElement | null;
+
+    if(form && submitBtn && statusMsg) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.pointerEvents = 'none';
+
+            const formData = new FormData(e.target as HTMLFormElement);
+            
+            const getString = (name: string) => (formData.get(name) as string) || '';
+            const getNum = (name: string) => parseFloat(getString(name)) || 0;
+            
+            const platformMappings = [
+                { id: 'platform_cines', name: 'Cines', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg==' },
+                { id: 'platform_netflix', name: 'Netflix', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_max', name: 'Max', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_disney', name: 'Disney+', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_appletv', name: 'Apple TV', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_prime', name: 'Prime Video', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' }
+            ];
+            const watchOptions = [];
+            for (const plat of platformMappings) {
+                if (formData.get(plat.id) === 'on') {
+                    watchOptions.push({ name: plat.name, logo: plat.logo });
+                }
+            }
+
+            const reviewData = {
+                title: getString('title'),
+                subtitle: getString('subtitle'),
+                rating: getNum('rating'),
+                year: getString('year'),
+                director: getString('director'),
+                duration: getString('duration'),
+                date: getString('date'),
+                genre: getString('genre'),
+                heroImage: getString('heroImage'),
+                posterImage: getString('posterImage'),
+                author: getString('author'),
+                fullReview: getString('fullReview').split('\n\n').map((p: string) => p.trim()).filter((p: string) => p),
+                finalScore: getString('finalScore'),
+                scores: [
+                    { category: "Fotografía", score: getNum('score_foto'), icon: "movie_filter", desc: getString('desc_foto') },
+                    { category: "Actuación", score: getNum('score_actuacion'), icon: "groups", desc: getString('desc_actuacion') },
+                    { category: "Banda Sonora", score: getNum('score_sonido'), icon: "audiotrack", desc: getString('desc_sonido') },
+                    { category: "Guion", score: getNum('score_guion'), icon: "auto_stories", desc: getString('desc_guion') }
+                ],
+                cast: [],
+                streaming: getString('streaming') || "Consultar plataformas",
+                watchOptions: watchOptions
+            };
+
+            try {
+                const res = await fetch('/api/save-review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(reviewData)
+                });
+
+                const data = await res.json();
+
+                if(data.success) {
+                    statusMsg.textContent = "¡Reseña publicada con éxito!";
+                    statusMsg.className = "text-center mt-4 text-sm font-bold text-green-400 transition-opacity opacity-100";
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = `/reviews/${data.slug}`;
+                    }, 2000);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                statusMsg.textContent = "Error al guardar: " + (err instanceof Error ? err.message : String(err));
+                statusMsg.className = "text-center mt-4 text-sm font-bold text-red-400 transition-opacity opacity-100";
+                
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.pointerEvents = 'all';
+            }
+        });
+    }
+</script>

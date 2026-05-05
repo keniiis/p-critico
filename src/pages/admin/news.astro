@@ -1,0 +1,204 @@
+---
+import Layout from '../../layouts/MainLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+
+// Esta página solo debería estar accesible en entorno local por seguridad
+const isDev = import.meta.env.DEV;
+---
+
+<Layout title="Admin Panel - Paralaje Crítico">
+    <Navbar />
+
+    <main class="grow pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-margin">
+            
+            {!isDev ? (
+                <div class="glass-panel p-12 text-center rounded-3xl border border-red-500/20 max-w-3xl mx-auto">
+                    <span class="material-symbols-outlined text-5xl text-red-400 mb-6">gpp_bad</span>
+                    <h1 class="font-display-lg text-3xl text-on-surface mb-4">Acceso Denegado</h1>
+                    <p class="text-tertiary">El panel de administración solo está disponible en el entorno de desarrollo local (npm run dev).</p>
+                </div>
+            ) : (
+                <>
+                    <header class="mb-16 text-center max-w-3xl mx-auto">
+                        <div class="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-primary-container font-label-caps text-[11px] tracking-widest uppercase mb-6">
+                            <span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
+                            Paralaje Crítico CMS
+                        </div>
+                        <h1 class="font-display-lg text-5xl text-on-surface text-gradient mb-6 leading-tight">Gestor de Contenido</h1>
+                        <p class="text-tertiary font-body-lg text-lg mb-8">Rellena el formulario para publicar una nueva noticia en el portal.</p>
+                        
+                        <!-- Pestañas de Navegación -->
+                        <div class="flex items-center justify-center gap-4">
+                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Reseñas</a>
+                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Noticias</a>
+                        </div>
+                    </header>
+
+                    <form id="news-form" class="space-y-12 max-w-5xl mx-auto">
+                        <!-- Sección: Info Básica -->
+                        <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-[#f43f5e]"></div>
+                            <h2 class="font-headline-md text-2xl text-on-surface mb-8">Detalles de la Noticia</h2>
+                            
+                            <div class="space-y-8 mb-8">
+                                <div>
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Titular de la Noticia</label>
+                                    <input required type="text" name="title" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors font-bold text-lg" placeholder="Ej: Quentin Tarantino cancela The Movie Critic" />
+                                </div>
+                                <div>
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Resumen (Para las tarjetas)</label>
+                                    <textarea required name="summary" rows="2" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors leading-relaxed" placeholder="Un breve adelanto para enganchar al lector..."></textarea>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Categoría</label>
+                                    <select required name="category" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors appearance-none">
+                                        <option value="Industria">Industria</option>
+                                        <option value="Casting / Rumores">Casting / Rumores</option>
+                                        <option value="Producción">Producción</option>
+                                        <option value="Taquilla">Taquilla</option>
+                                        <option value="Premios">Premios</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Formato de Tarjeta</label>
+                                    <select required name="variant" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors appearance-none">
+                                        <option value="regular">Normal (Tarjeta pequeña)</option>
+                                        <option value="featured">Destacada (Tarjeta grande panorama)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Fecha de Publicación</label>
+                                    <input required type="text" name="date" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors" placeholder="10 MAYO, 2026" />
+                                </div>
+                                <div>
+                                    <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Autor</label>
+                                    <input required type="text" name="author" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors" value="Paralaje Crítico" />
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8">
+                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Imagen de Portada (URL o Ruta Local)</label>
+                                <input required type="text" name="image" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors font-mono text-sm" placeholder="/images/news/tu-imagen.jpg" />
+                            </div>
+                        </section>
+
+                        <!-- Sección: Contenido -->
+                        <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-tertiary"></div>
+                            <h2 class="font-headline-md text-2xl text-on-surface mb-4">Cuerpo de la Noticia</h2>
+                            
+                            <div class="mb-6 p-4 rounded-xl bg-surface-container border border-white/5">
+                                <p class="text-xs text-tertiary mb-2"><span class="font-bold text-on-surface">Trucos de redacción rápida:</span> (Separa siempre con un ENTER vacío)</p>
+                                <ul class="text-xs text-tertiary space-y-1 font-mono">
+                                    <li>Empieza por <span class="text-primary-container">## </span> para hacer un <strong>Subtítulo</strong></li>
+                                    <li>Empieza por <span class="text-primary-container">> </span> para hacer una <strong>Cita destacada</strong></li>
+                                    <li>Empieza por <span class="text-primary-container">- </span> para hacer un ítem de <strong>Lista</strong></li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <textarea required name="fullContent" rows="18" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-6 py-5 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors leading-relaxed text-base" placeholder="Empieza a escribir la noticia aquí..."></textarea>
+                            </div>
+                        </section>
+
+                        <!-- Botón Submit -->
+                        <div class="pt-6 max-w-lg mx-auto">
+                            <button type="submit" id="submit-btn" class="w-full py-4 bg-[#f43f5e] hover:bg-white text-white hover:text-background font-label-caps uppercase tracking-widest rounded-xl transition-all font-bold text-lg flex items-center justify-center gap-2">
+                                <span class="material-symbols-outlined">publish</span>
+                                Publicar Noticia
+                            </button>
+                            <p id="status-msg" class="text-center mt-4 text-sm font-bold opacity-0 transition-opacity"></p>
+                        </div>
+                    </form>
+                </>
+            )}
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<script>
+    const form = document.getElementById('news-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const statusMsg = document.getElementById('status-msg') as HTMLParagraphElement | null;
+
+    if(form && submitBtn && statusMsg) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.pointerEvents = 'none';
+
+            const formData = new FormData(e.target as HTMLFormElement);
+            
+            const getString = (name: string) => (formData.get(name) as string) || '';
+            
+            // Parsear contenido
+            const rawContent = getString('fullContent');
+            // Separar bloques por saltos de línea dobles
+            const blocks = rawContent.split(/\n\s*\n/).map(b => b.trim()).filter(b => b);
+            
+            const content = [];
+            
+            for (const block of blocks) {
+                if (block.startsWith('## ')) {
+                    content.push({ type: 'heading', text: block.substring(3).trim() });
+                } else if (block.startsWith('> ')) {
+                    content.push({ type: 'quote', text: block.substring(2).trim() });
+                } else if (block.startsWith('- ')) {
+                    // Si es una lista, separamos sus líneas individuales
+                    const items = block.split('\n').filter(l => l.trim().startsWith('- ')).map(l => l.trim().substring(2).trim());
+                    content.push({ type: 'list', items: items });
+                } else {
+                    content.push({ type: 'paragraph', text: block });
+                }
+            }
+
+            const newsData = {
+                title: getString('title'),
+                summary: getString('summary'),
+                category: getString('category'),
+                date: getString('date'),
+                author: getString('author'),
+                image: getString('image'),
+                variant: getString('variant'),
+                content: content
+            };
+
+            try {
+                const res = await fetch('/api/save-news', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newsData)
+                });
+
+                const data = await res.json();
+
+                if(data.success) {
+                    statusMsg.textContent = "¡Noticia publicada con éxito!";
+                    statusMsg.className = "text-center mt-4 text-sm font-bold text-green-400 transition-opacity opacity-100";
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = `/news/${data.slug}`;
+                    }, 2000);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (err) {
+                statusMsg.textContent = "Error al guardar: " + (err instanceof Error ? err.message : String(err));
+                statusMsg.className = "text-center mt-4 text-sm font-bold text-red-400 transition-opacity opacity-100";
+                
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.pointerEvents = 'all';
+            }
+        });
+    }
+</script>

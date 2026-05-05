@@ -1,17 +1,286 @@
 ---
+import Layout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import NewsCard from '../components/NewsCard.astro';
 
+import reviewsJson from '../data/reviews.json';
+import newsJson from '../data/news.json';
+
+// Invertimos las listas para que los últimos agregados salgan primero
+const reviewsList = Object.entries(reviewsJson).map(([slug, review]) => ({
+    ...(review as any),
+    link: `/reviews/${slug}`
+})).reverse();
+
+const newsList = Object.entries(newsJson).map(([slug, news]) => ({
+    ...(news as any),
+    link: `/news/${slug}`
+})).reverse();
+
+const heroMovies = reviewsList.slice(0, 3).map(r => ({
+    title: r.title,
+    year: r.year,
+    director: r.director,
+    duration: r.duration,
+    desc: r.subtitle || (r.fullReview && r.fullReview[0] ? r.fullReview[0].substring(0, 150) + "..." : ""),
+    image: r.heroImage || r.posterImage,
+    label: "Destacada",
+    tag: r.genre.split('/')[0].trim(),
+    link: r.link
+}));
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+	<Navbar active="home" />
+
+	<!-- Main Content -->
+	<main class="flex-grow pt-20">
+		<!-- Hero Section Slider -->
+		<section id="hero-slider" class="relative w-full h-[600px] md:h-[870px] overflow-hidden">
+            {heroMovies.map((movie, index) => (
+                <div class={`hero-slide absolute inset-0 w-full h-full flex items-end pb-24 transition-all duration-1000 ease-in-out ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`} data-index={index}>
+                    <!-- Background Image -->
+                    <div class="absolute inset-0 w-full h-full">
+                        <img alt={movie.title} class="w-full h-full object-cover object-center" src={movie.image}/>
+                        <!-- Bottom-up Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+                    </div>
+                    <!-- Content Container -->
+                    <div class="relative z-10 w-full max-w-container-max mx-auto px-margin flex flex-col gap-6">
+                        <!-- Glass Chips -->
+                        <div class="flex gap-3 translate-y-8 opacity-0 transition-all duration-700 delay-300 slide-content">
+                            <span class="glass-panel text-on-surface font-label-caps text-label-caps px-3 py-1 rounded-full uppercase tracking-widest">{movie.label}</span>
+                            <span class="glass-panel text-on-surface font-label-caps text-label-caps px-3 py-1 rounded-full uppercase tracking-widest border border-secondary-container text-secondary-container">{movie.tag}</span>
+                        </div>
+                        <!-- Title & Meta -->
+                        <div class="max-w-3xl">
+                            <h1 class="font-display-lg text-display-lg text-on-surface text-gradient mb-4 translate-y-8 opacity-0 transition-all duration-700 delay-500 slide-content">{movie.title}</h1>
+                            <div class="flex flex-wrap items-center gap-2 md:gap-4 text-tertiary font-body-lg text-body-lg mb-6 translate-y-8 opacity-0 transition-all duration-700 delay-700 slide-content">
+                                <span>{movie.year}</span>
+                                <span class="w-1 h-1 rounded-full bg-tertiary"></span>
+                                <span>Dirigida por: {movie.director}</span>
+                                <span class="w-1 h-1 rounded-full bg-tertiary"></span>
+                                <span>Duración: {movie.duration}</span>
+                            </div>
+                            <p class="text-on-surface-variant font-body-lg text-body-lg max-w-2xl leading-relaxed mb-8 translate-y-8 opacity-0 transition-all duration-700 delay-900 slide-content">
+                                {movie.desc}
+                            </p>
+                            <!-- Actions -->
+                            <div class="flex gap-4 translate-y-8 opacity-0 transition-all duration-700 delay-1000 slide-content">
+                                <a href={movie.link} class="inline-flex items-center justify-center bg-on-surface text-background font-label-caps text-label-caps px-8 h-14 rounded hover:bg-white transition-all active:scale-95 uppercase tracking-widest font-bold">
+                                    Ver reseña completa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+
+            <!-- Slider Indicators -->
+            <div class="absolute bottom-10 right-0 z-20 flex gap-2 px-margin w-full max-w-container-max mx-auto left-0">
+                {heroMovies.map((_, index) => (
+                    <div class={`h-1 rounded-full transition-all duration-500 cursor-pointer hero-indicator ${index === 0 ? 'w-12 bg-primary-container' : 'w-4 bg-white/20'}`} data-index={index}></div>
+                ))}
+            </div>
+		</section>
+
+		<div class="w-full max-w-container-max mx-auto px-margin py-20 flex flex-col gap-24">
+			<!-- Recent Reviews Bento Grid -->
+			<section class="flex flex-col gap-10">
+				<div class="flex justify-between items-end border-b border-white/10 pb-4">
+					<h2 class="font-headline-md text-headline-md text-on-surface">Reseñas Recientes</h2>
+					<a class="font-label-caps text-label-caps text-tertiary hover:text-on-surface transition-colors uppercase tracking-widest flex items-center gap-1" href="/reviews">
+						Ver Todo <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+					</a>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {reviewsList.slice(0, 4).map((review, i) => {
+                        if (i === 0) return (
+                            <a href={review.link} class="md:col-span-2 group relative h-[400px] rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10">
+                                <img alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={review.heroImage}/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col gap-3">
+                                    <div class="flex items-center gap-1 text-secondary-container mb-2">
+                                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        <span class="font-bold">{review.rating}</span>
+                                    </div>
+                                    <h3 class="font-headline-md text-headline-md text-on-surface">{review.title}</h3>
+                                    <p class="font-body-lg text-body-lg text-tertiary line-clamp-2">{review.subtitle || review.desc}</p>
+                                    <span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest mt-2">Por {review.author}</span>
+                                </div>
+                            </a>
+                        );
+                        if (i === 1) return (
+                            <a href={review.link} class="group relative h-[400px] rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10">
+                                <img alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={review.heroImage}/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 w-full p-6 flex flex-col gap-2">
+                                    <div class="flex items-center gap-1 text-secondary-container mb-1">
+                                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        <span class="font-bold">{review.rating}</span>
+                                    </div>
+                                    <h3 class="font-headline-md text-on-surface text-xl">{review.title}</h3>
+                                    <p class="font-body-lg text-body-lg text-tertiary text-sm line-clamp-3">{review.subtitle}</p>
+                                </div>
+                            </a>
+                        );
+                        if (i === 2) return (
+                            <a href={review.link} class="group relative h-[400px] rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10">
+                                <img alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={review.heroImage}/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+                                <div class="absolute inset-0 p-6 flex flex-col justify-between">
+                                    <div class="flex items-center gap-1 text-secondary-container">
+                                        <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        <span class="font-bold">{review.rating}</span>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-headline-md text-headline-md text-on-surface text-xl mb-2">{review.title}</h3>
+                                        <p class="font-body-lg text-body-lg text-tertiary text-sm line-clamp-4 mb-4">{review.subtitle}</p>
+                                        <span class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest">Por {review.author}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        );
+                        if (i === 3) return (
+                            <a href={review.link} class="md:col-span-2 group relative h-auto md:h-[400px] rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10 flex flex-col md:flex-row">
+                                <div class="w-full md:w-1/2 h-[200px] md:h-full relative">
+                                    <img alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={review.heroImage}/>
+                                    <div class="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-background"></div>
+                                </div>
+                                <div class="w-full md:w-1/2 bg-surface-container-low p-6 md:p-8 flex flex-col justify-center gap-4">
+                                    <div class="flex items-center gap-1 text-secondary-container mb-2">
+                                        <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                        <span class="font-bold">{review.rating}</span>
+                                    </div>
+                                    <h3 class="font-headline-md text-headline-md text-on-surface">{review.title}</h3>
+                                    <p class="font-body-lg text-body-lg text-tertiary line-clamp-3">{review.subtitle}</p>
+                                    <div class="mt-4 flex items-center gap-2">
+                                        <span class="font-label-caps text-label-caps text-on-surface uppercase tracking-widest border-b border-on-surface pb-1">Leer Reseña</span>
+                                    </div>
+                                </div>
+                            </a>
+                        );
+                    })}
+				</div>
+			</section>
+
+			<!-- Latest Industry News & Rumors Grid -->
+			<section class="flex flex-col gap-10">
+				<div class="flex justify-between items-end border-b border-white/10 pb-4">
+					<h2 class="font-headline-md text-headline-md text-on-surface">Últimas Noticias y Rumores</h2>
+					<a class="font-label-caps text-label-caps text-tertiary hover:text-on-surface transition-colors uppercase tracking-widest flex items-center gap-1" href="/news">
+						Ver Todo <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+					</a>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {newsList.slice(0, 3).map(news => (
+                        <NewsCard 
+                            image={news.image}
+                            category={news.category}
+                            title={news.title}
+                            summary={news.summary}
+                            link={news.link}
+                        />
+                    ))}
+				</div>
+			</section>
+
+			<!-- Trending Now Grid -->
+			<section class="flex flex-col gap-10">
+				<div class="flex justify-between items-end border-b border-white/10 pb-4">
+					<h2 class="font-headline-md text-headline-md text-on-surface">Películas en Tendencia</h2>
+					<div class="flex gap-2">
+						<button class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-tertiary hover:text-on-surface hover:bg-white/5 transition-all"><span class="material-symbols-outlined text-[16px]">chevron_left</span></button>
+						<button class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-tertiary hover:text-on-surface hover:bg-white/5 transition-all"><span class="material-symbols-outlined text-[16px]">chevron_right</span></button>
+					</div>
+				</div>
+				<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    {reviewsList.slice(0, 5).map((review, index) => (
+                        <a class={`group flex flex-col gap-3 ${index === 4 ? 'hidden lg:flex' : ''}`} href={review.link}>
+                            <div class="relative aspect-[2/3] rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                                {review.posterImage ? (
+                                    <img src={review.posterImage} alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                ) : (
+                                    <div class="absolute inset-0 bg-surface-container-high flex items-center justify-center">
+                                        <span class="text-tertiary text-sm">Poster</span>
+                                    </div>
+                                )}
+                                <div class="absolute top-2 right-2 glass-panel px-2 py-1 rounded text-xs font-bold text-secondary-container flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">star</span> {review.rating}
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-headline-md text-headline-md text-on-surface text-base truncate group-hover:text-primary-container transition-colors">{review.title}</h4>
+                                <p class="font-body-lg text-body-lg text-tertiary text-sm italic">{review.director}</p>
+                            </div>
+                        </a>
+                    ))}
+				</div>
+			</section>
+		</div>
+	</main>
+
+	<Footer />
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const indicators = document.querySelectorAll('.hero-indicator');
+        const totalSlides = slides.length;
+
+        function showSlide(index: number) {
+            slides.forEach((slide: any, i: number) => {
+                const content = slide.querySelectorAll('.slide-content');
+                if (i === index) {
+                    slide.classList.remove('opacity-0', 'z-0');
+                    slide.classList.add('opacity-100', 'z-10');
+                    // Animate content
+                    content.forEach((el: any) => {
+                        el.classList.remove('translate-y-8', 'opacity-0');
+                        el.classList.add('translate-y-0', 'opacity-100');
+                    });
+                } else {
+                    slide.classList.remove('opacity-100', 'z-10');
+                    slide.classList.add('opacity-0', 'z-0');
+                    // Reset content animation
+                    content.forEach((el: any) => {
+                        el.classList.add('translate-y-8', 'opacity-0');
+                        el.classList.remove('translate-y-0', 'opacity-100');
+                    });
+                }
+            });
+
+            indicators.forEach((indicator: any, i: number) => {
+                if (i === index) {
+                    indicator.classList.remove('w-4', 'bg-white/20');
+                    indicator.classList.add('w-12', 'bg-primary-container');
+                } else {
+                    indicator.classList.add('w-4', 'bg-white/20');
+                    indicator.classList.remove('w-12', 'bg-primary-container');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Initialize first slide animations
+        setTimeout(() => showSlide(0), 100);
+
+        // Set interval
+        let sliderInterval = setInterval(nextSlide, 5000);
+
+        // Manual control
+        indicators.forEach((indicator: any, i: number) => {
+            indicator.addEventListener('click', () => {
+                currentSlide = i;
+                showSlide(currentSlide);
+                clearInterval(sliderInterval);
+                sliderInterval = setInterval(nextSlide, 5000);
+            });
+        });
+    </script>
+</Layout>

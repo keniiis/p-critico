@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import NewsCard from '../components/NewsCard.astro';
+
+import newsJson from '../data/news.json';
+
+const newsItems = Object.entries(newsJson).map(([slug, news]) => ({
+    ...(news as any),
+    link: `/news/${slug}`
+}));
+---
+
+<Layout title="Noticias y Rumores - Paralaje Crítico">
+    <Navbar active="news" />
+
+    <main class="flex-grow pt-32 pb-20">
+        <div class="max-w-container-max mx-auto px-margin">
+            <!-- Page Header -->
+            <header class="mb-16 border-b border-white/10 pb-8">
+                <h1 class="font-display-lg text-display-lg text-on-surface text-gradient mb-4">Noticias y Rumores</h1>
+                <p class="text-tertiary font-body-lg text-lg max-w-2xl">
+                    Mantente al día con lo último de Hollywood y más allá. Desde noticias de estudios hasta los rumores más comentados.
+                </p>
+            </header>
+
+            <!-- News Grid -->
+            <div class="flex flex-col gap-12">
+                <!-- Featured News -->
+                {newsItems.filter(item => item.variant === 'featured').map(item => (
+                    <NewsCard {...item} />
+                ))}
+
+                <!-- Regular News Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {newsItems.filter(item => item.variant !== 'featured').map(item => (
+                        <NewsCard {...item} />
+                    ))}
+                </div>
+            </div>
+
+            <!-- Categories filter temporarily hidden until more content is added -->
+        </div>
+    </main>
+
+    <Footer />
+</Layout>

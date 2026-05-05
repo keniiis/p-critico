@@ -1,0 +1,76 @@
+---
+interface Props {
+    movie: string;
+    rating: number;
+    image: string;
+    excerpt: string;
+    author: string;
+    slug?: string;
+    featured?: boolean;
+}
+
+const {
+    movie,
+    rating,
+    image,
+    excerpt,
+    author,
+    slug = "#",
+    featured = false,
+} = Astro.props;
+
+const stars = Array.from({ length: 5 }, (_, i) => {
+    if (rating >= i + 1) return "star";
+    if (rating >= i + 0.5) return "star_half";
+    return "star_outline";
+});
+---
+
+<a
+    href={`/reviews/${slug}`}
+    class={`group relative rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-all duration-300 border border-white/10 ${featured ? "md:col-span-2 h-[450px]" : "h-[400px]"}`}
+>
+    <img
+        src={image}
+        alt={movie}
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    <div
+        class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"
+    >
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col gap-3">
+        <div class="flex items-center gap-1 text-secondary-container mb-2">
+            {
+                stars.map((star) => (
+                    <span
+                        class={`material-symbols-outlined text-[18px] ${star !== "star_outline" ? "fill" : ""}`}
+                    >
+                        {star}
+                    </span>
+                ))
+            }
+            <span
+                class="text-on-surface font-label-caps text-xs ml-2 opacity-80"
+                >{rating.toFixed(1)}</span
+            >
+        </div>
+        <h3
+            class={`font-headline-md text-on-surface ${featured ? "text-3xl" : "text-xl"}`}
+        >
+            {movie}
+        </h3>
+        <p class="font-body-lg text-tertiary line-clamp-2 text-sm">{excerpt}</p>
+        <div class="mt-4 flex items-center justify-between">
+            <span
+                class="font-label-caps text-label-caps text-tertiary uppercase tracking-widest"
+                >Por {author}</span
+            >
+            <span
+                class="font-label-caps text-label-caps text-on-surface border-b border-on-surface pb-0.5 group-hover:text-primary-container group-hover:border-primary-container transition-colors"
+                >Leer reseña completa</span
+            >
+        </div>
+    </div>
+</a>

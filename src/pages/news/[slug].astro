@@ -1,0 +1,102 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+import newsJson from "../../data/news.json";
+
+export function getStaticPaths() {
+    return Object.keys(newsJson).map(slug => ({
+        params: { slug }
+    }));
+}
+
+const { slug } = Astro.params;
+
+interface NewsArticle {
+    title: string;
+    category: string;
+    date: string;
+    image: string;
+    author: string;
+    summary: string;
+    variant: string;
+    content: {
+        type: 'paragraph' | 'heading' | 'list' | 'quote';
+        text?: string;
+        items?: string[];
+    }[];
+}
+
+const article = (newsJson as Record<string, NewsArticle>)[slug as string];
+---
+
+<Layout title={`${article.title} - Noticias de Paralaje Crítico`}>
+    <Navbar active="news" />
+
+    <main class="flex-grow pt-32 pb-24">
+        <article class="max-w-4xl mx-auto px-margin">
+            <!-- Header -->
+            <header class="mb-12">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="glass-panel px-3 py-1 rounded-full font-label-caps text-[10px] text-primary-container uppercase tracking-widest">{article.category}</span>
+                    <span class="text-tertiary font-label-caps text-[10px] uppercase tracking-widest">{article.date}</span>
+                </div>
+                <h1 class="font-display-lg text-display-lg text-on-surface leading-tight mb-8 text-gradient">{article.title}</h1>
+                <div class="flex items-center gap-4 py-6 border-y border-white/10">
+                    <div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-bold">C</div>
+                    <div>
+                        <span class="block text-on-surface font-headline-md text-sm">{article.author}</span>
+                        <span class="text-tertiary text-xs uppercase tracking-widest font-label-caps">Editorial Team</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Featured Image -->
+            <div class="aspect-video rounded-2xl overflow-hidden mb-16 border border-white/10 shadow-2xl">
+                <img src={article.image} alt={article.title} class="w-full h-full object-cover" />
+            </div>
+
+            <!-- Content -->
+            <div class="prose prose-invert max-w-none">
+                {article.content.map((block) => (
+                    block.type === 'paragraph' ? (
+                        <p class="font-body-lg text-body-lg text-tertiary leading-relaxed mb-8 text-lg">{block.text}</p>
+                    ) : block.type === 'heading' ? (
+                        <h2 class="font-display-lg text-3xl text-on-surface mt-16 mb-8">{block.text}</h2>
+                    ) : block.type === 'quote' ? (
+                        <blockquote class="border-l-4 border-primary-container pl-8 my-12 italic text-on-surface text-2xl font-display-lg leading-snug">
+                            “{block.text}”
+                        </blockquote>
+                    ) : block.type === 'list' ? (
+                        <ul class="space-y-4 mb-12">
+                            {block.items?.map(item => (
+                                <li class="flex items-start gap-4 text-tertiary font-body-lg text-lg">
+                                    <span class="text-primary-container mt-1.5 material-symbols-outlined text-sm">fiber_manual_record</span>
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : null
+                ))}
+            </div>
+
+            <!-- Share / Footer -->
+            <footer class="mt-20 pt-10 border-t border-white/10 flex items-center justify-between">
+                <div class="flex gap-4">
+                    <button class="glass-panel p-3 rounded-full text-tertiary hover:text-on-surface transition-colors">
+                        <span class="material-symbols-outlined">share</span>
+                    </button>
+                    <button class="glass-panel p-3 rounded-full text-tertiary hover:text-on-surface transition-colors">
+                        <span class="material-symbols-outlined">bookmark</span>
+                    </button>
+                </div>
+                <a href="/" class="font-label-caps text-label-caps text-tertiary hover:text-on-surface transition-colors uppercase tracking-widest flex items-center gap-2">
+                    Volver al inicio <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </a>
+            </footer>
+        </article>
+    </main>
+
+    <Footer />
+</Layout>

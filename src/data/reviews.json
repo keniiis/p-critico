@@ -1,0 +1,251 @@
+﻿{
+    "el-senor-de-las-moscas-2026": {
+        "title": "El Señor de las Moscas (BBC, 2026)",
+        "subtitle": "Un Descenso Psicológico a la Barbarie",
+        "rating": 4.5,
+        "year": "2026",
+        "director": "Marc Munden",
+        "duration": "4 Episodios",
+        "genre": "Drama / Psicológico",
+        "heroImage": "/images/reviews/el-senor-de-las-moscas.jpg",
+        "posterImage": "/images/reviews/el-senor-de-las-moscas-poster.jpg",
+        "author": "Paralaje Crítico Editor",
+        "fullReview": [
+            "Setenta y dos años después de la publicación de la obra maestra de William Golding, la BBC ha entregado la que muchos consideran la adaptación definitiva y, sorprendentemente, la primera realizada para televisión. Bajo la pluma de Jack Thorne y la dirección de Marc Munden, esta miniserie de cuatro episodios no es solo una historia de supervivencia, sino un experimento social incómodo que explora la fragilidad de la civilización.",
+            "La serie innova con una estructura donde cada episodio lleva el nombre de uno de los protagonistas (Ralph, Jack, Piggy y Simon). Este enfoque permite profundizar en la psicología de los niños más allá de la simple acción, transformando la fábula original en un estudio realista y devastador sobre el liderazgo y el poder emocional.",
+            "Un cambio significativo respecto a la novela es la inclusión de flashbacks que muestran la vida de los niños antes de la isla. Aunque algunos críticos consideran que esto humaniza a los personajes, otros argumentan que estas escenas rompen la sensación de aislamiento y diluyen la idea de la 'maldad intrseca' del ser humano.",
+            "El éxito de la serie descansa en su joven elenco. David McKenna (Piggy) aporta una inteligencia punzante y una vulnerabilidad devastadora. Lox Pratt (Jack) logra un equilibrio perfecto entre el carisma autoritario y el salvajismo infantil, mientras que Winston Sawyers (Ralph) presenta un líder carismático pero moralmente ambiguo.",
+            "La técnica visual es polarizante; el uso de cámaras infrarrojas crea una isla de tonos neón y rojos surrealistas. La banda sonora, una colaboración entre Hans Zimmer y Cristobal Tapia de Veer, es visceral y discordante, subrayando la degradación moral de los personajes.",
+            "En conclusión, El Señor de las Moscas (2026) es una obra audaz, brillante y profundamente perturbadora. No busca sustituir al libro, sino actualizarlo para una era de polarización y desinformación. Es una recomendación obligatoria para quienes disfruten de dramas de supervivencia con trasfondo psicológico."
+        ],
+        "scores": [
+            {
+                "category": "Fotografía",
+                "score": 9,
+                "icon": "movie_filter",
+                "desc": "La fotografía de Mark Wolf bajo la dirección de Marc Munden es suntuosa y visualmente rica. La serie destaca por una experimentación técnica audaz, utilizando cámaras infrarrojas para convertir el follaje en tonos rojos y neones surrealistas."
+            },
+            {
+                "category": "Actuación",
+                "score": 9.5,
+                "icon": "groups",
+                "desc": "Es, sin duda, el aspecto más aclamado de la producción. El reparto juvenil ofrece interpretaciones de una 'naturalidad cruda' que evita los tropos habituales. David McKenna (Piggy) es calificado como un hallazgo sin precedentes."
+            },
+            {
+                "category": "Banda Sonora",
+                "score": 9.2,
+                "icon": "audiotrack",
+                "desc": "Pieza clave en la degradación moral de la historia. Compuesta por Cristobal Tapia de Veer con Hans Zimmer, la música transita de melodías ligeras a percusiones agresivas."
+            },
+            {
+                "category": "Guion",
+                "score": 8.5,
+                "icon": "auto_stories",
+                "desc": "El guion de Jack Thorne es elogiado por su estructura episódica focalizada en la psicología de cada protagonista. No obstante, la nota se ajusta debido a la controversia de los flashbacks previos a la isla."
+            }
+        ],
+        "cast": [
+            {
+                "actor": "Winston Sawyers",
+                "role": "Ralph"
+            },
+            {
+                "actor": "Lox Pratt",
+                "role": "Jack"
+            },
+            {
+                "actor": "David McKenna",
+                "role": "Piggy"
+            },
+            {
+                "actor": "Ike Talbut",
+                "role": "Simon"
+            },
+            {
+                "actor": "Thomas Connor",
+                "role": "Roger"
+            },
+            {
+                "actor": "Noah Flemyng",
+                "role": "Sam"
+            },
+            {
+                "actor": "Cassius Flemyng",
+                "role": "Eric"
+            }
+        ],
+        "finalScore": "9.1",
+        "streaming": "Netflix / BBC iPlayer",
+        "watchOptions": [
+            {
+                "name": "Netflix",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+"
+            },
+            {
+                "name": "BBC iPlayer",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+"
+            },
+            {
+                "name": "Movistar+",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+"
+            }
+        ],
+        "date": "MAYO 05, 2026"
+    },
+    "michael-2026": {
+        "title": "Michael (2026)",
+        "subtitle": "Un Brillo en el Escenario, una Sombra en el Relato",
+        "rating": 3,
+        "year": "2026",
+        "director": "Antoine Fuqua",
+        "duration": "127 min",
+        "genre": "Biopic / Musical",
+        "heroImage": "/images/reviews/michael.jpg",
+        "posterImage": "/images/reviews/michael-poster.jpg",
+        "author": "Paralaje Crítico Editor",
+        "fullReview": [
+            "Dirigida por Antoine Fuqua y escrita por el tres veces nominado al Oscar John Logan, Michael ha provocado una de las fracturas más profundas de la historia del cine reciente entre la crítica especializada y el público. Mientras la crítica la describe como una 'hagiografía higienizada', los fans la han convertido en un éxito de taquilla mundial, superando los récords de apertura de biopics como Bohemian Rhapsody y Oppenheimer.",
+            "El corazón de la película es, sin duda, Jaafar Jackson, sobrino real del artista. Su interpretación ha sido calificada de 'genial y transformadora', logrando capturar no solo los movimientos coreográficos, sino también la voz y la compleja dualidad entre la delicadeza y la fuerza del Rey del Pop.",
+            "Las recreaciones de momentos icónicos como Motown 25 y el concierto en Wembley de 1988 son visualmente espectaculares y han sido descritas por la audiencia como la experiencia más cercana a un concierto real de Jackson.",
+            "El mayor punto de fricción radica en la estructura del guion. Al estar coproducida por los albaceas del patrimonio de Jackson (Estate), la película ha sido acusada de evitar los temas más polémicos. La trama termina abruptamente en 1988, antes de que surgieran las acusaciones de abuso infantil que marcaron la última década de su vida.",
+            "Críticos de medios como The Guardian la han tachado de 'blanda y superficial', argumentando que el filme funciona más como un 'montaje de tráiler de 127 minutos' que como un estudio biográfico serio sobre un hombre profundamente complicado.",
+            "En conclusión, Michael (2026) logra su objetivo principal: resucitar la magia del artista para sus seguidores, aunque falle en desentrañar al hombre detrás del mito."
+        ],
+        "scores": [
+            {
+                "category": "Fotografía",
+                "score": 8.5,
+                "icon": "movie_filter",
+                "desc": "Dion Beebe captura la evolución visual de Jackson magistralmente. Utiliza una paleta granulada para sus inicios en Gary, Indiana, contrastándola con el resplandor vibrante y casi onírico de la era 'Thriller'. Los juegos de luces en los conciertos son cine en estado puro."
+            },
+            {
+                "category": "Actuación",
+                "score": 9.7,
+                "icon": "groups",
+                "desc": "Jaafar Jackson no solo imita, encarna el espíritu de su tío. Su capacidad para replicar la vulnerabilidad al hablar y la energía explosiva en el escenario es de Oscar. Colman Domingo ofrece un Joe Jackson complejo, un villano cuya ambición forjó al mito."
+            },
+            {
+                "category": "Banda Sonora",
+                "score": 9.8,
+                "icon": "audiotrack",
+                "desc": "La mezcla de sonido es impecable. Escuchar los arreglos originales de 'Billie Jean' en un sistema de cine es una experiencia religiosa. La música dicta el ritmo emocional, compensando las carencias del guion en los momentos clave de la cinta."
+            },
+            {
+                "category": "Guion",
+                "score": 5,
+                "icon": "auto_stories",
+                "desc": "John Logan opta por un camino seguro y lineal. Aunque efectivo, el guion se siente como una lista de éxitos que evita las zonas grises. Al omitir los eventos posteriores a 1993, la película se queda a medio camino de ser el estudio definitivo."
+            }
+        ],
+        "cast": [
+            {
+                "actor": "Jaafar Jackson",
+                "role": "Michael Jackson"
+            },
+            {
+                "actor": "Juliano Krue Valdi",
+                "role": "Michael (Joven)"
+            },
+            {
+                "actor": "Colman Domingo",
+                "role": "Joe Jackson"
+            },
+            {
+                "actor": "Nia Long",
+                "role": "Katherine Jackson"
+            },
+            {
+                "actor": "Miles Teller",
+                "role": "John Branca"
+            }
+        ],
+        "finalScore": "8.2",
+        "streaming": "Solo en Cines",
+        "watchOptions": [
+            {
+                "name": "Cines",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
+            }
+        ],
+        "date": "MAYO 05, 2026"
+    },
+    "el-diablo-viste-a-la-moda-2-2026": {
+        "title": "El Diablo Viste a la Moda 2 (2026)",
+        "subtitle": "Cerúleo en Tiempos de Algoritmos",
+        "rating": 4,
+        "year": "2026",
+        "director": "David Frankel",
+        "duration": "119 min",
+        "date": "Mayo 05",
+        "genre": "Comedia dramática",
+        "heroImage": "/images/reviews/el-diablo-viste-a-la-moda-2.jpg",
+        "posterImage": "/images/reviews/el-diablo-viste-a-la-moda-2-poster.jpg",
+        "author": "Paralaje Crítico Editor",
+        "fullReview": [
+            "Veinte años después de que Andy Sachs lanzara su teléfono a una fuente en París, el equipo original —liderado por el director David Frankel y la guionista Aline Brosh McKenna— se reúne para una secuela que cambia el optimismo de la cultura del \"hustle\" por una mirada melancólica y mordaz a la erosión de la industria mediática. La película no es solo un viaje de nostalgia, sino una sátira sobre la supervivencia profesional en la era del contenido efímero y la inteligencia artificial.",
+            "El Retorno de los Íconos",
+            "La química entre el \"núcleo de los cuatro\" (Meryl Streep, Anne Hathaway, Emily Blunt y Stanley Tucci) permanece intacta, como si no hubiera pasado el tiempo.",
+            "Miranda Priestly (Streep): Ya no es solo la jefa tiránica; es una profesional de la \"vieja escuela\" que lucha por mantener la relevancia frente a consultores que prefieren el clickbait sobre el arte.",
+            "Andy Sachs (Hathaway): Tras ser despedida de su trabajo como periodista de investigación, regresa a Runway no como una aprendiz, sino como una profesional madura que ha decidido priorizar su carrera y aventuras sobre los hitos tradicionales de matrimonio e hijos.",
+            "Emily Charlton (Blunt): Protagoniza el cambio de poder más radical, siendo ahora una alta ejecutiva en Dior y la guardiana del presupuesto publicitario que Runway necesita desesperadamente para sobrevivir.",
+            "Una Trama de Supervivencia Corporativa\nLa narrativa se centra en la lucha de Miranda y Andy contra Jay Ravitz (B.J. Novak), el heredero de Elias-Clarke que busca \"destripar\" la revista para convertirla en una plataforma impulsada por algoritmos e IA.",
+            "El clímax en la Semana de la Moda de Milán, con una aparición especial y canción original de Lady Gaga, eleva la producción a una escala visualmente deslumbrante."
+        ],
+        "finalScore": "8.5",
+        "scores": [
+            {
+                "category": "Fotografía",
+                "score": 7.5,
+                "icon": "movie_filter",
+                "desc": "Aunque la fotografía de Florian Ballhaus captura el glamour de Manhattan y Milán de forma suntuosa, un sector de la crítica y el público ha lamentado la adopción de un \"estilo Netflix\" (imagen digital suave, filtrada y con pérdida de contraste), que algunos consideran menos cinematográfica que la película original."
+            },
+            {
+                "category": "Actuación",
+                "score": 9.6,
+                "icon": "groups",
+                "desc": "Es el punto más fuerte de la cinta. La madurez y gravedad que Streep y Hathaway aportan a sus personajes son aclamadas. Mención especial para Stanley Tucci, cuya interpretación de Nigel como el ancla emocional de la historia logró conmover a la audiencia hasta las lágrimas."
+            },
+            {
+                "category": "Banda Sonora",
+                "score": 9,
+                "icon": "audiotrack",
+                "desc": "Compuesta por Theodore Shapiro, la música integra perfectamente temas modernos de artistas como SZA y Dua Lipa. La canción original \"Runway\" de Lady Gaga y Doechii es descrita como una pieza que \"pega fuerte\" y define el tono sofisticado de la secuela."
+            },
+            {
+                "category": "Guion",
+                "score": 7.8,
+                "icon": "auto_stories",
+                "desc": "El guion es elogiado por ser \"viejo y sabio\" como sus protagonistas. Sin embargo, la nota se ajusta debido a una resolución que algunos tachan de \"deus ex machina\" (la compra de la empresa por una multimillonaria reclusa) y por la controversia en torno al personaje de Jin Chao, criticado por caer en ciertos tropos racistas anti-asiáticos."
+            }
+        ],
+        "cast": [
+            {
+                "actor": "Meryl Streep",
+                "role": "Miranda Priestly"
+            },
+            {
+                "actor": "Anne Hathaway",
+                "role": "Andy Sachs"
+            },
+            {
+                "actor": "Emily Blunt",
+                "role": "Emily Charlton"
+            },
+            {
+                "actor": "Stanley Tucci",
+                "role": "Nigel"
+            },
+            {
+                "actor": "B.J. Novak",
+                "role": "Jay Ravitz"
+            }
+        ],
+        "streaming": "Solo en Cines",
+        "watchOptions": [
+            {
+                "name": "Cines",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
+            }
+        ]
+    }
+}

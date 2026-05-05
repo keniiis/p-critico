@@ -1,0 +1,28 @@
+{
+    "dolly-parton-cancela-residencia-las-vegas": {
+        "title": "Dolly Parton cancela definitivamente su residencia en Las Vegas por motivos de salud",
+        "category": "Música / Industria",
+        "date": "05 MAYO, 2026",
+        "image": "/images/news/dolly-parton-portada.jpg",
+        "author": "Paralaje Crítico",
+        "summary": "La icónica estrella del country confirma que necesita más tiempo para recuperarse, asegurando a sus fans que, aunque está 'mareada', sigue siendo optimista sobre su futuro.",
+        "variant": "featured",
+        "content": [
+            { "type": "paragraph", "text": "La icónica estrella del country, Dolly Parton, ha anunciado la cancelación definitiva de su esperada residencia en Las Vegas, titulada “Dolly: Live in Las Vegas”. A pesar de que los seis conciertos programados en el Colosseum del Caesars Palace para septiembre de 2026 ya estaban agotados, la cantante de 80 años confirmó que necesita más tiempo para recuperarse plenamente." },
+            { "type": "heading", "text": "“Mareada pero optimista”: El estado de salud de Dolly" },
+            { "type": "paragraph", "text": "A través de un video en sus redes sociales, Parton explicó que, aunque está respondiendo positivamente a sus tratamientos y mejora cada día, todavía no se siente físicamente lista para las exigencias de un espectáculo en vivo. La artista mencionó que algunos de sus medicamentos le provocan una sensación de mareo (lo que ella llama sentirse 'swimmy-headed'), algo que complica su desempeño habitual en el escenario." },
+            { "type": "quote", "text": "No puedo estar mareada cargando banjos, guitarras y demás sobre tacones de 12 centímetros... y ya saben que los voy a usar" },
+            { "type": "paragraph", "text": "Además, señaló que sus pesados atuendos con pedrería y sus icónicas pelucas harían que cualquiera se sintiera aturdido en esas condiciones. Aunque no reveló un diagnóstico específico, Parton ha enfrentado desafíos con cálculos renales y desajustes en sus sistemas inmunológico y digestivo en los últimos años." },
+            { "type": "heading", "text": "Información para los fans y reembolsos" },
+            { "type": "paragraph", "text": "La residencia ya había sufrido un aplazamiento previo desde diciembre de 2025, pero esta vez no se han anunciado nuevas fechas. Ticketmaster emitirá reembolsos automáticos a los poseedores de entradas en un plazo de dos a tres semanas." },
+            { "type": "heading", "text": "Nuevos proyectos en el horizonte" },
+            { "type": "paragraph", "text": "A pesar de este retiro de los escenarios de Las Vegas, la agenda de Dolly Parton para 2026 sigue activa en otros formatos:" },
+            { "type": "list", "items": [
+                "Tour Multimedia 'Threads: My Songs in Symphony': Experiencia inmersiva con orquestas en vivo.",
+                "Broadway: Trabajo continuo en su musical 'Dolly: A True Original Musical'.",
+                "Dollywood y Nashville: Nuevas atracciones y apertura de su hotel y museo."
+            ]},
+            { "type": "paragraph", "text": "Dolly cerró su mensaje con una nota de esperanza, asegurando a sus seguidores que no planea retirarse del negocio: “¡Aún me queda algo de curación por hacer, pero estoy en camino! Nos vemos pronto”." }
+        ]
+    }
+}

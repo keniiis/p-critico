@@ -1,0 +1,204 @@
+---
+import Layout from "../../layouts/MainLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+import rawReviewsData from "../../data/reviews.json";
+
+export function getStaticPaths() {
+    return Object.keys(rawReviewsData).map((slug) => ({
+        params: { slug },
+    }));
+}
+
+const { slug } = Astro.params;
+
+interface WatchOption {
+    name: string;
+    logo: string;
+    url?: string;
+}
+
+interface Review {
+    title: string;
+    subtitle: string;
+    rating: number;
+    year: string;
+    director: string;
+    duration: string;
+    genre: string;
+    heroImage: string;
+    posterImage: string;
+    author: string;
+    fullReview: string[];
+    scores: { category: string; score: number; icon: string; desc: string; }[];
+    cast: { actor: string; role: string; image?: string | null; }[];
+    finalScore: string;
+    streaming: string;
+    watchOptions: WatchOption[];
+    date: string;
+}
+
+function getScoreColor(score: number, max = 10) {
+    const percentage = (score / max) * 100;
+    if (percentage >= 80) return "text-green-500 bg-green-500";
+    if (percentage >= 60) return "text-yellow-500 bg-yellow-500";
+    return "text-red-500 bg-red-500";
+}
+
+async function getActorImage(name: string) {
+    try {
+        const response = await fetch(`https://api.tvmaze.com/search/people?q=${encodeURIComponent(name)}`);
+        const data = await response.json();
+        if (data && data.length > 0 && data[0].person.image) {
+            return data[0].person.image.medium;
+        }
+    } catch (e) {
+        console.error("Error fetching actor image:", e);
+    }
+    return null;
+}
+
+const reviewsData: Record<string, Review> = rawReviewsData as Record<string, Review>;
+
+const review = reviewsData[slug as string] || reviewsData["michael-2026"];
+
+const enhancedCast = await Promise.all(
+    review.cast.map(async (p) => ({
+        ...p,
+        image: await getActorImage(p.actor),
+    })),
+);
+---
+
+<Layout title={`${review.title} - Reseña - Paralaje Crítico`}>
+    <Navbar active="reviews" />
+
+    <main class="flex-grow">
+        <section class="relative w-full h-[60vh] min-h-[500px] flex items-end pb-20 pt-32">
+            <div class="absolute inset-0">
+                <img src={review.heroImage} alt={review.title} class="w-full h-full object-cover object-top" />
+                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+            </div>
+            <div class="relative z-10 w-full max-w-container-max mx-auto px-margin">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="glass-panel px-3 py-1 rounded-full font-label-caps text-label-caps text-on-surface">{review.year}</span>
+                    <span class="glass-panel px-3 py-1 rounded-full font-label-caps text-label-caps text-on-surface">{review.duration}</span>
+                    <div class="flex items-center gap-1 ml-4">
+                        <span class="material-symbols-outlined fill text-[18px] text-secondary-container">star</span>
+                        <span class={`font-bold ${getScoreColor(review.rating, 5).split(" ")[0]}`}>{review.rating} / 5.0</span>
+                    </div>
+                </div>
+                <h1 class="font-display-lg text-display-lg text-on-surface mb-4 leading-tight">{review.title}</h1>
+                <p class="text-tertiary font-headline-md text-xl max-w-2xl">{review.genre} · Dirigida por {review.director}</p>
+            </div>
+        </section>
+
+        <section class="max-w-container-max mx-auto px-margin py-20 grid grid-cols-1 lg:grid-cols-12 gap-16 relative">
+            <div class="lg:col-span-8">
+                <div class="flex items-center gap-4 mb-12 pb-8 border-b border-white/10">
+                    <div>
+                        <span class="font-label-caps text-label-caps text-tertiary block text-[10px]">Escrito por:</span>
+                        <span class="font-headline-md text-lg text-on-surface leading-none">{review.author}</span>
+                    </div>
+                    <span class="ml-auto text-tertiary font-label-caps text-[10px] tracking-widest uppercase">{review['date']}</span>
+                </div>
+
+                <div class="prose prose-invert max-w-none">
+                    {review.fullReview.map((paragraph) => (
+                        <p class="font-body-lg text-body-lg text-tertiary leading-relaxed mb-8 text-lg">{paragraph}</p>
+                    ))}
+                    <blockquote class="border-l-4 border-primary-container pl-8 my-12 italic text-on-surface text-2xl font-display-lg leading-snug">"{review.subtitle}"</blockquote>
+                    
+                    <div class="mt-20 pt-10 border-t border-white/10">
+                        <h2 class="font-display-lg text-3xl text-on-surface mb-10">Análisis Técnico</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {review.scores.map((s) => {
+                                const colors = getScoreColor(s.score);
+                                return (
+                                    <div class="glass-panel p-6 rounded-xl border border-white/5 hover:border-white/20 transition-colors">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <span class={`material-symbols-outlined ${colors.split(" ")[0]} text-[24px]`}>{s.icon}</span>
+                                            <h4 class="font-headline-md text-on-surface text-lg">{s.category}</h4>
+                                            <span class={`ml-auto font-bold ${colors.split(" ")[0]}`}>{s.score}/10</span>
+                                        </div>
+                                        <p class="text-tertiary text-sm leading-relaxed">{s.desc}</p>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <!-- NUEVA SECCIÓN: DISPONIBLE EN -->
+                    <div class="mt-20 pt-10 border-t border-white/10">
+                        <h2 class="font-display-lg text-3xl text-on-surface mb-8">Disponible en</h2>
+                        <div class="flex flex-wrap gap-6">
+                            {review.watchOptions.map((option) => (
+                                <div class="glass-panel flex items-center gap-4 px-6 py-4 rounded-xl hover:bg-white/5 transition-all border border-white/5 hover:border-white/20 group">
+                                    <img src={option.logo} alt={option.name} class="h-8 w-auto filter grayscale group-hover:grayscale-0 transition-all duration-300" />
+                                    <span class="text-on-surface font-headline-md text-sm">{option.name}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="hidden lg:block lg:col-span-4 review-sidebar-offset">
+                <div class="sticky top-32 space-y-8">
+                    <div class="glass-panel p-8 rounded-xl">
+                        <h3 class="font-headline-md text-xl text-on-surface mb-8">Desglose del Puntaje</h3>
+                        <div class="space-y-8">
+                            {review.scores.map((s) => {
+                                const colors = getScoreColor(s.score);
+                                return (
+                                    <div>
+                                        <div class="flex justify-between items-end mb-3">
+                                            <span class="font-label-caps text-label-caps text-tertiary uppercase tracking-wider text-[10px]">{s.category}</span>
+                                            <span class={`font-bold text-sm ${colors.split(" ")[0]}`}>{s.score}/10</span>
+                                        </div>
+                                        <div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                            <div class={`h-full ${colors.split(" ")[1]} transition-all duration-1000`} style={`width: ${s.score * 10}%`} />
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        <div class="mt-8 pt-8 border-t border-white/10 text-center">
+                            <div class={`text-5xl font-display-lg mb-2 ${getScoreColor(parseFloat(review.finalScore)).split(" ")[0]}`}>{review.finalScore}</div>
+                            <div class="font-label-caps text-label-caps text-tertiary tracking-[0.2em] text-[10px]">PUNTUACIÓN PARALAJE CRÍTICO</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-8 rounded-xl">
+                        <h3 class="font-headline-md text-xl text-on-surface mb-6 border-b border-white/10 pb-4">Elenco</h3>
+                        <div class="space-y-6">
+                            {enhancedCast.map((person) => (
+                                <div class="flex items-center gap-4">
+                                    {person.image ? (
+                                        <img src={person.image} alt={person.actor} class="w-12 h-12 rounded-full object-cover border border-white/10 shadow-lg" />
+                                    ) : (
+                                        <div class="w-12 h-12 rounded-full bg-surface-container-high border border-white/10 flex items-center justify-center text-on-surface text-xs font-bold">
+                                            {person.actor.split(" ").map((n) => n[0]).join("")}
+                                        </div>
+                                    )}
+                                    <div class="flex flex-col">
+                                        <span class="font-bold text-on-surface text-sm leading-tight">{person.actor}</span>
+                                        <span class="text-tertiary text-xs uppercase tracking-widest mt-1">{person.role}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+    <Footer />
+</Layout>
+
+<style>
+    .review-sidebar-offset {
+        margin-top: -120px;
+    }
+</style>

@@ -1,0 +1,62 @@
+---
+interface Props {
+    image: string;
+    category: string;
+    title: string;
+    summary: string;
+    link?: string;
+    variant?: "default" | "featured";
+}
+
+const {
+    image,
+    category,
+    title,
+    summary,
+    link = "#",
+    variant = "default",
+} = Astro.props;
+
+const isFeatured = variant === "featured";
+---
+
+<div
+    class={`glass-panel rounded-xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10 flex flex-col ${isFeatured ? "md:flex-row md:h-96" : ""}`}
+>
+    <div
+        class={`${isFeatured ? "md:w-1/2 h-64 md:h-full" : "h-64"} overflow-hidden relative`}
+    >
+        <img
+            src={image}
+            alt={title}
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-[#121414] to-transparent opacity-80"
+        >
+        </div>
+    </div>
+    <div
+        class={`p-6 relative z-10 ${isFeatured ? "md:w-1/2 md:mt-0 flex flex-col justify-center" : "-mt-16 flex-grow flex flex-col"}`}
+    >
+        <span
+            class="font-label-caps text-label-caps text-primary mb-2 block uppercase tracking-widest"
+            >{category}</span
+        >
+        <h3
+            class={`font-headline-md text-on-surface mb-2 group-hover:text-primary transition-colors ${isFeatured ? "text-3xl" : "text-xl"}`}
+        >
+            {title}
+        </h3>
+        <p
+            class={`font-body-lg text-tertiary line-clamp-3 mb-4 ${isFeatured ? "text-base" : "text-sm flex-grow"}`}
+        >
+            {summary}
+        </p>
+        <a
+            href={link}
+            class="font-label-caps text-label-caps text-on-surface uppercase tracking-widest border-b border-on-surface pb-1 self-start"
+            >Leer noticia completa</a
+        >
+    </div>
+</div>

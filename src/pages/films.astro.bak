@@ -1,0 +1,207 @@
+﻿---
+import Layout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="The Dark Knight - Paralaje Crítico">
+	<Navbar active="films" />
+
+	<main class="flex-grow pt-20">
+		<!-- Hero Section -->
+		<section class="relative w-full h-[716px] flex items-end justify-center bg-surface-container-lowest">
+			<img alt="Cinematic Hero" class="absolute inset-0 w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXgth7TBosIAkRAs8TDYoSQ4QscFYMWWt8lpMTz42fKaWIr-_qHtVC2mSR22i5QOObpZshiT9fc0URRDofM-dlkuqNnDs2mPX09bqixbl0hyvV7_H355MXr63TnVLNsQRsV2tNrQ_F_xDApQSWgPJqMDPeJgjjycaYBfu3hVrHrqtykQXh1zAU7DPFDOd9JWXACdOlF4RS-1bqaOHfQxZdqC8HN2plmb3luTahuBr9QesDn1tmbQmNstlBimlDyvABUL4QozhEmhg"/>
+			<div class="absolute inset-0 hero-gradient"></div>
+			<div class="relative z-10 w-full max-w-[1440px] px-gutter pb-margin flex flex-col md:flex-row items-end justify-between gap-8">
+				<div>
+					<div class="flex items-center gap-4 mb-4">
+						<span class="glass-panel px-3 py-1 rounded-full font-label-caps text-label-caps text-on-surface">2008</span>
+						<span class="glass-panel px-3 py-1 rounded-full font-label-caps text-label-caps text-on-surface">PG-13</span>
+						<span class="glass-panel px-3 py-1 rounded-full font-label-caps text-label-caps text-on-surface">152 MIN</span>
+						<div class="flex items-center gap-1 text-secondary-container ml-4">
+							<span class="material-symbols-outlined fill">star</span>
+							<span class="material-symbols-outlined fill">star</span>
+							<span class="material-symbols-outlined fill">star</span>
+							<span class="material-symbols-outlined fill">star</span>
+							<span class="material-symbols-outlined">star_half</span>
+							<span class="font-label-caps text-label-caps text-on-surface ml-2 mt-1">4.8 (2.4M)</span>
+						</div>
+					</div>
+					<h1 class="font-display-lg text-display-lg text-on-surface mb-2">The Dark Knight</h1>
+					<p class="font-headline-md text-headline-md text-tertiary">When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.</p>
+				</div>
+				<div class="flex-shrink-0 flex gap-4">
+					<button class="bg-on-surface text-background px-8 py-4 rounded-full font-label-caps text-label-caps hover:bg-white transition-colors flex items-center gap-2">
+						<span class="material-symbols-outlined fill">play_arrow</span>
+						WATCH TRAILER
+					</button>
+					<button class="glass-panel px-4 py-4 rounded-full hover:bg-white/10 transition-colors flex items-center justify-center text-on-surface">
+						<span class="material-symbols-outlined">bookmark_add</span>
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- Content Grid -->
+		<section class="max-w-[1440px] mx-auto px-gutter py-margin grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+			<!-- Main Content (Left Column) -->
+			<div class="lg:col-span-8 flex flex-col gap-12">
+				<!-- Official Review -->
+				<article class="glass-panel p-8 rounded-xl relative overflow-hidden group">
+					<div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+						<span class="material-symbols-outlined text-9xl">format_quote</span>
+					</div>
+					<h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-3">
+						<span class="w-1 h-6 bg-primary-container rounded-full"></span>
+						Paralaje Crítico Official Review
+					</h2>
+					<div class="prose prose-invert max-w-none font-body-lg text-body-lg text-tertiary space-y-6">
+						<p class="font-bold text-on-surface text-lg">Christopher Nolan's masterpiece transcends the superhero genre, delivering a gripping crime thriller that fundamentally altered modern blockbuster filmmaking.</p>
+						<p>It's rare for a sequel to surpass its predecessor in almost every conceivable way, but 'The Dark Knight' achieves precisely that. Heath Ledger's posthumous Oscar-winning performance as the Joker is nothing short of legendary—a chaotic force of nature that anchors the film's exploration of morality, escalation, and the fragility of societal order.</p>
+						<p>Wally Pfister's cinematography, particularly the groundbreaking use of IMAX cameras, gives Gotham a chillingly realistic, sprawling scale. Hans Zimmer and James Newton Howard's pulsing, uneasy score underscores the relentless tension.</p>
+						<p>More than a decade later, it remains the gold standard for comic book adaptations—a dark, uncompromising, and profoundly influential piece of cinema.</p>
+					</div>
+					<div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+						<div class="flex items-center gap-4">
+							<div class="w-12 h-12 rounded-full bg-surface-variant overflow-hidden">
+								<img alt="Reviewer" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVp-8M21TShpBqsytnstLMuytNQQRvoIdo3rnlxAefz8z0S3zik--kexNd3xsYShCwqmgriCJgntcYdc2rH-_uvVrXGdYENmULbD4eP-OHxRCFHFV15csM-dDAHliBGkUreikTjM8tAVVbqxaS8htVjFX2cwNLw1me7UwsiQmac63TIYEcHhl55L8MmqqzMEuwI83BC2FrDFkMKlBx660LrD97NA01nlsE80eqwByzG1yz6BPbSvxDLf5WzDTs5XVXz2ttFO7gdAI"/>
+							</div>
+							<div>
+								<div class="font-label-caps text-label-caps text-on-surface">REVIEWED BY</div>
+								<div class="font-headline-md text-lg text-on-surface">Sarah Jenkins</div>
+							</div>
+						</div>
+						<div class="text-right">
+							<div class="font-display-lg text-3xl text-primary-container">98/100</div>
+							<div class="font-label-caps text-label-caps text-tertiary">MASTERPIECE</div>
+						</div>
+					</div>
+				</article>
+
+				<!-- Technical Specs Bento -->
+				<div>
+					<h3 class="font-headline-md text-headline-md text-on-surface mb-6">Technical Specs</h3>
+					<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+						<div class="glass-panel p-4 rounded-lg flex flex-col items-center text-center gap-2 hover:bg-white/5 transition-colors">
+							<span class="material-symbols-outlined text-primary-container">movie</span>
+							<span class="font-label-caps text-label-caps text-tertiary">FORMAT</span>
+							<span class="font-bold text-on-surface text-sm">35mm, 70mm IMAX</span>
+						</div>
+						<div class="glass-panel p-4 rounded-lg flex flex-col items-center text-center gap-2 hover:bg-white/5 transition-colors">
+							<span class="material-symbols-outlined text-primary-container">aspect_ratio</span>
+							<span class="font-label-caps text-label-caps text-tertiary">ASPECT RATIO</span>
+							<span class="font-bold text-on-surface text-sm">2.39:1, 1.43:1</span>
+						</div>
+						<div class="glass-panel p-4 rounded-lg flex flex-col items-center text-center gap-2 hover:bg-white/5 transition-colors">
+							<span class="material-symbols-outlined text-primary-container">volume_up</span>
+							<span class="font-label-caps text-label-caps text-tertiary">AUDIO</span>
+							<span class="font-bold text-on-surface text-sm">Dolby Digital, DTS</span>
+						</div>
+						<div class="glass-panel p-4 rounded-lg flex flex-col items-center text-center gap-2 hover:bg-white/5 transition-colors">
+							<span class="material-symbols-outlined text-primary-container">palette</span>
+							<span class="font-label-caps text-label-caps text-tertiary">COLOR</span>
+							<span class="font-bold text-on-surface text-sm">Color (Technicolor)</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Sidebar (Right Column) -->
+			<aside class="lg:col-span-4 flex flex-col gap-8">
+				<!-- Director & Cast -->
+				<div class="glass-panel p-6 rounded-xl">
+					<h3 class="font-headline-md text-xl text-on-surface mb-6 border-b border-white/10 pb-4">Cast & Crew</h3>
+					<div class="space-y-6">
+						<div>
+							<span class="font-label-caps text-label-caps text-tertiary block mb-3">DIRECTOR</span>
+							<div class="flex items-center gap-3">
+								<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
+									<img alt="Director" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb3-Cxe-kqFSa-5zO06k3DKyhgbtq2aHWDCYfCgcQXkWV-5AgNzBmkudNxPP0_m0v1ItowPgYGSPi0JP-yW4YR1DebbZqtuXGXXHXi16BS2wrDSw7CjAfCi42_jmM_Xj9g_zN4DJmKT5EkH1BWqQZmSMNG7AmJ38Aex38gghEaEGYG0Xww4VvnnXE_oSVR8VuKYppgikDXIQENvtxs1g_KnhZ5FKJPdcBASYP64WItd92CCOXyv99rnm_B4tRtbED0hcI-q1Nmnss"/>
+								</div>
+								<span class="font-bold text-on-surface">Christopher Nolan</span>
+							</div>
+						</div>
+						<div>
+							<span class="font-label-caps text-label-caps text-tertiary block mb-3">TOP CAST</span>
+							<ul class="space-y-4">
+								<li class="flex items-center gap-3">
+									<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
+										<img alt="Actor" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc2FIR49_bueD4NjDhdvFVOuXf6IBaTzcd35KDmYdC6WcVlB_WXA-0dz9lGW9X0JGFa21JlwHi4aSjw4H-gDl46EOMyL91RuPVzcCDt5WaEjapC-XouHFTyyh609pcV6p8f4AV4W0slSmVdsyylW3wQ_kZOX1YUUhA_JLCmSKgbdbukVhD_E6VZmTGHDHJRH1Zw_IGmjR_PIPmMeoTjNMGPuuiWW5IRWvApL7Rwz5dMBRi4cRW9O4DvN4MjVn2vzQik1efl0EqUJo"/>
+									</div>
+									<div>
+										<div class="font-bold text-on-surface text-sm">Christian Bale</div>
+										<div class="text-xs text-tertiary">Bruce Wayne / Batman</div>
+									</div>
+								</li>
+								<li class="flex items-center gap-3">
+									<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
+										<img alt="Actor" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtxuXax0ZmDqS1zv51YDgtIrXDch8ib-1DV7IhnJ1-yeETBVeGsepxW8nrNmTVNGsVxsMbiniOV5iqePpDhzoBczzucpYGHjHScENZ_06nK9LOMt92GyC2e3vnvMtDlD8AFtvD5Qu_NvaviDpvcZDLlwaJvIAkCsO6iPNhpMDuWfxhvlOXDUTyMyNVmBKNTJk2jxVhT7ZRW0rkqoEHAuC0mtLgfwE66c45ev3_9TodPzjyPJaPDSTJjI3bnFyuoWHwyCLAW6w9rvE"/>
+									</div>
+									<div>
+										<div class="font-bold text-on-surface text-sm">Heath Ledger</div>
+										<div class="text-xs text-tertiary">Joker</div>
+									</div>
+								</li>
+								<li class="flex items-center gap-3">
+									<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden">
+										<img alt="Actor" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCgK_rnr-C4CLnWopPJJsULjusCigD3GQh-xxOZ2arDFKmrMWnUOiAToKJTMJWZRb_Rx0g8tPcbJuUIZvNGcVbWQZthYuqx5lcGtk8knclBO6gSvRiOWYDKV_MCJKHUZbJoi6lPI8wUbGHo4dgYa__QrM7Cm5ZT3XYLxyj9YPJo0rUrnP3WEAJaowgDhY-epbVlBQlSbMUKfg2zD33rP-H2rCA-zd_1g4h04wPFQnmB1-MmwAnsQwUKSK2RpgqhVu5Xw3WING8Iik"/>
+									</div>
+									<div>
+										<div class="font-bold text-on-surface text-sm">Aaron Eckhart</div>
+										<div class="text-xs text-tertiary">Harvey Dent</div>
+									</div>
+								</li>
+							</ul>
+							<button class="mt-4 text-sm text-primary-container hover:text-white transition-colors font-semibold">View Full Cast & Crew</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Community Ratings -->
+				<div class="glass-panel p-6 rounded-xl">
+					<h3 class="font-headline-md text-xl text-on-surface mb-6 border-b border-white/10 pb-4">Community Metrics</h3>
+					<div class="space-y-6">
+						<div>
+							<div class="flex justify-between text-sm mb-2">
+								<span class="text-tertiary">Cinematography</span>
+								<span class="text-on-surface font-bold">9.5/10</span>
+							</div>
+							<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+								<div class="h-full bg-primary-container w-[95%]"></div>
+							</div>
+						</div>
+						<div>
+							<div class="flex justify-between text-sm mb-2">
+								<span class="text-tertiary">Direction</span>
+								<span class="text-on-surface font-bold">9.8/10</span>
+							</div>
+							<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+								<div class="h-full bg-primary-container w-[98%]"></div>
+							</div>
+						</div>
+						<div>
+							<div class="flex justify-between text-sm mb-2">
+								<span class="text-tertiary">Score</span>
+								<span class="text-on-surface font-bold">9.7/10</span>
+							</div>
+							<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+								<div class="h-full bg-primary-container w-[97%]"></div>
+							</div>
+						</div>
+						<div>
+							<div class="flex justify-between text-sm mb-2">
+								<span class="text-tertiary">Pacing</span>
+								<span class="text-on-surface font-bold">8.9/10</span>
+							</div>
+							<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+								<div class="h-full bg-primary-container w-[89%]"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</aside>
+		</section>
+	</main>
+
+	<Footer />
+</Layout>
