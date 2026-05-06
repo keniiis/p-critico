@@ -81,14 +81,10 @@ const article = (newsJson as Record<string, NewsArticle>)[slug as string];
                 ))}
             </div>
 
-            <!-- Share / Footer -->
             <footer class="mt-20 pt-10 border-t border-white/10 flex items-center justify-between">
                 <div class="flex gap-4">
-                    <button class="glass-panel p-3 rounded-full text-tertiary hover:text-on-surface transition-colors">
+                    <button id="share-btn" class="glass-panel p-3 rounded-full text-tertiary hover:text-on-surface transition-colors">
                         <span class="material-symbols-outlined">share</span>
-                    </button>
-                    <button class="glass-panel p-3 rounded-full text-tertiary hover:text-on-surface transition-colors">
-                        <span class="material-symbols-outlined">bookmark</span>
                     </button>
                 </div>
                 <a href="/" class="font-label-caps text-label-caps text-tertiary hover:text-on-surface transition-colors uppercase tracking-widest flex items-center gap-2">
@@ -99,4 +95,30 @@ const article = (newsJson as Record<string, NewsArticle>)[slug as string];
     </main>
 
     <Footer />
+
+    <script>
+        const shareBtn = document.getElementById('share-btn');
+        
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: document.title,
+                    text: 'Mira esta noticia en Paralaje Crítico:',
+                    url: window.location.href
+                };
+
+                try {
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                    } else {
+                        // Fallback: Copiar al portapapeles
+                        await navigator.clipboard.writeText(window.location.href);
+                        alert('¡Enlace copiado al portapapeles!');
+                    }
+                } catch (err) {
+                    console.error('Error al compartir:', err);
+                }
+            });
+        }
+    </script>
 </Layout>

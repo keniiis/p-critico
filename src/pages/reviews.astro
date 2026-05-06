@@ -14,7 +14,7 @@ const reviews = Object.entries(rawReviewsData).map(([slug, data]) => ({
     image: (data as any).heroImage,
     excerpt: (data as any).fullReview[0] || (data as any).subtitle,
     author: data.author,
-    featured: slug === 'michael-2026' || slug === 'el-senor-de-las-moscas-2026'
+    featured: false
 }));
 ---
 

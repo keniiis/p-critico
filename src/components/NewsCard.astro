@@ -21,7 +21,7 @@ const isFeatured = variant === "featured";
 ---
 
 <div
-    class={`glass-panel rounded-xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10 flex flex-col ${isFeatured ? "md:flex-row md:h-96" : ""}`}
+    class={`glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col ${isFeatured ? "md:flex-row md:h-96" : ""}`}
 >
     <div
         class={`${isFeatured ? "md:w-1/2 h-64 md:h-full" : "h-64"} overflow-hidden relative`}
@@ -29,7 +29,7 @@ const isFeatured = variant === "featured";
         <img
             src={image}
             alt={title}
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            class="w-full h-full object-cover"
         />
         <div
             class="absolute inset-0 bg-gradient-to-t from-[#121414] to-transparent opacity-80"
@@ -44,7 +44,7 @@ const isFeatured = variant === "featured";
             >{category}</span
         >
         <h3
-            class={`font-headline-md text-on-surface mb-2 group-hover:text-primary transition-colors ${isFeatured ? "text-3xl" : "text-xl"}`}
+            class={`font-headline-md text-on-surface mb-2 transition-colors ${isFeatured ? "text-3xl" : "text-xl"}`}
         >
             {title}
         </h3>
@@ -55,7 +55,7 @@ const isFeatured = variant === "featured";
         </p>
         <a
             href={link}
-            class="font-label-caps text-label-caps text-on-surface uppercase tracking-widest border-b border-on-surface pb-1 self-start"
+            class="font-label-caps text-label-caps text-on-surface hover:text-primary hover:border-primary transition-colors uppercase tracking-widest border-b border-on-surface pb-1 self-start"
             >Leer noticia completa</a
         >
     </div>
