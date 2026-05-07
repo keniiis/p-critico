@@ -317,12 +317,116 @@ const isDev = import.meta.env.DEV;
                             <p id="status-msg" class="text-center mt-4 text-sm font-bold opacity-0 transition-opacity"></p>
                         </div>
                     </form>
+
+                    <!-- Sección: Gestionar -->
+                    <div id="manage-section" class="hidden space-y-12">
+                        <div class="flex flex-col items-center justify-center gap-6 mb-12">
+                            <h2 class="font-display-lg text-4xl text-on-surface">Contenido Publicado</h2>
+                            <div class="flex p-1 bg-white/5 rounded-2xl border border-white/10">
+                                <button id="view-reviews" class="px-8 py-3 rounded-xl bg-primary-container text-background font-bold text-sm transition-all shadow-lg">RESEÑAS</button>
+                                <button id="view-news" class="px-8 py-3 rounded-xl hover:bg-white/5 text-tertiary font-bold text-sm transition-all">NOTICIAS</button>
+                            </div>
+                        </div>
+
+                        <!-- Listas con Grid Dinámico -->
+                        <div id="manage-reviews-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                            <!-- Se llena vía JS -->
+                        </div>
+                        <div id="manage-news-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 hidden">
+                            <!-- Se llena vía JS -->
+                        </div>
+                    </div>
                 </>
             )}
         </div>
     </main>
+
     <Footer />
 </Layout>
+
+<style is:global>
+    /* Estilos para las tarjetas de gestión */
+    .manage-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .manage-card:hover {
+        transform: translateY(-8px);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.2);
+        shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .manage-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .manage-card-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .manage-card-tag {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+        color: #f43f5e;
+    }
+    .manage-card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: white;
+        line-height: 1.4;
+        margin-bottom: 0.75rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .manage-card-desc {
+        font-size: 0.875rem;
+        color: #a1a1aa;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .manage-card-btn {
+        margin-top: auto;
+        width: 100%;
+        padding: 0.875rem;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .manage-card-btn:hover {
+        background: #f43f5e;
+        border-color: #f43f5e;
+        color: white;
+    }
+</style>
 
 <script>
     const form = document.getElementById('review-form') as HTMLFormElement | null;
@@ -466,74 +570,103 @@ const isDev = import.meta.env.DEV;
         });
         // ── GESTIONAR TAB ──────────────────────────────────────────────
         const tabGestionar   = document.getElementById('tab-gestionar');
-        const gestionarPanel = document.getElementById('gestionar-panel');
+        const gestionarPanel = document.getElementById('manage-section');
         const reviewForm     = document.getElementById('review-form');
         const editSlugInput  = document.getElementById('edit-slug') as HTMLInputElement;
-        const reviewsList    = document.getElementById('reviews-list');
-        const newsListEl     = document.getElementById('news-list-gestionar');
-        const subTabReviews  = document.getElementById('sub-tab-reviews');
-        const subTabNews     = document.getElementById('sub-tab-news');
+        const reviewsList    = document.getElementById('manage-reviews-list');
+        const newsListEl     = document.getElementById('manage-news-list');
+        const subTabReviews  = document.getElementById('view-reviews');
+        const subTabNews     = document.getElementById('view-news');
+
+        // Renderizar Noticias
+        function renderNews(newsList: any[]) {
+            if (!newsListEl) return;
+            newsListEl.innerHTML = newsList.map(item => `
+                <div class="manage-card animate-fade-in">
+                    <img src="${item.image}" alt="${item.title}" />
+                    <div class="manage-card-content">
+                        <span class="manage-card-tag">${item.category || 'NOTICIA'}</span>
+                        <h3 class="manage-card-title">${item.title}</h3>
+                        <p class="manage-card-desc">${item.summary || item.excerpt || ''}</p>
+                        <button class="manage-card-btn edit-news-btn" data-slug="${item.slug}">
+                            <span class="material-symbols-outlined text-[18px]">edit</span>
+                            Editar Noticia
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-vincular eventos de edición
+            newsListEl.querySelectorAll('.edit-news-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const slug = (e.currentTarget as HTMLElement).dataset.slug;
+                    window.location.href = `/admin/news?edit=${slug}`;
+                });
+            });
+        }
+
+        // Renderizar Reseñas
+        function renderReviews(reviewsArray: any[]) {
+            if (!reviewsList) return;
+            reviewsList.innerHTML = reviewsArray.map(item => `
+                <div class="manage-card animate-fade-in">
+                    <img src="${item.heroImage || item.image}" alt="${item.title}" />
+                    <div class="manage-card-content">
+                        <span class="manage-card-tag" style="color: #a78bfa;">${item.genre || 'RESEÑA'} — ${item.finalScore}/10</span>
+                        <h3 class="manage-card-title">${item.title}</h3>
+                        <p class="manage-card-desc">${item.subtitle || item.synopsis || ''}</p>
+                        <button class="manage-card-btn edit-review-btn" data-slug="${item.slug}">
+                            <span class="material-symbols-outlined text-[18px]">edit_note</span>
+                            Editar Crítica
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-vincular eventos de edición
+            wireReviewEdits();
+        }
 
         // Helper: carga tarjetas de reseñas
         async function loadReviews() {
             if (!reviewsList) return;
-            reviewsList.innerHTML = '<div class="text-tertiary text-center py-10 col-span-3">Cargando...</div>';
-            const data = await (await fetch('/api/get-reviews')).json() as Record<string, any>;
-            reviewsList.innerHTML = '';
-            Object.entries(data).reverse().forEach(([slug, r]: [string, any]) => {
-                const card = document.createElement('div');
-                card.className = 'glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col';
-                card.innerHTML = `
-                    <img src="${r.heroImage}" alt="${r.title}" class="w-full h-40 object-cover object-top" />
-                    <div class="p-5 flex flex-col gap-3 flex-grow">
-                        <p class="text-tertiary text-[10px] font-label-caps tracking-widest uppercase">${r.genre || ''}</p>
-                        <h3 class="text-on-surface font-headline-md text-base leading-snug">${r.title}</h3>
-                        <p class="text-tertiary text-xs line-clamp-2">${r.subtitle || ''}</p>
-                        <button data-slug="${slug}" class="edit-review-btn mt-auto w-full py-2.5 rounded-lg bg-primary-container text-background text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">edit</span> Editar
-                        </button>
-                    </div>`;
-                reviewsList.appendChild(card);
-            });
-            wireReviewEdits();
+            reviewsList.innerHTML = '<div class="text-tertiary text-center py-10 col-span-full animate-pulse">Cargando reseñas...</div>';
+            try {
+                const data = await (await fetch('/api/get-reviews')).json() as Record<string, any>;
+                const reviewsArray = Object.entries(data).reverse().map(([slug, r]) => ({ ...r, slug }));
+                renderReviews(reviewsArray);
+            } catch (err) {
+                reviewsList.innerHTML = '<div class="text-red-400 text-center py-10 col-span-full">Error al cargar reseñas</div>';
+            }
         }
 
         // Helper: carga tarjetas de noticias
         async function loadNews() {
             if (!newsListEl) return;
-            newsListEl.innerHTML = '<div class="text-tertiary text-center py-10 col-span-3">Cargando...</div>';
-            const data = await (await fetch('/api/get-news')).json() as Record<string, any>;
-            newsListEl.innerHTML = '';
-            Object.entries(data).reverse().forEach(([slug, n]: [string, any]) => {
-                const card = document.createElement('div');
-                card.className = 'glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col';
-                card.innerHTML = `
-                    <img src="${n.image}" alt="${n.title}" class="w-full h-40 object-cover object-top" />
-                    <div class="p-5 flex flex-col gap-3 flex-grow">
-                        <p class="text-[#f43f5e] text-[10px] font-label-caps tracking-widest uppercase">${n.category || ''}</p>
-                        <h3 class="text-on-surface font-headline-md text-base leading-snug">${n.title}</h3>
-                        <p class="text-tertiary text-xs line-clamp-2">${n.summary || ''}</p>
-                        <a href="/admin/news" class="mt-auto w-full py-2.5 rounded-lg bg-[#f43f5e] text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-background transition-colors flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-[16px]">edit</span> Editar en panel noticias
-                        </a>
-                    </div>`;
-                newsListEl.appendChild(card);
-            });
+            newsListEl.innerHTML = '<div class="text-tertiary text-center py-10 col-span-full animate-pulse">Cargando noticias...</div>';
+            try {
+                const res = await fetch('/api/get-news');
+                const data = await res.json() as Record<string, any>;
+                const newsArray = Object.entries(data).reverse().map(([slug, n]) => ({ ...n, slug }));
+                renderNews(newsArray);
+            } catch (err) {
+                newsListEl.innerHTML = '<div class="text-red-400 text-center py-10 col-span-full">Error al cargar noticias</div>';
+            }
         }
 
         // Sub-pestañas
         subTabReviews?.addEventListener('click', () => {
             reviewsList?.classList.remove('hidden');
             newsListEl?.classList.add('hidden');
-            subTabReviews.className = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background';
-            subTabNews!.className   = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-white/10';
+            subTabReviews.className = 'px-8 py-3 rounded-xl bg-primary-container text-background font-bold text-sm transition-all shadow-lg';
+            subTabNews!.className   = 'px-8 py-3 rounded-xl hover:bg-white/5 text-tertiary font-bold text-sm transition-all';
         });
 
         subTabNews?.addEventListener('click', () => {
             reviewsList?.classList.add('hidden');
             newsListEl?.classList.remove('hidden');
-            subTabNews.className    = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-[#f43f5e] text-white';
-            subTabReviews!.className = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-white/10';
+            subTabNews.className    = 'px-8 py-3 rounded-xl bg-[#f43f5e] text-white font-bold text-sm transition-all shadow-lg';
+            subTabReviews!.className = 'px-8 py-3 rounded-xl hover:bg-white/5 text-tertiary font-bold text-sm transition-all';
             loadNews();
         });
 
