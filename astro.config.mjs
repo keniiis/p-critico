@@ -157,9 +157,17 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-        // Forzamos a que sea un solo archivo y no un índice si es posible
-        // Aunque Astro suele crear el index, esto asegura que el contenido sea procesable
-        filter: (page) => !page.includes('/admin')
+        filter: (page) => !page.includes('/admin'),
+        serialize(item) {
+            if (item.url.includes('/news/')) {
+                item.changefreq = 'daily';
+                item.priority = 0.9;
+            } else {
+                item.changefreq = 'weekly';
+                item.priority = 0.7;
+            }
+            return item;
+        }
     })
   ]
 });
