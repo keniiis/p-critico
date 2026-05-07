@@ -64,34 +64,17 @@ const isDev = import.meta.env.DEV;
                         <h1 class="font-display-lg text-5xl text-on-surface text-gradient mb-6 leading-tight">Gestor de Contenido</h1>
                         <p class="text-tertiary font-body-lg text-lg mb-8">Rellena el formulario para publicar una nueva película en el catálogo.</p>
                         
-                        <!-- Pestañas de Navegación -->
+                        <!-- Pestañas de Navegación Premium -->
                         <div class="flex items-center justify-center gap-4">
-                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Nueva Reseña</a>
-                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Nueva Noticia</a>
-                            <button type="button" id="tab-gestionar" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Gestionar</button>
+                            <div class="flex p-1 bg-white/5 rounded-2xl border border-white/10">
+                                <a href="/admin" id="tab-nueva-resena" class="px-8 py-3 rounded-xl bg-[#f43f5e] text-white font-bold text-sm transition-all shadow-lg shadow-red-500/20">NUEVA RESEÑA</a>
+                                <a href="/admin/news" class="px-8 py-3 rounded-xl hover:bg-white/5 text-tertiary font-bold text-sm transition-all">NUEVA NOTICIA</a>
+                                <button type="button" id="tab-gestionar" class="px-8 py-3 rounded-xl hover:bg-white/5 text-tertiary font-bold text-sm transition-all">GESTIONAR</button>
+                            </div>
                         </div>
                     </header>
 
-                    <!-- Panel Gestionar -->
-                    <div id="gestionar-panel" class="hidden space-y-6 mb-16">
-                        <h2 class="font-display-lg text-3xl text-on-surface text-center mb-4">Contenido Publicado</h2>
 
-                        <!-- Sub-pestañas -->
-                        <div class="flex items-center justify-center gap-4 mb-8">
-                            <button id="sub-tab-reviews" class="px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Reseñas</button>
-                            <button id="sub-tab-news" class="px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-white/10">Noticias</button>
-                        </div>
-
-                        <!-- Lista Reseñas -->
-                        <div id="reviews-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="text-tertiary text-center py-10 col-span-3">Cargando reseñas...</div>
-                        </div>
-
-                        <!-- Lista Noticias (oculta por defecto) -->
-                        <div id="news-list-gestionar" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <div class="text-tertiary text-center py-10 col-span-3">Cargando noticias...</div>
-                        </div>
-                    </div>
 
                     <!-- Campo oculto para modo edición -->
                     <input type="hidden" id="edit-slug" value="" />
@@ -670,11 +653,29 @@ const isDev = import.meta.env.DEV;
             loadNews();
         });
 
+        const tabNuevaResena = document.getElementById('tab-nueva-resena');
+        
         tabGestionar?.addEventListener('click', async () => {
             gestionarPanel?.classList.remove('hidden');
             reviewForm?.classList.add('hidden');
+            
+            // Cambiar estilos de pestañas para indicar pestaña activa
+            tabNuevaResena?.classList.replace('bg-[#f43f5e]', 'hover:bg-white/5');
+            tabNuevaResena?.classList.replace('text-white', 'text-tertiary');
+            tabNuevaResena?.classList.remove('shadow-lg', 'shadow-red-500/20');
+            
+            tabGestionar?.classList.replace('hover:bg-white/5', 'bg-[#f43f5e]');
+            tabGestionar?.classList.replace('text-tertiary', 'text-white');
+            tabGestionar?.classList.add('shadow-lg', 'shadow-red-500/20');
+
             await loadReviews();
         });
+
+        // Auto-abrir pestaña gestionar si viene por URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('tab') === 'gestionar') {
+            tabGestionar?.click();
+        }
 
         function wireReviewEdits() {
             reviewsList?.querySelectorAll('.edit-review-btn').forEach(btn => {
