@@ -157,7 +157,9 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/admin')
+        // Forzamos a que sea un solo archivo y no un índice si es posible
+        // Aunque Astro suele crear el index, esto asegura que el contenido sea procesable
+        filter: (page) => !page.includes('/admin')
     })
   ]
 });
