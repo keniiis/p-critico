@@ -8,21 +8,129 @@
         "summary": "La icónica estrella del country confirma que necesita más tiempo para recuperarse, asegurando a sus fans que, aunque está 'mareada', sigue siendo optimista sobre su futuro.",
         "variant": "featured",
         "content": [
-            { "type": "paragraph", "text": "La icónica estrella del country, Dolly Parton, ha anunciado la cancelación definitiva de su esperada residencia en Las Vegas, titulada “Dolly: Live in Las Vegas”. A pesar de que los seis conciertos programados en el Colosseum del Caesars Palace para septiembre de 2026 ya estaban agotados, la cantante de 80 años confirmó que necesita más tiempo para recuperarse plenamente." },
-            { "type": "heading", "text": "“Mareada pero optimista”: El estado de salud de Dolly" },
-            { "type": "paragraph", "text": "A través de un video en sus redes sociales, Parton explicó que, aunque está respondiendo positivamente a sus tratamientos y mejora cada día, todavía no se siente físicamente lista para las exigencias de un espectáculo en vivo. La artista mencionó que algunos de sus medicamentos le provocan una sensación de mareo (lo que ella llama sentirse 'swimmy-headed'), algo que complica su desempeño habitual en el escenario." },
-            { "type": "quote", "text": "No puedo estar mareada cargando banjos, guitarras y demás sobre tacones de 12 centímetros... y ya saben que los voy a usar" },
-            { "type": "paragraph", "text": "Además, señaló que sus pesados atuendos con pedrería y sus icónicas pelucas harían que cualquiera se sintiera aturdido en esas condiciones. Aunque no reveló un diagnóstico específico, Parton ha enfrentado desafíos con cálculos renales y desajustes en sus sistemas inmunológico y digestivo en los últimos años." },
-            { "type": "heading", "text": "Información para los fans y reembolsos" },
-            { "type": "paragraph", "text": "La residencia ya había sufrido un aplazamiento previo desde diciembre de 2025, pero esta vez no se han anunciado nuevas fechas. Ticketmaster emitirá reembolsos automáticos a los poseedores de entradas en un plazo de dos a tres semanas." },
-            { "type": "heading", "text": "Nuevos proyectos en el horizonte" },
-            { "type": "paragraph", "text": "A pesar de este retiro de los escenarios de Las Vegas, la agenda de Dolly Parton para 2026 sigue activa en otros formatos:" },
-            { "type": "list", "items": [
-                "Tour Multimedia 'Threads: My Songs in Symphony': Experiencia inmersiva con orquestas en vivo.",
-                "Broadway: Trabajo continuo en su musical 'Dolly: A True Original Musical'.",
-                "Dollywood y Nashville: Nuevas atracciones y apertura de su hotel y museo."
-            ]},
-            { "type": "paragraph", "text": "Dolly cerró su mensaje con una nota de esperanza, asegurando a sus seguidores que no planea retirarse del negocio: “¡Aún me queda algo de curación por hacer, pero estoy en camino! Nos vemos pronto”." }
+            {
+                "type": "paragraph",
+                "text": "La icónica estrella del country, Dolly Parton, ha anunciado la cancelación definitiva de su esperada residencia en Las Vegas, titulada “Dolly: Live in Las Vegas”. A pesar de que los seis conciertos programados en el Colosseum del Caesars Palace para septiembre de 2026 ya estaban agotados, la cantante de 80 años confirmó que necesita más tiempo para recuperarse plenamente."
+            },
+            {
+                "type": "heading",
+                "text": "“Mareada pero optimista”: El estado de salud de Dolly"
+            },
+            {
+                "type": "paragraph",
+                "text": "A través de un video en sus redes sociales, Parton explicó que, aunque está respondiendo positivamente a sus tratamientos y mejora cada día, todavía no se siente físicamente lista para las exigencias de un espectáculo en vivo. La artista mencionó que algunos de sus medicamentos le provocan una sensación de mareo (lo que ella llama sentirse 'swimmy-headed'), algo que complica su desempeño habitual en el escenario."
+            },
+            {
+                "type": "quote",
+                "text": "No puedo estar mareada cargando banjos, guitarras y demás sobre tacones de 12 centímetros... y ya saben que los voy a usar"
+            },
+            {
+                "type": "paragraph",
+                "text": "Además, señaló que sus pesados atuendos con pedrería y sus icónicas pelucas harían que cualquiera se sintiera aturdido en esas condiciones. Aunque no reveló un diagnóstico específico, Parton ha enfrentado desafíos con cálculos renales y desajustes en sus sistemas inmunológico y digestivo en los últimos años."
+            },
+            {
+                "type": "heading",
+                "text": "Información para los fans y reembolsos"
+            },
+            {
+                "type": "paragraph",
+                "text": "La residencia ya había sufrido un aplazamiento previo desde diciembre de 2025, pero esta vez no se han anunciado nuevas fechas. Ticketmaster emitirá reembolsos automáticos a los poseedores de entradas en un plazo de dos a tres semanas."
+            },
+            {
+                "type": "heading",
+                "text": "Nuevos proyectos en el horizonte"
+            },
+            {
+                "type": "paragraph",
+                "text": "A pesar de este retiro de los escenarios de Las Vegas, la agenda de Dolly Parton para 2026 sigue activa en otros formatos:"
+            },
+            {
+                "type": "list",
+                "items": [
+                    "Tour Multimedia 'Threads: My Songs in Symphony': Experiencia inmersiva con orquestas en vivo.",
+                    "Broadway: Trabajo continuo en su musical 'Dolly: A True Original Musical'.",
+                    "Dollywood y Nashville: Nuevas atracciones y apertura de su hotel y museo."
+                ]
+            },
+            {
+                "type": "paragraph",
+                "text": "Dolly cerró su mensaje con una nota de esperanza, asegurando a sus seguidores que no planea retirarse del negocio: “¡Aún me queda algo de curación por hacer, pero estoy en camino! Nos vemos pronto”."
+            }
+        ]
+    },
+    "hogwarts-reabre-sus-puertas-hbo-confirma-la-segunda-temporada-de-la-serie-de-harry-potter-antes-del-estreno-de-la-primera": {
+        "title": "Hogwarts reabre sus puertas: HBO confirma la segunda temporada de la serie de Harry Potter antes del estreno de la primera",
+        "summary": "La magia está más viva que nunca. HBO ha dado oficialmente luz verde a la segunda temporada de su esperada serie sobre Harry Potter",
+        "category": "Industria",
+        "date": "Mayo 06, 2026",
+        "author": "Paralaje Crítico",
+        "image": "/images/news/harry-potter-serie-hbo.webp",
+        "variant": "regular",
+        "content": [
+            {
+                "type": "paragraph",
+                "text": "La magia está más viva que nunca. HBO ha dado oficialmente luz verde a la segunda temporada de su esperada serie sobre Harry Potter, una noticia que llega siete meses antes de que el primer ciclo debute en la plataforma. Esta renovación anticipada confirma la confianza total de la cadena en el proyecto, que pretende ser una adaptación fiel y extensa de la obra de J.K. Rowling."
+            },
+            {
+                "type": "paragraph",
+                "text": "Temporada 1: Estreno en Navidad de 2026"
+            },
+            {
+                "type": "paragraph",
+                "text": "La primera temporada, que adaptará íntegramente \"Harry Potter y la Piedra Filosofal\", ya tiene fijada su ventana de lanzamiento para la Navidad de 2026. Esta entrega constará de ocho episodios y ha sido descrita por su equipo técnico como una producción \"monumental\" que ha requerido meses de preproducción para recrear escenarios icónicos como Hogwarts y Privet Drive."
+            },
+            {
+                "type": "paragraph",
+                "text": "Sin esperas: El plan para la segunda temporada"
+            },
+            {
+                "type": "paragraph",
+                "text": "Para evitar que los jóvenes protagonistas crezcan demasiado rápido entre temporadas —un problema común en producciones con niños—, HBO ya ha iniciado la escritura de los guiones de la segunda tanda de episodios."
+            },
+            {
+                "type": "paragraph",
+                "text": "Contenido: Se centrará en el segundo libro, \"Harry Potter y la Cámara Secreta\"."
+            },
+            {
+                "type": "paragraph",
+                "text": "Rodaje: Está previsto que las grabaciones comiencen en el último trimestre de 2026, casi en paralelo al estreno de la primera temporada."
+            },
+            {
+                "type": "paragraph",
+                "text": "Liderazgo: Jon Brown, guionista de Succession, se unirá a Francesca Gardiner como co-showrunner para esta segunda etapa."
+            },
+            {
+                "type": "paragraph",
+                "text": "Un reparto de estrellas para una nueva generación"
+            },
+            {
+                "type": "paragraph",
+                "text": "El elenco principal ya ha sido confirmado, destacando un equilibrio entre nuevos talentos y veteranos de la industria:"
+            },
+            {
+                "type": "paragraph",
+                "text": "El Trío Protagonista: Dominic McLaughlin (Harry Potter), Arabella Stanton (Hermione Granger) y Alastair Stout (Ron Weasley)."
+            },
+            {
+                "type": "paragraph",
+                "text": "El Cuerpo Docente: John Lithgow interpretará a Albus Dumbledore, mientras que Janet McTeer será la Profesora McGonagall y Paapa Essiedu asumirá el papel de Severus Snape."
+            },
+            {
+                "type": "paragraph",
+                "text": "Otros fichajes clave: Nick Frost como Rubeus Hagrid, Johnny Flynn como Lucius Malfoy y Katherine Parkinson como Molly Weasley."
+            },
+            {
+                "type": "paragraph",
+                "text": "Un compromiso de 10 años"
+            },
+            {
+                "type": "paragraph",
+                "text": "Warner Bros. Discovery ha reafirmado que esta serie es un proyecto a largo plazo, con un plan de 10 años de duración en HBO Max. Con un presupuesto que se estima similar al de grandes producciones como House of the Dragon (alrededor de 20 millones de dólares por episodio), la serie busca profundizar en detalles de los libros que las películas originales no pudieron explorar."
+            },
+            {
+                "type": "paragraph",
+                "text": "La expectación es máxima: el primer adelanto oficial de la serie ya ha roto récords de audiencia, acumulando millones de reproducciones en sus primeras horas. Sin duda, el viaje de regreso a Hogwarts apenas está comenzando."
+            }
         ]
     }
 }

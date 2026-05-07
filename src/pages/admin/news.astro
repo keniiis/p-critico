@@ -11,7 +11,7 @@ const isDev = import.meta.env.DEV;
     <Navbar />
 
     <main class="grow pt-32 pb-20">
-        <div class="max-w-7xl mx-auto px-margin">
+        <div class="max-w-[1600px] mx-auto px-margin">
             
             {!isDev ? (
                 <div class="glass-panel p-12 text-center rounded-3xl border border-red-500/20 max-w-3xl mx-auto">
@@ -21,7 +21,7 @@ const isDev = import.meta.env.DEV;
                 </div>
             ) : (
                 <>
-                    <header class="mb-16 text-center max-w-3xl mx-auto">
+                    <header class="mb-16 text-center max-w-5xl mx-auto">
                         <div class="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-primary-container font-label-caps text-[11px] tracking-widest uppercase mb-6">
                             <span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
                             Paralaje Crítico CMS
@@ -31,12 +31,23 @@ const isDev = import.meta.env.DEV;
                         
                         <!-- Pestañas de Navegación -->
                         <div class="flex items-center justify-center gap-4">
-                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Reseñas</a>
-                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Noticias</a>
+                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Nueva Reseña</a>
+                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-[#f43f5e] text-white">Nueva Noticia</a>
+                            <button type="button" id="tab-gestionar" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Gestionar</button>
                         </div>
                     </header>
 
-                    <form id="news-form" class="space-y-12 max-w-5xl mx-auto">
+                    <!-- Panel Gestionar -->
+                    <div id="gestionar-panel" class="hidden space-y-6 mb-16">
+                        <h2 class="font-display-lg text-3xl text-on-surface text-center mb-8">Noticias Publicadas</h2>
+                        <div id="news-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="text-tertiary text-center py-10 col-span-3">Cargando noticias...</div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="edit-slug" value="" />
+
+                    <form id="news-form" class="space-y-12 max-w-none">
                         <!-- Sección: Info Básica -->
                         <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
                             <div class="absolute top-0 left-0 w-1.5 h-full bg-[#f43f5e]"></div>
@@ -87,22 +98,53 @@ const isDev = import.meta.env.DEV;
                             </div>
                         </section>
 
-                        <!-- Sección: Contenido -->
-                        <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
-                            <div class="absolute top-0 left-0 w-1.5 h-full bg-tertiary"></div>
-                            <h2 class="font-headline-md text-2xl text-on-surface mb-4">Cuerpo de la Noticia</h2>
-                            
-                            <div class="mb-6 p-4 rounded-xl bg-surface-container border border-white/5">
-                                <p class="text-xs text-tertiary mb-2"><span class="font-bold text-on-surface">Trucos de redacción rápida:</span> (Separa siempre con un ENTER vacío)</p>
-                                <ul class="text-xs text-tertiary space-y-1 font-mono">
-                                    <li>Empieza por <span class="text-primary-container">## </span> para hacer un <strong>Subtítulo</strong></li>
-                                    <li>Empieza por <span class="text-primary-container">> </span> para hacer una <strong>Cita destacada</strong></li>
-                                    <li>Empieza por <span class="text-primary-container">- </span> para hacer un ítem de <strong>Lista</strong></li>
-                                </ul>
+                        <!-- Sección: Contenido Mejorada (Ancho total y altura fija) -->
+                        <section class="glass-panel rounded-3xl border border-white/10 relative overflow-hidden shadow-2xl">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-[#f43f5e]"></div>
+
+                            <!-- Barra de herramientas optimizada -->
+                            <div class="flex items-center justify-between px-8 py-6 border-b border-white/10 bg-white/5">
+                                <div class="flex items-center gap-6">
+                                    <h2 class="font-headline-md text-xl text-on-surface">Cuerpo de la Noticia</h2>
+                                    <div class="flex items-center gap-1.5 bg-black/20 p-1 rounded-xl border border-white/5">
+                                        <button type="button" data-action="heading" title="Título" class="fmt-btn w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 text-xs font-bold text-tertiary">H2</button>
+                                        <button type="button" data-action="bold" title="Negrita" class="fmt-btn w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 text-xs font-bold text-tertiary">B</button>
+                                        <button type="button" data-action="quote" title="Cita" class="fmt-btn w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 text-xs text-tertiary">"</button>
+                                        <button type="button" data-action="list" title="Lista" class="fmt-btn w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/10 text-xs text-tertiary">—</button>
+                                    </div>
+                                </div>
+                                <button type="button" id="toggle-preview" class="px-5 py-2 rounded-xl bg-[#f43f5e] text-white text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-background transition-all flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-[16px]">visibility</span> VISTA PREVIA
+                                </button>
                             </div>
-                            
-                            <div>
-                                <textarea required name="fullContent" rows="18" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-6 py-5 text-on-surface focus:outline-none focus:border-[#f43f5e] transition-colors leading-relaxed text-base" placeholder="Empieza a escribir la noticia aquí..."></textarea>
+
+                            <!-- Editor Split Pane con bloqueo total de altura -->
+                            <div id="editor-container" class="grid grid-cols-2 divide-x divide-white/10" style="height: 700px; max-height: 700px; overflow: hidden;">
+                                <!-- Panel Izquierdo: Editor -->
+                                <div class="flex flex-col h-full bg-black/10" style="height: 700px;">
+                                    <div class="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center gap-2 flex-none">
+                                        <span class="w-2 h-2 rounded-full bg-[#f43f5e] animate-pulse"></span>
+                                        <span class="text-tertiary text-[10px] font-label-caps tracking-widest uppercase">Escritura</span>
+                                    </div>
+                                    <textarea
+                                        required
+                                        name="fullContent"
+                                        id="md-editor"
+                                        class="w-full h-full bg-transparent px-10 py-8 text-on-surface focus:outline-none font-mono text-sm leading-relaxed resize-none"
+                                        style="overflow-y: scroll !important; height: calc(700px - 40px); display: block;"
+                                        placeholder="Empieza a escribir tu historia..."></textarea>
+                                </div>
+
+                                <!-- Panel Derecho: Preview -->
+                                <div class="flex flex-col h-full bg-surface-container/30" style="height: 700px;">
+                                    <div class="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center gap-2 flex-none">
+                                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                        <span class="text-tertiary text-[10px] font-label-caps tracking-widest uppercase">Vista Previa</span>
+                                    </div>
+                                    <div id="md-preview" class="px-12 py-10 prose-preview" style="height: calc(700px - 40px); overflow-y: scroll !important; background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0); background-size: 32px 32px; display: block;">
+                                        <p class="text-tertiary text-sm italic">Tu contenido aparecerá aquí con formato real...</p>
+                                    </div>
+                                </div>
                             </div>
                         </section>
 
@@ -122,83 +164,380 @@ const isDev = import.meta.env.DEV;
     <Footer />
 </Layout>
 
+<style is:global>
+    /* Estilos globales para la previsualización de noticias */
+    #md-preview h1, #md-preview h2, #md-preview h3 {
+        font-size: 1.5rem !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.75rem !important;
+        display: block !important;
+        line-height: 1.2 !important;
+        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+        padding-bottom: 0.5rem !important;
+    }
+    #md-preview p {
+        color: #d1d1d1 !important;
+        line-height: 1.7 !important;
+        margin-bottom: 1.25rem !important;
+        font-size: 1rem !important;
+        display: block !important;
+    }
+    #md-preview blockquote {
+        border-left: 4px solid #f43f5e !important;
+        padding: 0.75rem 1.25rem !important;
+        background: rgba(244, 63, 94, 0.1) !important;
+        border-radius: 0 0.75rem 0.75rem 0 !important;
+        color: #fda4af !important;
+        font-style: italic !important;
+        margin: 1.5rem 0 !important;
+    }
+    #md-preview ul {
+        list-style: none !important;
+        padding-left: 0.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    #md-preview ul li {
+        color: #d1d1d1 !important;
+        margin-bottom: 0.5rem !important;
+        display: flex !important;
+        gap: 0.75rem !important;
+    }
+    #md-preview ul li::before {
+        content: "—" !important;
+        color: #f43f5e !important;
+        font-weight: bold !important;
+    }
+    #md-preview strong {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+    }
+
+    /* --- ESTILO DE SCROLLBARS PREMIUM --- */
+    #md-editor::-webkit-scrollbar, 
+    #md-preview::-webkit-scrollbar {
+        width: 8px;
+    }
+    #md-editor::-webkit-scrollbar-track, 
+    #md-preview::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    #md-editor::-webkit-scrollbar-thumb, 
+    #md-preview::-webkit-scrollbar-thumb {
+        background: rgba(244, 63, 94, 0.3);
+        border-radius: 10px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+    #md-editor::-webkit-scrollbar-thumb:hover, 
+    #md-preview::-webkit-scrollbar-thumb:hover {
+        background: rgba(244, 63, 94, 0.6);
+    }
+</style>
+
 <script>
-    const form = document.getElementById('news-form') as HTMLFormElement | null;
-    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
-    const statusMsg = document.getElementById('status-msg') as HTMLParagraphElement | null;
+    // ── MARKDOWN LIVE EDITOR ─────────────────────────────────────────
+    const mdEditor      = document.getElementById('md-editor') as HTMLTextAreaElement | null;
+    const mdPreview     = document.getElementById('md-preview') as HTMLElement | null;
+    const toggleBtn     = document.getElementById('toggle-preview') as HTMLButtonElement | null;
+    const editorContainer = document.getElementById('editor-container') as HTMLElement | null;
 
-    if(form && submitBtn && statusMsg) {
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
-            submitBtn.style.opacity = '0.7';
-            submitBtn.style.pointerEvents = 'none';
+    function renderMarkdown(text: string): string {
+        if (!text.trim()) return '<p class="text-tertiary text-sm italic">El contenido aparecerá aquí mientras escribes...</p>';
+        
+        const lines = text.split('\n');
+        let html = '';
+        let inList = false;
 
-            const formData = new FormData(e.target as HTMLFormElement);
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i].trim();
             
-            const getString = (name: string) => (formData.get(name) as string) || '';
-            
-            // Parsear contenido
-            const rawContent = getString('fullContent');
-            // Separar bloques por saltos de línea dobles
-            const blocks = rawContent.split(/\n\s*\n/).map(b => b.trim()).filter(b => b);
-            
-            const content = [];
-            
-            for (const block of blocks) {
-                if (block.startsWith('## ')) {
-                    content.push({ type: 'heading', text: block.substring(3).trim() });
-                } else if (block.startsWith('> ')) {
-                    content.push({ type: 'quote', text: block.substring(2).trim() });
-                } else if (block.startsWith('- ')) {
-                    // Si es una lista, separamos sus líneas individuales
-                    const items = block.split('\n').filter(l => l.trim().startsWith('- ')).map(l => l.trim().substring(2).trim());
-                    content.push({ type: 'list', items: items });
-                } else {
-                    content.push({ type: 'paragraph', text: block });
-                }
+            if (!line) {
+                if (inList) { html += '</ul>'; inList = false; }
+                continue;
             }
 
+            // Regex flexible: Busca de 1 a 6 '#' al inicio, opcionalmente seguidos de espacios
+            const titleMatch = line.match(/^(#{1,6})\s*(.*)/);
+
+            if (titleMatch) {
+                if (inList) { html += '</ul>'; inList = false; }
+                const level = titleMatch[1].length;
+                const content = titleMatch[2].trim();
+                html += `<h${level}>${content}</h${level}>`;
+            } else if (line.startsWith('> ')) {
+                if (inList) { html += '</ul>'; inList = false; }
+                html += `<blockquote>${line.substring(2).trim()}</blockquote>`;
+            } else if (line.startsWith('- ')) {
+                if (!inList) { html += '<ul>'; inList = true; }
+                html += `<li>${line.substring(2).trim()}</li>`;
+            } else {
+                if (inList) { html += '</ul>'; inList = false; }
+                const parsed = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                html += `<p>${parsed}</p>`;
+            }
+        }
+        
+        if (inList) html += '</ul>';
+        return html;
+    }
+
+    const updatePreview = () => {
+        if (mdEditor && mdPreview) {
+            const newHTML = renderMarkdown(mdEditor.value);
+            if (mdPreview.innerHTML !== newHTML) {
+                mdPreview.innerHTML = newHTML;
+            }
+        }
+    };
+
+    // Múltiples disparadores para asegurar que siempre esté al día
+    mdEditor?.addEventListener('input', updatePreview);
+    mdEditor?.addEventListener('keyup', updatePreview);
+    mdEditor?.addEventListener('change', updatePreview);
+    mdEditor?.addEventListener('click', updatePreview);
+    
+    // Intervalo de seguridad para cuando pegas texto o editas
+    setInterval(updatePreview, 300);
+    updatePreview();
+
+    // Botones de formato rápido
+    document.querySelectorAll('.fmt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (!mdEditor) return;
+            const action = (btn as HTMLElement).dataset.action;
+            const start  = mdEditor.selectionStart;
+            const end    = mdEditor.selectionEnd;
+            const sel    = mdEditor.value.substring(start, end);
+            let insert   = '';
+            let offset   = 0;
+
+            if (action === 'heading') { insert = `\n\n## ${sel || 'Subtítulo'}\n\n`; offset = 4; }
+            if (action === 'bold')    { insert = `**${sel || 'texto'}**`; offset = 2; }
+            if (action === 'quote')   { insert = `\n\n> ${sel || 'Cita destacada'}\n\n`; offset = 4; }
+            if (action === 'list')    { insert = `\n\n- ${sel || 'Elemento'}\n- \n\n`; offset = 4; }
+
+            mdEditor.value = mdEditor.value.substring(0, start) + insert + mdEditor.value.substring(end);
+            mdEditor.focus();
+            mdEditor.selectionStart = mdEditor.selectionEnd = start + insert.length - (action === 'bold' ? 2 : offset);
+            if (mdPreview) mdPreview.innerHTML = renderMarkdown(mdEditor.value);
+        });
+    });
+
+    // Toggle solo editor / split pane
+    let splitMode = true;
+    toggleBtn?.addEventListener('click', () => {
+        splitMode = !splitMode;
+        if (editorContainer) {
+            editorContainer.className = splitMode
+                ? 'grid grid-cols-2 divide-x divide-white/10'
+                : 'grid grid-cols-1';
+        }
+        const previewPanel = mdPreview?.parentElement?.parentElement as HTMLElement | null;
+        if (previewPanel) previewPanel.style.display = splitMode ? '' : 'none';
+        if (toggleBtn) {
+            toggleBtn.innerHTML = splitMode
+                ? '<span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa'
+                : '<span class="material-symbols-outlined text-[14px]">edit</span> Split Editor';
+        }
+    });
+</script>
+
+<script>
+    // ── GESTIÓN INTEGRAL DEL EDITOR Y FORMULARIO ─────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        const form      = document.getElementById('news-form') as HTMLFormElement | null;
+        const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+        const statusMsg = document.getElementById('status-msg') as HTMLParagraphElement | null;
+        
+        const mdEditor        = document.getElementById('md-editor') as HTMLTextAreaElement | null;
+        const mdPreview       = document.getElementById('md-preview') as HTMLElement | null;
+        const toggleBtn       = document.getElementById('toggle-preview') as HTMLButtonElement | null;
+        const editorContainer = document.getElementById('editor-container') as HTMLElement | null;
+
+        // --- MOTOR DE RENDERIZADO AVANZADO ---
+        function renderMarkdown(text: string): string {
+            if (!text || !text.trim()) return '<p class="text-tertiary text-sm italic">El contenido aparecerá aquí mientras escribes...</p>';
+            
+            // Reemplazos de elementos de bloque
+            let html = text
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+                .replace(/^\s*-\s(.*$)/gim, '<ul><li>$1</li></ul>')
+                .replace(/^\s*\d\.\s(.*$)/gim, '<ol><li>$1</li></ol>')
+                .replace(/---/g, '<hr class="border-white/10 my-8" />')
+                .replace(/```([\s\S]*?)```/g, '<pre class="bg-black/30 p-4 rounded-lg my-4 font-mono text-xs overflow-x-auto text-primary-container">$1</pre>');
+
+            // Reemplazos de elementos inline
+            html = html
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-xl my-6 border border-white/10 shadow-2xl" />')
+                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-primary-container underline" target="_blank">$1</a>')
+                .replace(/`(.*?)`/g, '<code class="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono text-pink-300">$1</code>');
+
+            // Limpieza de párrafos y listas
+            const paragraphs = html.split(/\n\s*\n/);
+            return paragraphs.map(p => {
+                if (p.startsWith('<')) return p; // Ya es un bloque HTML
+                return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+            }).join('').replace(/<\/ul><ul>/g, '').replace(/<\/ol><ol>/g, '');
+        }
+
+        let lastContent = '';
+        const updatePreview = () => {
+            if (mdEditor && mdPreview) {
+                const currentContent = mdEditor.value;
+                if (currentContent !== lastContent) {
+                    lastContent = currentContent;
+                    mdPreview.innerHTML = renderMarkdown(currentContent);
+                }
+            }
+        };
+
+        // --- EVENTOS DEL EDITOR ---
+        if (mdEditor) {
+            mdEditor.addEventListener('input', updatePreview);
+            mdEditor.addEventListener('keyup', updatePreview);
+            setInterval(updatePreview, 500);
+        }
+
+        // --- BOTONES DE FORMATO ---
+        document.querySelectorAll('.fmt-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!mdEditor) return;
+                const action = (btn as HTMLElement).dataset.action;
+                const start  = mdEditor.selectionStart;
+                const end    = mdEditor.selectionEnd;
+                const sel    = mdEditor.value.substring(start, end);
+                let insert = '';
+                if (action === 'heading') insert = `\n## ${sel || 'Subtítulo'}\n`;
+                if (action === 'bold')    insert = `**${sel || 'texto'}**`;
+                if (action === 'quote')   insert = `\n> ${sel || 'Cita destacada'}\n`;
+                if (action === 'list')    insert = `\n- ${sel || 'Elemento'}\n`;
+
+                mdEditor.value = mdEditor.value.substring(0, start) + insert + mdEditor.value.substring(end);
+                mdEditor.focus();
+                updatePreview();
+            });
+        });
+
+        // --- TOGGLE VISTA ---
+        let splitMode = true;
+        toggleBtn?.addEventListener('click', () => {
+            splitMode = !splitMode;
+            if (editorContainer) editorContainer.className = splitMode ? 'grid grid-cols-2 divide-x divide-white/10' : 'grid grid-cols-1';
+            const previewPane = mdPreview?.parentElement;
+            if (previewPane) previewPane.style.display = splitMode ? '' : 'none';
+            if (toggleBtn) toggleBtn.innerHTML = splitMode ? '<span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa' : '<span class="material-symbols-outlined text-[14px]">edit</span> Editar';
+        });
+
+        // --- GESTIÓN DE EDICIÓN (LISTA) ---
+        const tabGestionar   = document.getElementById('tab-gestionar');
+        const gestionarPanel = document.getElementById('gestionar-panel');
+        const newsList       = document.getElementById('news-list');
+        const editSlugInput  = document.getElementById('edit-slug') as HTMLInputElement | null;
+
+        tabGestionar?.addEventListener('click', async () => {
+            gestionarPanel?.classList.remove('hidden');
+            if (form) form.classList.add('hidden');
+
+            const res = await fetch('/api/get-news');
+            const data = await res.json();
+            if (newsList) {
+                newsList.innerHTML = '';
+                Object.entries(data).reverse().forEach(([slug, n]: [string, any]) => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col';
+                    card.innerHTML = `<img src="${n.image}" class="w-full h-40 object-cover" /><div class="p-5"><h3 class="text-on-surface font-bold mb-3">${n.title}</h3><button data-slug="${slug}" class="edit-btn w-full py-2 bg-[#f43f5e] text-white rounded-lg text-xs font-bold uppercase">Editar</button></div>`;
+                    newsList.appendChild(card);
+                });
+
+                newsList.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const slug = (btn as HTMLElement).dataset.slug!;
+                        const n = data[slug];
+                        if (gestionarPanel) gestionarPanel.classList.add('hidden');
+                        if (form) form.classList.remove('hidden');
+                        if (editSlugInput) editSlugInput.value = slug;
+                        if (submitBtn) submitBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Actualizar Noticia';
+
+                        // Rellenar campos
+                        const fields = ['title', 'summary', 'category', 'date', 'author', 'image', 'variant'];
+                        fields.forEach(f => {
+                            const el = form?.elements.namedItem(f) as HTMLInputElement;
+                            if (el) el.value = n[f] || '';
+                        });
+
+                        const mdText = (n.content || []).map((b: any) => {
+                            if (b.type === 'heading') return `## ${b.text}`;
+                            if (b.type === 'quote') return `> ${b.text}`;
+                            if (b.type === 'list') return b.items.map((i: string) => `- ${i}`).join('\n');
+                            return b.text;
+                        }).join('\n\n');
+                        if (mdEditor) mdEditor.value = mdText;
+                        updatePreview();
+                    });
+                });
+            }
+        });
+
+        // --- ENVÍO DEL FORMULARIO ---
+        form?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const editSlug = editSlugInput?.value;
+            
+            if (submitBtn) {
+                submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
+                submitBtn.style.opacity = '0.7';
+                submitBtn.style.pointerEvents = 'none';
+            }
+
+            const formData = new FormData(form);
+            const getString = (n: string) => (formData.get(n) as string) || '';
+            
+            const rawContent = getString('fullContent');
+            const blocks = rawContent.split(/\n\s*\n/).map(b => b.trim()).filter(b => b);
+            const content = blocks.map(b => {
+                if (b.startsWith('## ')) return { type: 'heading', text: b.substring(3).trim() };
+                if (b.startsWith('> ')) return { type: 'quote', text: b.substring(2).trim() };
+                if (b.startsWith('- ')) return { type: 'list', items: b.split('\n').map(l => l.substring(2).trim()) };
+                return { type: 'paragraph', text: b };
+            });
+
             const newsData = {
-                title: getString('title'),
-                summary: getString('summary'),
-                category: getString('category'),
-                date: getString('date'),
-                author: getString('author'),
-                image: getString('image'),
-                variant: getString('variant'),
-                content: content
+                title: getString('title'), summary: getString('summary'),
+                category: getString('category'), date: getString('date'),
+                author: getString('author'), image: getString('image'),
+                variant: getString('variant'), content
             };
 
             try {
-                const res = await fetch('/api/save-news', {
+                const endpoint = editSlug ? '/api/update-news' : '/api/save-news';
+                const body = editSlug ? { slug: editSlug, data: newsData } : newsData;
+                
+                const res = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newsData)
+                    body: JSON.stringify(body)
                 });
-
-                const data = await res.json();
-
-                if(data.success) {
-                    statusMsg.textContent = "¡Noticia publicada con éxito!";
-                    statusMsg.className = "text-center mt-4 text-sm font-bold text-green-400 transition-opacity opacity-100";
-                    form.reset();
-                    setTimeout(() => {
-                        window.location.href = `/news/${data.slug}`;
-                    }, 2000);
-                } else {
-                    throw new Error(data.error);
+                const result = await res.json();
+                if (result.success) {
+                    if (statusMsg) {
+                        statusMsg.textContent = "¡Éxito!";
+                        statusMsg.className = "text-center mt-4 text-green-400 opacity-100";
+                    }
+                    setTimeout(() => window.location.href = `/news/${result.slug || editSlug}`, 1500);
                 }
             } catch (err) {
-                statusMsg.textContent = "Error al guardar: " + (err instanceof Error ? err.message : String(err));
-                statusMsg.className = "text-center mt-4 text-sm font-bold text-red-400 transition-opacity opacity-100";
-                
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.style.opacity = '1';
-                submitBtn.style.pointerEvents = 'all';
+                if (statusMsg) {
+                    statusMsg.textContent = "Error al guardar";
+                    statusMsg.className = "text-center mt-4 text-red-400 opacity-100";
+                }
             }
         });
-    }
+    });
 </script>

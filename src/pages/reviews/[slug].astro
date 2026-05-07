@@ -37,6 +37,7 @@ interface Review {
     streaming: string;
     watchOptions: WatchOption[];
     date: string;
+    trailerUrl?: string;
 }
 
 function getScoreColor(score: number, max = 10) {
@@ -71,11 +72,15 @@ const enhancedCast = await Promise.all(
 );
 ---
 
+<script is:inline define:vars={{ trailerUrl: review.trailerUrl }}>
+    window.reviewTrailerUrl = trailerUrl;
+</script>
+
 <Layout title={`${review.title} - Reseña - Paralaje Crítico`}>
     <Navbar active="reviews" />
 
     <main class="flex-grow">
-        <section class="relative w-full h-[60vh] min-h-[500px] flex items-end pb-20 pt-32">
+        <section class="relative w-full h-[60vh] min-h-[500px] flex items-end pt-32">
             <div class="absolute inset-0">
                 <img src={review.heroImage} alt={review.title} class="w-full h-full object-cover object-top" />
                 <div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
@@ -91,8 +96,38 @@ const enhancedCast = await Promise.all(
                 </div>
                 <h1 class="font-display-lg text-display-lg text-on-surface mb-4 leading-tight">{review.title}</h1>
                 <p class="text-tertiary font-headline-md text-xl max-w-2xl">{review.genre} · Dirigida por {review.director}</p>
+                
+                {review.trailerUrl && (
+                    <button 
+                        id="open-trailer"
+                        class="mt-8 inline-flex items-center gap-3 px-6 py-3 glass-panel rounded-full text-on-surface hover:bg-white/10 transition-all group"
+                    >
+                        <span class="material-symbols-outlined fill text-primary-container group-hover:scale-110 transition-transform">play_arrow</span>
+                        <span class="font-label-caps text-label-caps tracking-widest">Ver Tráiler</span>
+                    </button>
+                )}
             </div>
         </section>
+
+        <!-- Modal de Tráiler -->
+        {review.trailerUrl && (
+            <div id="trailer-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+                <button id="close-modal" class="absolute top-8 right-8 text-on-surface/50 hover:text-on-surface transition-colors">
+                    <span class="material-symbols-outlined text-4xl">close</span>
+                </button>
+                <div class="w-full max-w-5xl aspect-video px-margin">
+                    <iframe 
+                        id="trailer-iframe"
+                        class="w-full h-full rounded-2xl shadow-2xl border border-white/10"
+                        src="" 
+                        title="Trailer oficial"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
+        )}
 
         <section class="max-w-container-max mx-auto px-margin py-20 grid grid-cols-1 lg:grid-cols-12 gap-16 relative">
             <div class="lg:col-span-8">
@@ -210,7 +245,12 @@ const enhancedCast = await Promise.all(
 
     <script>
         const shareBtn = document.getElementById('share-btn');
+        const openTrailerBtn = document.getElementById('open-trailer');
+        const closeTrailerBtn = document.getElementById('close-modal');
+        const trailerModal = document.getElementById('trailer-modal');
+        const trailerIframe = document.getElementById('trailer-iframe') as HTMLIFrameElement;
         
+        // Lógica de Compartir
         if (shareBtn) {
             shareBtn.addEventListener('click', async () => {
                 const shareData = {
@@ -229,6 +269,31 @@ const enhancedCast = await Promise.all(
                 } catch (err) {
                     console.error('Error al compartir:', err);
                 }
+            });
+        }
+
+        // Lógica del Tráiler
+        if (openTrailerBtn && trailerModal && trailerIframe) {
+            const trailerUrl = (window as any).reviewTrailerUrl;
+
+            openTrailerBtn.addEventListener('click', () => {
+                trailerModal.classList.remove('opacity-0', 'pointer-events-none');
+                // Convertir link de youtube a embed
+                const url = new URL(trailerUrl);
+                const videoId = url.searchParams.get('v');
+                trailerIframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                document.body.style.overflow = 'hidden'; // Bloquear scroll
+            });
+
+            const closeModal = () => {
+                trailerModal.classList.add('opacity-0', 'pointer-events-none');
+                trailerIframe.src = '';
+                document.body.style.overflow = ''; // Liberar scroll
+            };
+
+            closeTrailerBtn?.addEventListener('click', closeModal);
+            trailerModal.addEventListener('click', (e) => {
+                if (e.target === trailerModal) closeModal();
             });
         }
     </script>

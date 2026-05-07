@@ -1,4 +1,4 @@
-﻿{
+{
     "el-senor-de-las-moscas-2026": {
         "title": "El Señor de las Moscas (BBC, 2026)",
         "subtitle": "Un Descenso Psicológico a la Barbarie",
@@ -90,7 +90,8 @@
                 "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+"
             }
         ],
-        "date": "MAYO 05, 2026"
+        "date": "MAYO 05, 2026",
+        "trailerUrl": "https://www.youtube.com/watch?v=3Q9SQ7hTMdg"
     },
     "michael-2026": {
         "title": "Michael (2026)",
@@ -167,7 +168,8 @@
                 "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
             }
         ],
-        "date": "MAYO 05, 2026"
+        "date": "MAYO 05, 2026",
+        "trailerUrl": "https://www.youtube.com/watch?v=7wWEvqjsvxE"
     },
     "el-diablo-viste-a-la-moda-2-2026": {
         "title": "El Diablo Viste a la Moda 2 (2026)",
@@ -246,6 +248,70 @@
                 "name": "Cines",
                 "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
             }
-        ]
+        ],
+        "trailerUrl": "https://www.youtube.com/watch?v=O52u0imiqNY"
+    },
+    "mortal-kombat-ii-2026": {
+        "title": "Mortal Kombat II (2026)",
+        "subtitle": "Una Oda Sangrienta al Fan Service",
+        "rating": 3.5,
+        "year": "2026",
+        "director": "Simon McQuoid",
+        "duration": "116 min",
+        "date": "Mayo 06",
+        "genre": "Accion / Artes Marciales",
+        "heroImage": "/images/reviews/mortal-kombat-2.webp",
+        "posterImage": "/images/reviews/Mortal-Kombat-2-poster.jpg",
+        "author": "Paralaje Crítico",
+        "fullReview": [
+            "Esta secuela es una respuesta directa a las críticas de la entrega de 2021. Si la primera película se sentía limitada por intentar establecer una historia de origen, esta segunda parte \"se quita los guantes\" y se sumerge de lleno en el torneo de Mortal Kombat, abrazando la violencia absurda, los fatalities brutales y el carisma de sus personajes icónicos.",
+            "Karl Urban: El Corazón del Espectáculo",
+            "El mayor acierto de la cinta es la inclusión de Karl Urban como Johnny Cage. Urban entiende perfectamente el tono de la película, aportando una mezcla de arrogancia, vanidad y humor autoconsciente que revitaliza cada escena en la que aparece. Actúa como un sustituto del público, comentando lo absurdo de la mitología de Outworld mientras busca salvar su carrera cinematográfica en decadencia. Junto a él, Adeline Rudolph (Kitana) y el regreso de Josh Lawson (Kano) como alivio cómico caótico elevan el dinamismo del elenco.",
+            "Acción y Fidelidad al Juego",
+            "A diferencia de su predecesora, esta película finalmente pone el torneo en el centro de la escena. Las coreografías de lucha han mejorado significativamente, siendo más claras y menos editadas, permitiendo que el trabajo de acrobacias brille, especialmente en enfrentamientos como el de Liu Kang contra Kung Lao. Los efectos especiales de criaturas como Baraka son físicamente impactantes y fieles al material original.",
+            "Mortal Kombat II no aspira a ser cine de prestigio, sino un espectáculo visceral y divertido diseñado específicamente para los fans. Aunque la crítica profesional le otorga una puntuación neutral (alrededor de 50 en Metacritic), la audiencia la ha recibido con mucho más entusiasmo (75-77% en Rotten Tomatoes), celebrando que finalmente se haya entregado la carnicería y el torneo que la saga merecía en la gran pantalla."
+        ],
+        "finalScore": "7.1",
+        "scores": [
+            {
+                "category": "Fotografía",
+                "score": 7,
+                "icon": "movie_filter",
+                "desc": "La producción destaca por utilizar escenarios táctiles y sets físicos en lugar de depender exclusivamente de fondos digitales, lo que da a las arenas (como el Dead Pool o los calabozos) una atmósfera densa y real. No obstante, el CGI es inconsistente; en pantallas IMAX, ciertos efectos visuales parecen inacabados o propios de una cinemática de videojuego de bajo presupuesto."
+            },
+            {
+                "category": "Actuación",
+                "score": 8.5,
+                "icon": "groups",
+                "desc": "Karl Urban es calificado como un casting \"absurdamente perfecto\". El elenco principal se siente mucho más cómodo en sus roles esta vez, destacando también la \"intensidad silenciosa\" de Adeline Rudolph como Kitana. Sin embargo, algunos personajes secundarios todavía carecen de profundidad fuera de las secuencias de combate."
+            },
+            {
+                "category": "Banda Sonora",
+                "score": 8,
+                "icon": "audiotrack",
+                "desc": "Compuesta por Benjamin Wallfisch, la música es \"grande, ruidosa y truculenta\", compañando perfectamente el caos de las batallas. La banda sonora refuerza el tono de \"extravaganza de serie B\" con gran efectividad."
+            },
+            {
+                "category": "Guion",
+                "score": 5,
+                "icon": "auto_stories",
+                "desc": "Sigue siendo el punto más débil. El guion es descrito como \"fangoso\" y lleno de diálogos toscos que sirven meramente para conectar una pelea con otra. La trama secundaria sobre el amuleto de Shinnok y las constantes exposiciones de lore pueden resultar tediosas para quienes no son seguidores acérrimos de la franquicia."
+            }
+        ],
+        "cast": [
+            { "actor": "Karl Urban", "role": "Johnny Cage" },
+            { "actor": "Adeline Rudolph", "role": "Kitana" },
+            { "actor": "Martyn Ford", "role": "Shao Kahn" },
+            { "actor": "Ludi Lin", "role": "Liu Kang" },
+            { "actor": "Chin Han", "role": "Shang Tsung" }
+        ],
+        "streaming": "Consultar plataformas",
+        "watchOptions": [
+            {
+                "name": "Cines",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
+            }
+        ],
+        "trailerUrl": "https://www.youtube.com/watch?v=-S-TTb0iXzw"
     }
 }

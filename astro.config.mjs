@@ -69,6 +69,76 @@ function localAdminApi() {
           return;
         }
 
+        if (req.url === '/api/update-review' && req.method === 'POST') {
+          let body = '';
+          req.on('data', (/** @type {any} */ chunk) => body += chunk.toString());
+          req.on('end', () => {
+            try {
+              const { slug, data: reviewData } = JSON.parse(body);
+              const dataPath = path.resolve('./src/data/reviews.json');
+              const currentData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+              currentData[slug] = { ...currentData[slug], ...reviewData };
+              fs.writeFileSync(dataPath, JSON.stringify(currentData, null, 4));
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: true, slug }));
+            } catch (error) {
+              const err = /** @type {Error} */ (error);
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, error: err.message }));
+            }
+          });
+          return;
+        }
+
+        if (req.url === '/api/get-reviews' && req.method === 'GET') {
+          try {
+            const dataPath = path.resolve('./src/data/reviews.json');
+            const currentData = fs.readFileSync(dataPath, 'utf-8');
+            res.setHeader('Content-Type', 'application/json');
+            res.end(currentData);
+          } catch (error) {
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: 'Could not read reviews' }));
+          }
+          return;
+        }
+
+        if (req.url === '/api/get-news' && req.method === 'GET') {
+          try {
+            const dataPath = path.resolve('./src/data/news.json');
+            const currentData = fs.readFileSync(dataPath, 'utf-8');
+            res.setHeader('Content-Type', 'application/json');
+            res.end(currentData);
+          } catch (error) {
+            res.statusCode = 500;
+            res.end(JSON.stringify({ error: 'Could not read news' }));
+          }
+          return;
+        }
+
+        if (req.url === '/api/update-news' && req.method === 'POST') {
+          let body = '';
+          req.on('data', (/** @type {any} */ chunk) => body += chunk.toString());
+          req.on('end', () => {
+            try {
+              const { slug, data: newsData } = JSON.parse(body);
+              const dataPath = path.resolve('./src/data/news.json');
+              const currentData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
+              currentData[slug] = { ...currentData[slug], ...newsData };
+              fs.writeFileSync(dataPath, JSON.stringify(currentData, null, 4));
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: true, slug }));
+            } catch (error) {
+              const err = /** @type {Error} */ (error);
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ success: false, error: err.message }));
+            }
+          });
+          return;
+        }
+
         next();
       });
     }

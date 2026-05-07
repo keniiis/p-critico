@@ -143,20 +143,18 @@ const heroMovies = reviewsList.slice(0, 3).map(r => ({
                             </a>
                         );
                         if (i === 3) return (
-                            <a href={review.link} class="md:col-span-2 group relative h-auto md:h-[400px] rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10 flex flex-col md:flex-row">
-                                <div class="w-full md:w-1/2 h-[200px] md:h-full relative">
-                                    <img alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={review.heroImage}/>
-                                    <div class="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-background"></div>
-                                </div>
-                                <div class="w-full md:w-1/2 bg-surface-container-low p-6 md:p-8 flex flex-col justify-center gap-4">
+                            <a href={review.link} class="md:col-span-2 group relative h-[400px] rounded-xl overflow-hidden glass-panel cursor-pointer hover:scale-[1.02] transition-transform duration-300 border border-white/10">
+                                <img alt={review.title} class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src={review.heroImage}/>
+                                <div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col gap-3">
                                     <div class="flex items-center gap-1 text-secondary-container mb-2">
                                         <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
                                         <span class="font-bold">{review.rating}</span>
                                     </div>
                                     <h3 class="font-headline-md text-headline-md text-on-surface">{review.title}</h3>
-                                    <p class="font-body-lg text-body-lg text-tertiary line-clamp-3">{review.subtitle}</p>
-                                    <div class="mt-4 flex items-center gap-2">
-                                        <span class="font-label-caps text-label-caps text-on-surface uppercase tracking-widest border-b border-on-surface pb-1">Leer Reseña</span>
+                                    <p class="font-body-lg text-body-lg text-tertiary line-clamp-2">{review.subtitle || review.desc}</p>
+                                    <div class="mt-2 flex items-center gap-2">
+                                        <span class="font-label-caps text-label-caps text-on-surface uppercase tracking-widest border-b border-on-surface pb-1 text-[10px]">Leer Reseña Completa</span>
                                     </div>
                                 </div>
                             </a>

@@ -9,9 +9,44 @@ const isDev = import.meta.env.DEV;
 
 <Layout title="Admin Panel - Paralaje Crítico">
     <Navbar />
+    
+    <style is:global>
+        #md-preview p {
+            color: #a8a8a8 !important;
+            line-height: 1.8 !important;
+            margin-bottom: 1.5rem !important;
+            font-size: 1rem !important;
+            display: block !important;
+        }
+        #md-preview strong {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+        }
+
+        /* --- ESTILO DE SCROLLBARS PREMIUM (VIOLETA) --- */
+        #md-editor::-webkit-scrollbar, 
+        #md-preview::-webkit-scrollbar {
+            width: 8px;
+        }
+        #md-editor::-webkit-scrollbar-track, 
+        #md-preview::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        #md-editor::-webkit-scrollbar-thumb, 
+        #md-preview::-webkit-scrollbar-thumb {
+            background: rgba(167, 139, 250, 0.3);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        #md-editor::-webkit-scrollbar-thumb:hover, 
+        #md-preview::-webkit-scrollbar-thumb:hover {
+            background: rgba(167, 139, 250, 0.6);
+        }
+    </style>
 
     <main class="grow pt-32 pb-20">
-        <div class="max-w-7xl mx-auto px-margin">
+        <div class="max-w-[1600px] mx-auto px-margin">
             
             {!isDev ? (
                 <div class="glass-panel p-12 text-center rounded-3xl border border-red-500/20 max-w-3xl mx-auto">
@@ -21,7 +56,7 @@ const isDev = import.meta.env.DEV;
                 </div>
             ) : (
                 <>
-                    <header class="mb-16 text-center max-w-3xl mx-auto">
+                    <header class="mb-16 text-center max-w-5xl mx-auto">
                         <div class="inline-flex items-center gap-2 glass-panel px-4 py-2 rounded-full text-primary-container font-label-caps text-[11px] tracking-widest uppercase mb-6">
                             <span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
                             Paralaje Crítico CMS
@@ -31,80 +66,133 @@ const isDev = import.meta.env.DEV;
                         
                         <!-- Pestañas de Navegación -->
                         <div class="flex items-center justify-center gap-4">
-                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Reseñas</a>
-                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Noticias</a>
+                            <a href="/admin" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Nueva Reseña</a>
+                            <a href="/admin/news" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Nueva Noticia</a>
+                            <button type="button" id="tab-gestionar" class="px-8 py-3 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-transparent hover:border-white/10">Gestionar</button>
                         </div>
                     </header>
 
-                    <form id="review-form" class="space-y-12">
+                    <!-- Panel Gestionar -->
+                    <div id="gestionar-panel" class="hidden space-y-6 mb-16">
+                        <h2 class="font-display-lg text-3xl text-on-surface text-center mb-4">Contenido Publicado</h2>
+
+                        <!-- Sub-pestañas -->
+                        <div class="flex items-center justify-center gap-4 mb-8">
+                            <button id="sub-tab-reviews" class="px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background">Reseñas</button>
+                            <button id="sub-tab-news" class="px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-white/10">Noticias</button>
+                        </div>
+
+                        <!-- Lista Reseñas -->
+                        <div id="reviews-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="text-tertiary text-center py-10 col-span-3">Cargando reseñas...</div>
+                        </div>
+
+                        <!-- Lista Noticias (oculta por defecto) -->
+                        <div id="news-list-gestionar" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="text-tertiary text-center py-10 col-span-3">Cargando noticias...</div>
+                        </div>
+                    </div>
+
+                    <!-- Campo oculto para modo edición -->
+                    <input type="hidden" id="edit-slug" value="" />
+
+                    <form id="review-form" class="space-y-12 max-w-none">
                         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            <!-- Columna Izquierda (Datos Básicos) -->
+                            <!-- Columna Izquierda (Contenido y Detalles) -->
                             <div class="lg:col-span-7 space-y-12">
-                                <!-- Sección: Info Básica -->
+                                <!-- Sección: Información Básica -->
                                 <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
                                     <div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
-                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Información General</h2>
+                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Información de la Obra</h2>
                                     
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                                    <div class="space-y-8">
                                         <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Título de la Película</label>
-                                            <input required type="text" name="title" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: Oppenheimer" />
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Título de la Película / Serie</label>
+                                            <input required type="text" name="title" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-bold text-lg" placeholder="Ej: Oppenheimer" />
                                         </div>
                                         <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Subtítulo / Frase gancho</label>
-                                            <input required type="text" name="subtitle" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: El destructor de mundos" />
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Subtítulo o Gancho</label>
+                                            <input required type="text" name="subtitle" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: El hombre que movió el mundo" />
                                         </div>
-                                    </div>
-
-                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Estrellas (0-5)</label>
-                                            <input required type="number" step="0.1" name="rating" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="4.5" />
-                                        </div>
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Año</label>
-                                            <input required type="text" name="year" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="2023" />
-                                        </div>
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Duración</label>
-                                            <input required type="text" name="duration" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="180 min" />
-                                        </div>
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Fecha Pub.</label>
-                                            <input required type="text" name="date" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="JULIO 21, 2023" />
-                                        </div>
-                                    </div>
-
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Director</label>
-                                            <input required type="text" name="director" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Christopher Nolan" />
-                                        </div>
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Género</label>
-                                            <input required type="text" name="genre" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Drama / Histórico" />
+                                        
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Nota (0-10)</label>
+                                                <input required type="number" step="0.1" name="rating" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center font-bold" placeholder="8.5" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Año</label>
+                                                <input required type="text" name="year" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center" placeholder="2023" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Duración</label>
+                                                <input required type="text" name="duration" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center" placeholder="180 min" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Género</label>
+                                                <input required type="text" name="genre" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center" placeholder="Drama" />
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
 
-                                <!-- Sección: Contenido -->
-                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                <!-- Sección: Editor Visual -->
+                                <section class="glass-panel rounded-3xl border border-white/10 relative overflow-hidden">
                                     <div class="absolute top-0 left-0 w-1.5 h-full bg-tertiary"></div>
-                                    <h2 class="font-headline-md text-2xl text-on-surface mb-8">Redacción de la Crítica</h2>
-                                    
-                                    <div class="mb-8">
-                                        <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Cuerpo del artículo (Separa párrafos con doble ENTER)</label>
-                                        <textarea required name="fullReview" rows="14" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-6 py-5 text-on-surface focus:outline-none focus:border-primary-container transition-colors leading-relaxed text-base" placeholder="Escribe tu análisis aquí..."></textarea>
+                                    <div class="flex items-center justify-between px-8 pt-8 pb-4 border-b border-white/10">
+                                        <h2 class="font-headline-md text-2xl text-on-surface">Cuerpo de la Crítica</h2>
+                                        <button type="button" id="toggle-preview" class="px-4 py-1.5 rounded-lg bg-primary-container text-background text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa
+                                        </button>
                                     </div>
-                                    
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Nota Final (0 a 10)</label>
-                                            <input required type="text" name="finalScore" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-primary-container transition-colors font-bold text-primary-container text-lg" placeholder="8.5" />
+
+                                    <!-- Editor Split Pane con bloqueo de altura -->
+                                    <div id="editor-container" class="grid grid-cols-2 divide-x divide-white/10" style="height: 700px; max-height: 700px; overflow: hidden;">
+                                        <!-- Panel Izquierdo: Editor -->
+                                        <div class="flex flex-col h-full bg-black/10" style="height: 700px;">
+                                            <div class="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center gap-2 flex-none">
+                                                <span class="w-2 h-2 rounded-full bg-[#a78bfa] animate-pulse"></span>
+                                                <span class="text-tertiary text-[10px] font-label-caps tracking-widest uppercase">Crítica MD</span>
+                                            </div>
+                                            <textarea
+                                                required
+                                                name="review"
+                                                id="md-editor"
+                                                class="w-full h-full bg-transparent px-10 py-8 text-on-surface focus:outline-none font-mono text-sm leading-relaxed resize-none"
+                                                style="overflow-y: scroll !important; height: calc(700px - 40px); display: block;"
+                                                placeholder="Escribe tu crítica aquí..."></textarea>
                                         </div>
+
+                                        <!-- Panel Derecho: Preview -->
+                                        <div class="flex flex-col h-full bg-surface-container/30" style="height: 700px;">
+                                            <div class="px-4 py-2 bg-white/5 border-b border-white/5 flex items-center gap-2 flex-none">
+                                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                                <span class="text-tertiary text-[10px] font-label-caps tracking-widest uppercase">Vista Previa</span>
+                                            </div>
+                                            <div id="md-preview" class="px-12 py-10 prose-preview" style="height: calc(700px - 40px); overflow-y: scroll !important; background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0); background-size: 32px 32px; display: block;">
+                                                <p class="text-tertiary text-sm italic">Tu crítica aparecerá aquí con formato real...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <!-- Sección: Elenco y Firma -->
+                                <section class="glass-panel p-10 md:p-12 rounded-3xl border border-white/10 relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
+                                    <div class="space-y-8">
                                         <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Tu Firma (Autor)</label>
-                                            <input required type="text" name="author" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" value="Paralaje Crítico" />
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Elenco (Uno por línea: Actor como Personaje)</label>
+                                            <textarea name="cast" rows="5" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-6 py-5 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-mono text-sm" placeholder="Karl Urban como Johnny Cage"></textarea>
+                                        </div>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Nota Final (0 a 10)</label>
+                                                <input required type="text" name="finalScore" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-primary-container font-bold text-lg focus:outline-none focus:border-primary-container transition-colors" placeholder="8.5" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Firma del Autor</label>
+                                                <input required type="text" name="author" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" value="Paralaje Crítico" />
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
@@ -124,6 +212,10 @@ const isDev = import.meta.env.DEV;
                                         <div>
                                             <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Póster (Tarjeta) - Vertical</label>
                                             <input required type="text" name="posterImage" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-mono text-sm" placeholder="/images/reviews/tu-poster.jpg" />
+                                        </div>
+                                        <div>
+                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">URL del Tráiler (YouTube)</label>
+                                            <input type="text" name="trailerUrl" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-mono text-sm" placeholder="https://www.youtube.com/watch?v=..." />
                                         </div>
                                     </div>
                                 </section>
@@ -237,6 +329,52 @@ const isDev = import.meta.env.DEV;
     const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
     const statusMsg = document.getElementById('status-msg') as HTMLParagraphElement | null;
 
+        // ── EDITOR VISUAL (RESEÑAS) ───────────────────────────────────
+        const mdEditor      = document.getElementById('md-editor') as HTMLTextAreaElement | null;
+        const mdPreview     = document.getElementById('md-preview') as HTMLElement | null;
+        const toggleBtn     = document.getElementById('toggle-preview') as HTMLButtonElement | null;
+        const editorContainer = document.getElementById('editor-container') as HTMLElement | null;
+
+        function renderPreview(text: string): string {
+            if (!text.trim()) return '<p class="text-tertiary text-sm italic">Tu crítica se verá así...</p>';
+            const paragraphs = text.split(/\n\s*\n/).map(p => p.trim()).filter(p => p);
+            return paragraphs.map(p => {
+                const parsed = p.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                return `<p>${parsed}</p>`;
+            }).join('');
+        }
+
+        if (mdEditor && mdPreview) {
+            mdEditor.addEventListener('input', () => {
+                mdPreview.innerHTML = renderPreview(mdEditor.value);
+            });
+
+            // Proxy para detectar cambios programáticos (cuando se edita una reseña existente)
+            const origDescriptor = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
+            if (origDescriptor) {
+                Object.defineProperty(mdEditor, 'value', {
+                    set(v) {
+                        origDescriptor.set!.call(this, v);
+                        mdPreview.innerHTML = renderPreview(v);
+                    },
+                    get() { return origDescriptor.get!.call(this); }
+                });
+            }
+        }
+
+        let splitMode = true;
+        toggleBtn?.addEventListener('click', () => {
+            splitMode = !splitMode;
+            if (editorContainer) {
+                editorContainer.className = splitMode ? 'grid grid-cols-2 divide-x divide-white/10' : 'grid grid-cols-1';
+            }
+            const previewPanel = mdPreview?.parentElement as HTMLElement | null;
+            if (previewPanel) previewPanel.style.display = splitMode ? '' : 'none';
+            toggleBtn.innerHTML = splitMode 
+                ? '<span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa' 
+                : '<span class="material-symbols-outlined text-[14px]">edit</span> Escritura';
+        });
+
     if(form && submitBtn && statusMsg) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -266,6 +404,12 @@ const isDev = import.meta.env.DEV;
                 }
             }
 
+            const castRaw = getString('cast');
+            const cast = castRaw.split('\n').filter(l => l.includes(' como ')).map(l => {
+                const [actor, role] = l.split(' como ');
+                return { actor: actor.trim(), role: role.trim() };
+            });
+
             const reviewData = {
                 title: getString('title'),
                 subtitle: getString('subtitle'),
@@ -286,9 +430,10 @@ const isDev = import.meta.env.DEV;
                     { category: "Banda Sonora", score: getNum('score_sonido'), icon: "audiotrack", desc: getString('desc_sonido') },
                     { category: "Guion", score: getNum('score_guion'), icon: "auto_stories", desc: getString('desc_guion') }
                 ],
-                cast: [],
+                cast: cast,
                 streaming: getString('streaming') || "Consultar plataformas",
-                watchOptions: watchOptions
+                watchOptions: watchOptions,
+                trailerUrl: getString('trailerUrl')
             };
 
             try {
@@ -319,5 +464,215 @@ const isDev = import.meta.env.DEV;
                 submitBtn.style.pointerEvents = 'all';
             }
         });
+        // ── GESTIONAR TAB ──────────────────────────────────────────────
+        const tabGestionar   = document.getElementById('tab-gestionar');
+        const gestionarPanel = document.getElementById('gestionar-panel');
+        const reviewForm     = document.getElementById('review-form');
+        const editSlugInput  = document.getElementById('edit-slug') as HTMLInputElement;
+        const reviewsList    = document.getElementById('reviews-list');
+        const newsListEl     = document.getElementById('news-list-gestionar');
+        const subTabReviews  = document.getElementById('sub-tab-reviews');
+        const subTabNews     = document.getElementById('sub-tab-news');
+
+        // Helper: carga tarjetas de reseñas
+        async function loadReviews() {
+            if (!reviewsList) return;
+            reviewsList.innerHTML = '<div class="text-tertiary text-center py-10 col-span-3">Cargando...</div>';
+            const data = await (await fetch('/api/get-reviews')).json() as Record<string, any>;
+            reviewsList.innerHTML = '';
+            Object.entries(data).reverse().forEach(([slug, r]: [string, any]) => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col';
+                card.innerHTML = `
+                    <img src="${r.heroImage}" alt="${r.title}" class="w-full h-40 object-cover object-top" />
+                    <div class="p-5 flex flex-col gap-3 flex-grow">
+                        <p class="text-tertiary text-[10px] font-label-caps tracking-widest uppercase">${r.genre || ''}</p>
+                        <h3 class="text-on-surface font-headline-md text-base leading-snug">${r.title}</h3>
+                        <p class="text-tertiary text-xs line-clamp-2">${r.subtitle || ''}</p>
+                        <button data-slug="${slug}" class="edit-review-btn mt-auto w-full py-2.5 rounded-lg bg-primary-container text-background text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[16px]">edit</span> Editar
+                        </button>
+                    </div>`;
+                reviewsList.appendChild(card);
+            });
+            wireReviewEdits();
+        }
+
+        // Helper: carga tarjetas de noticias
+        async function loadNews() {
+            if (!newsListEl) return;
+            newsListEl.innerHTML = '<div class="text-tertiary text-center py-10 col-span-3">Cargando...</div>';
+            const data = await (await fetch('/api/get-news')).json() as Record<string, any>;
+            newsListEl.innerHTML = '';
+            Object.entries(data).reverse().forEach(([slug, n]: [string, any]) => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel rounded-xl overflow-hidden border border-white/10 flex flex-col';
+                card.innerHTML = `
+                    <img src="${n.image}" alt="${n.title}" class="w-full h-40 object-cover object-top" />
+                    <div class="p-5 flex flex-col gap-3 flex-grow">
+                        <p class="text-[#f43f5e] text-[10px] font-label-caps tracking-widest uppercase">${n.category || ''}</p>
+                        <h3 class="text-on-surface font-headline-md text-base leading-snug">${n.title}</h3>
+                        <p class="text-tertiary text-xs line-clamp-2">${n.summary || ''}</p>
+                        <a href="/admin/news" class="mt-auto w-full py-2.5 rounded-lg bg-[#f43f5e] text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-background transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[16px]">edit</span> Editar en panel noticias
+                        </a>
+                    </div>`;
+                newsListEl.appendChild(card);
+            });
+        }
+
+        // Sub-pestañas
+        subTabReviews?.addEventListener('click', () => {
+            reviewsList?.classList.remove('hidden');
+            newsListEl?.classList.add('hidden');
+            subTabReviews.className = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-primary-container text-background';
+            subTabNews!.className   = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-white/10';
+        });
+
+        subTabNews?.addEventListener('click', () => {
+            reviewsList?.classList.add('hidden');
+            newsListEl?.classList.remove('hidden');
+            subTabNews.className    = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors bg-[#f43f5e] text-white';
+            subTabReviews!.className = 'px-6 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-colors glass-panel text-tertiary hover:text-on-surface border border-white/10';
+            loadNews();
+        });
+
+        tabGestionar?.addEventListener('click', async () => {
+            gestionarPanel?.classList.remove('hidden');
+            reviewForm?.classList.add('hidden');
+            await loadReviews();
+        });
+
+        function wireReviewEdits() {
+            reviewsList?.querySelectorAll('.edit-review-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const slug = (btn as HTMLElement).dataset.slug!;
+                    const allData = await (await fetch('/api/get-reviews')).json();
+                    const r = allData[slug];
+
+                    gestionarPanel?.classList.add('hidden');
+                    reviewForm?.classList.remove('hidden');
+                    editSlugInput.value = slug;
+
+                    if (submitBtn) submitBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Actualizar Reseña';
+
+                    const set = (name: string, val: string) => {
+                        const el = (reviewForm as HTMLFormElement)?.elements.namedItem(name) as HTMLInputElement | HTMLTextAreaElement | null;
+                        if (el) el.value = val ?? '';
+                    };
+                    set('title',       r.title);
+                    set('subtitle',    r.subtitle);
+                    set('rating',      String(r.rating));
+                    set('year',        r.year);
+                    set('director',    r.director);
+                    set('duration',    r.duration);
+                    set('date',        r.date);
+                    set('genre',       r.genre);
+                    set('heroImage',   r.heroImage);
+                    set('posterImage', r.posterImage);
+                    set('author',      r.author);
+                    set('trailerUrl',  r.trailerUrl || '');
+                    set('finalScore',  r.finalScore);
+                    set('streaming',   r.streaming);
+                    set('fullReview',  (r.fullReview || []).join('\n\n'));
+                    set('cast',        (r.cast || []).map((c: any) => `${c.actor} como ${c.role}`).join('\n'));
+
+                    r.scores?.forEach((s: any) => {
+                        const map: Record<string, string> = { 'Fotografía': 'foto', 'Actuación': 'actuacion', 'Banda Sonora': 'sonido', 'Guion': 'guion' };
+                        const key = map[s.category];
+                        if (key) { set(`score_${key}`, String(s.score)); set(`desc_${key}`, s.desc); }
+                    });
+
+                    const platMap: Record<string, string> = { 'Cines': 'cines', 'Netflix': 'netflix', 'Max': 'max', 'Disney+': 'disney', 'Apple TV': 'appletv', 'Prime Video': 'prime' };
+                    r.watchOptions?.forEach((o: any) => {
+                        const key = platMap[o.name];
+                        if (key) {
+                            const cb = (reviewForm as HTMLFormElement)?.elements.namedItem(`platform_${key}`) as HTMLInputElement;
+                            if (cb) cb.checked = true;
+                        }
+                    });
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+        }
+
+
+        // Interceptar submit para diferenciar crear vs actualizar
+        const originalSubmitHandler = form?.addEventListener;
+        form?.addEventListener('submit', async (e) => {
+            const editSlug = editSlugInput?.value;
+            if (!editSlug) return; // Si no hay slug, deja que el handler original cree nuevo
+
+            e.stopImmediatePropagation();
+            e.preventDefault();
+
+            if (!submitBtn || !statusMsg) return;
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.pointerEvents = 'none';
+
+            const formData = new FormData(e.target as HTMLFormElement);
+            const getString = (name: string) => (formData.get(name) as string) || '';
+            const getNum    = (name: string) => parseFloat(getString(name)) || 0;
+
+            const platformMappings = [
+                { id: 'platform_cines', name: 'Cines', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg==' },
+                { id: 'platform_netflix', name: 'Netflix', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_max', name: 'Max', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_disney', name: 'Disney+', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_appletv', name: 'Apple TV', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' },
+                { id: 'platform_prime', name: 'Prime Video', logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMSAzSDNjLTEuMSAwLTIgLjktMiAydjEyYzAgMS4xLjkgMiAyIDJoNXYyaDh2LTJoNWMxLjEgMCAxLjk5LS45IDEuOTktMkwyMyA1YzAtMS4xLS45LTItMi0yem0wIDE0SDNWNWgxOHYxMnptLTUtNmwtNyA0Vjd6Ii8+PC9zdmc+' }
+            ];
+            const watchOptions: any[] = [];
+            for (const plat of platformMappings) {
+                if (formData.get(plat.id) === 'on') watchOptions.push({ name: plat.name, logo: plat.logo });
+            }
+            const castRaw = getString('cast');
+            const cast = castRaw.split('\n').filter((l: string) => l.includes(' como ')).map((l: string) => {
+                const [actor, role] = l.split(' como ');
+                return { actor: actor.trim(), role: role.trim() };
+            });
+
+            const updatedData = {
+                title: getString('title'), subtitle: getString('subtitle'),
+                rating: getNum('rating'), year: getString('year'),
+                director: getString('director'), duration: getString('duration'),
+                date: getString('date'), genre: getString('genre'),
+                heroImage: getString('heroImage'), posterImage: getString('posterImage'),
+                author: getString('author'), trailerUrl: getString('trailerUrl'),
+                fullReview: getString('fullReview').split('\n\n').map((p: string) => p.trim()).filter((p: string) => p),
+                finalScore: getString('finalScore'), streaming: getString('streaming'),
+                scores: [
+                    { category: 'Fotografía',   score: getNum('score_foto'),       icon: 'movie_filter', desc: getString('desc_foto') },
+                    { category: 'Actuación',     score: getNum('score_actuacion'),  icon: 'groups',       desc: getString('desc_actuacion') },
+                    { category: 'Banda Sonora',  score: getNum('score_sonido'),     icon: 'audiotrack',   desc: getString('desc_sonido') },
+                    { category: 'Guion',         score: getNum('score_guion'),      icon: 'auto_stories', desc: getString('desc_guion') }
+                ],
+                cast, watchOptions
+            };
+
+            try {
+                const res = await fetch('/api/update-review', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slug: editSlug, data: updatedData })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    statusMsg!.textContent = '¡Reseña actualizada con éxito!';
+                    statusMsg!.className = 'text-center mt-4 text-sm font-bold text-green-400 transition-opacity opacity-100';
+                    editSlugInput.value = '';
+                    setTimeout(() => { window.location.href = `/reviews/${editSlug}`; }, 1500);
+                } else { throw new Error(result.error); }
+            } catch (err) {
+                statusMsg!.textContent = 'Error: ' + (err instanceof Error ? err.message : String(err));
+                statusMsg!.className = 'text-center mt-4 text-sm font-bold text-red-400 transition-opacity opacity-100';
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.pointerEvents = 'all';
+            }
+        }, true); // capture:true para ejecutarse antes del handler original
     }
 </script>
