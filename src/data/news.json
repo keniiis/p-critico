@@ -14,11 +14,12 @@
             },
             {
                 "type": "heading",
+                "level": 2,
                 "text": "“Mareada pero optimista”: El estado de salud de Dolly"
             },
             {
                 "type": "paragraph",
-                "text": "A través de un video en sus redes sociales, Parton explicó que, aunque está respondiendo positivamente a sus tratamientos y mejora cada día, todavía no se siente físicamente lista para las exigencias de un espectáculo en vivo. La artista mencionó que algunos de sus medicamentos le provocan una sensación de mareo (lo que ella llama sentirse 'swimmy-headed'), algo que complica su desempeño habitual en el escenario."
+                "text": "A través de un video en sus redes sociales, Parton explicó que, aunque está respondiendo positivamente a sus tratamientos y mejora cada día, todavía no se siente físicamente lista para las exigencias de un espectáculo en vivo."
             },
             {
                 "type": "quote",
@@ -26,10 +27,11 @@
             },
             {
                 "type": "paragraph",
-                "text": "Además, señaló que sus pesados atuendos con pedrería y sus icónicas pelucas harían que cualquiera se sintiera aturdido en esas condiciones. Aunque no reveló un diagnóstico específico, Parton ha enfrentado desafíos con cálculos renales y desajustes en sus sistemas inmunológico y digestivo en los últimos años."
+                "text": "Además, señaló que sus pesados atuendos con pedrería y sus icónicas pelucas harían que cualquiera se sintiera aturdido en esas condiciones."
             },
             {
                 "type": "heading",
+                "level": 2,
                 "text": "Información para los fans y reembolsos"
             },
             {
@@ -38,6 +40,7 @@
             },
             {
                 "type": "heading",
+                "level": 2,
                 "text": "Nuevos proyectos en el horizonte"
             },
             {
@@ -47,14 +50,14 @@
             {
                 "type": "list",
                 "items": [
-                    "Tour Multimedia 'Threads: My Songs in Symphony': Experiencia inmersiva con orquestas en vivo.",
-                    "Broadway: Trabajo continuo en su musical 'Dolly: A True Original Musical'.",
-                    "Dollywood y Nashville: Nuevas atracciones y apertura de su hotel y museo."
+                    "**Tour Multimedia 'Threads: My Songs in Symphony':** Experiencia inmersiva con orquestas en vivo.",
+                    "**Broadway:** Trabajo continuo en su musical 'Dolly: A True Original Musical'.",
+                    "**Dollywood y Nashville:** Nuevas atracciones y apertura de su hotel y museo."
                 ]
             },
             {
                 "type": "paragraph",
-                "text": "Dolly cerró su mensaje con una nota de esperanza, asegurando a sus seguidores que no planea retirarse del negocio: “¡Aún me queda algo de curación por hacer, pero estoy en camino! Nos vemos pronto”."
+                "text": "Dolly cerró su mensaje con una nota de esperanza: “¡Aún me queda algo de curación por hacer, pero estoy en camino! Nos vemos pronto”."
             }
         ]
     },
@@ -69,67 +72,111 @@
         "content": [
             {
                 "type": "paragraph",
-                "text": "La magia está más viva que nunca. HBO ha dado oficialmente luz verde a la segunda temporada de su esperada serie sobre Harry Potter, una noticia que llega siete meses antes de que el primer ciclo debute en la plataforma. Esta renovación anticipada confirma la confianza total de la cadena en el proyecto, que pretende ser una adaptación fiel y extensa de la obra de J.K. Rowling."
+                "text": "La magia está más viva que nunca. **HBO** ha dado oficialmente luz verde a la segunda temporada de su esperada serie sobre **Harry Potter**, una noticia que llega siete meses antes de que el primer ciclo debute en la plataforma. Esta renovación anticipada confirma la confianza total de la cadena en el proyecto, que pretende ser una adaptación fiel y extensa de la obra de **J.K. Rowling**."
+            },
+            {
+                "type": "hr"
+            },
+            {
+                "type": "heading",
+                "text": "Temporada 1: Estreno en Navidad de 2026",
+                "level": 2
             },
             {
                 "type": "paragraph",
-                "text": "Temporada 1: Estreno en Navidad de 2026"
+                "text": "La primera temporada, que adaptará íntegramente *\"Harry Potter y la Piedra Filosofal\"*, ya tiene fijada su ventana de lanzamiento para la **Navidad de 2026**."
+            },
+            {
+                "type": "list",
+                "items": [
+                    "**Extensión:** Constará de ocho episodios.",
+                    "**Producción:** Descrita como \"monumental\", ha requerido meses de preproducción para recrear escenarios icónicos como **Hogwarts** y **Privet Drive**."
+                ]
+            },
+            {
+                "type": "heading",
+                "text": "Sin esperas: El plan para la segunda temporada",
+                "level": 2
             },
             {
                 "type": "paragraph",
-                "text": "La primera temporada, que adaptará íntegramente \"Harry Potter y la Piedra Filosofal\", ya tiene fijada su ventana de lanzamiento para la Navidad de 2026. Esta entrega constará de ocho episodios y ha sido descrita por su equipo técnico como una producción \"monumental\" que ha requerido meses de preproducción para recrear escenarios icónicos como Hogwarts y Privet Drive."
+                "text": "Para evitar que los jóvenes protagonistas crezcan demasiado rápido entre temporadas, HBO ya ha iniciado la escritura de los guiones de la segunda tanda de episodios."
+            },
+            {
+                "type": "list",
+                "items": [
+                    "**Contenido:** Se centrará en el segundo libro, *\"Harry Potter y la Cámara Secreta\"*.",
+                    "**Rodaje:** Previsto para comenzar en el último trimestre de 2026, casi en paralelo al estreno de la primera temporada.",
+                    "**Liderazgo:** **Jon Brown** (*Succession*) se unirá a **Francesca Gardiner** como co-showrunner."
+                ]
+            },
+            {
+                "type": "heading",
+                "text": "Un reparto de estrellas para una nueva generación",
+                "level": 2
             },
             {
                 "type": "paragraph",
-                "text": "Sin esperas: El plan para la segunda temporada"
+                "text": "El elenco principal ya ha sido confirmado, destacando un equilibrio entre nuevos talentos y veteranos:"
+            },
+            {
+                "type": "heading",
+                "text": "El Trío Protagonista",
+                "level": 3
+            },
+            {
+                "type": "list",
+                "items": [
+                    "**Harry Potter:** Dominic McLaughlin",
+                    "**Hermione Granger:** Arabella Stanton",
+                    "**Ron Weasley:** Alastair Stout"
+                ]
+            },
+            {
+                "type": "heading",
+                "text": "El Cuerpo Docente",
+                "level": 3
+            },
+            {
+                "type": "list",
+                "items": [
+                    "**Albus Dumbledore:** John Lithgow",
+                    "**Profesora McGonagall:** Janet McTeer",
+                    "**Severus Snape:** Paapa Essiedu"
+                ]
+            },
+            {
+                "type": "heading",
+                "text": "Otros fichajes clave",
+                "level": 3
+            },
+            {
+                "type": "list",
+                "items": [
+                    "**Rubeus Hagrid:** Nick Frost",
+                    "**Lucius Malfoy:** Johnny Flynn",
+                    "**Molly Weasley:** Katherine Parkinson"
+                ]
+            },
+            {
+                "type": "heading",
+                "text": "Un compromiso de 10 años",
+                "level": 2
             },
             {
                 "type": "paragraph",
-                "text": "Para evitar que los jóvenes protagonistas crezcan demasiado rápido entre temporadas —un problema común en producciones con niños—, HBO ya ha iniciado la escritura de los guiones de la segunda tanda de episodios."
+                "text": "**Warner Bros. Discovery** ha reafirmado que esta serie es un proyecto a largo plazo con un plan de **10 años de duración** en HBO Max."
+            },
+            {
+                "type": "list",
+                "items": [
+                    "**Presupuesto:** Se estima en alrededor de **20 millones de dólares por episodio** (similar a *House of the Dragon*).",
+                    "**Objetivo:** Profundizar en detalles de los libros que las películas originales no pudieron explorar."
+                ]
             },
             {
                 "type": "paragraph",
-                "text": "Contenido: Se centrará en el segundo libro, \"Harry Potter y la Cámara Secreta\"."
-            },
-            {
-                "type": "paragraph",
-                "text": "Rodaje: Está previsto que las grabaciones comiencen en el último trimestre de 2026, casi en paralelo al estreno de la primera temporada."
-            },
-            {
-                "type": "paragraph",
-                "text": "Liderazgo: Jon Brown, guionista de Succession, se unirá a Francesca Gardiner como co-showrunner para esta segunda etapa."
-            },
-            {
-                "type": "paragraph",
-                "text": "Un reparto de estrellas para una nueva generación"
-            },
-            {
-                "type": "paragraph",
-                "text": "El elenco principal ya ha sido confirmado, destacando un equilibrio entre nuevos talentos y veteranos de la industria:"
-            },
-            {
-                "type": "paragraph",
-                "text": "El Trío Protagonista: Dominic McLaughlin (Harry Potter), Arabella Stanton (Hermione Granger) y Alastair Stout (Ron Weasley)."
-            },
-            {
-                "type": "paragraph",
-                "text": "El Cuerpo Docente: John Lithgow interpretará a Albus Dumbledore, mientras que Janet McTeer será la Profesora McGonagall y Paapa Essiedu asumirá el papel de Severus Snape."
-            },
-            {
-                "type": "paragraph",
-                "text": "Otros fichajes clave: Nick Frost como Rubeus Hagrid, Johnny Flynn como Lucius Malfoy y Katherine Parkinson como Molly Weasley."
-            },
-            {
-                "type": "paragraph",
-                "text": "Un compromiso de 10 años"
-            },
-            {
-                "type": "paragraph",
-                "text": "Warner Bros. Discovery ha reafirmado que esta serie es un proyecto a largo plazo, con un plan de 10 años de duración en HBO Max. Con un presupuesto que se estima similar al de grandes producciones como House of the Dragon (alrededor de 20 millones de dólares por episodio), la serie busca profundizar en detalles de los libros que las películas originales no pudieron explorar."
-            },
-            {
-                "type": "paragraph",
-                "text": "La expectación es máxima: el primer adelanto oficial de la serie ya ha roto récords de audiencia, acumulando millones de reproducciones en sus primeras horas. Sin duda, el viaje de regreso a Hogwarts apenas está comenzando."
+                "text": "La expectación es máxima: el primer adelanto oficial ya ha roto récords de audiencia. El viaje de regreso a Hogwarts apenas está comenzando."
             }
         ]
     }

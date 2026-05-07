@@ -144,11 +144,12 @@ const isDev = import.meta.env.DEV;
                         </section>
 
                         <!-- Botón Submit -->
-                        <div class="pt-6 max-w-lg mx-auto">
-                            <button type="submit" id="submit-btn" class="w-full py-4 bg-[#f43f5e] hover:bg-white text-white hover:text-background font-label-caps uppercase tracking-widest rounded-xl transition-all font-bold text-lg flex items-center justify-center gap-2">
+                        <div class="pt-6 max-w-lg mx-auto relative z-50">
+                            <button type="button" id="save-news-btn" onclick="window.submitAdminForm && window.submitAdminForm()" class="w-full py-4 bg-[#f43f5e] hover:bg-white text-white hover:text-background font-label-caps uppercase tracking-widest rounded-xl transition-all font-bold text-lg flex items-center justify-center gap-2 relative z-50 cursor-pointer shadow-xl">
                                 <span class="material-symbols-outlined">publish</span>
                                 Publicar Noticia
                             </button>
+                        </div>
                             <p id="status-msg" class="text-center mt-4 text-sm font-bold opacity-0 transition-opacity"></p>
                         </div>
                     </form>
@@ -161,16 +162,19 @@ const isDev = import.meta.env.DEV;
 
 <style is:global>
     /* Estilos globales para la previsualización de noticias */
-    #md-preview h1, #md-preview h2, #md-preview h3 {
-        font-size: 1.5rem !important;
+    #md-preview h1 { font-size: 2rem !important; }
+    #md-preview h2 { font-size: 1.5rem !important; }
+    #md-preview h3 { font-size: 1.25rem !important; }
+    #md-preview h4 { font-size: 1.1rem !important; }
+    #md-preview h5, #md-preview h6 { font-size: 1rem !important; }
+    #md-preview h1, #md-preview h2, #md-preview h3,
+    #md-preview h4, #md-preview h5, #md-preview h6 {
         font-weight: 800 !important;
         color: #ffffff !important;
         margin-top: 1.5rem !important;
         margin-bottom: 0.75rem !important;
         display: block !important;
         line-height: 1.2 !important;
-        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-        padding-bottom: 0.5rem !important;
     }
     #md-preview p {
         color: #d1d1d1 !important;
@@ -188,6 +192,11 @@ const isDev = import.meta.env.DEV;
         font-style: italic !important;
         margin: 1.5rem 0 !important;
     }
+    #md-preview hr {
+        border: none !important;
+        border-top: 1px solid rgba(255,255,255,0.15) !important;
+        margin: 1.75rem 0 !important;
+    }
     #md-preview ul {
         list-style: none !important;
         padding-left: 0.5rem !important;
@@ -197,16 +206,28 @@ const isDev = import.meta.env.DEV;
         color: #d1d1d1 !important;
         margin-bottom: 0.5rem !important;
         display: flex !important;
+        align-items: baseline !important;
         gap: 0.75rem !important;
     }
     #md-preview ul li::before {
         content: "—" !important;
         color: #f43f5e !important;
         font-weight: bold !important;
+        flex-shrink: 0 !important;
+    }
+    #md-preview ul li > span {
+        flex: 1 !important;
+        min-width: 0 !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
     }
     #md-preview strong {
         color: #ffffff !important;
         font-weight: 700 !important;
+    }
+    #md-preview em {
+        color: #fda4af !important;
+        font-style: italic !important;
     }
 
     /* --- ESTILO DE SCROLLBARS PREMIUM --- */
@@ -227,302 +248,229 @@ const isDev = import.meta.env.DEV;
     }
     #md-editor::-webkit-scrollbar-thumb:hover, 
     #md-preview::-webkit-scrollbar-thumb:hover {
-        background: rgba(244, 63, 94, 0.6);
+        background: rgba(244, 63, 94, 0.5);
+    }
+
+    /* Scrollbar para Firefox */
+    #md-editor, 
+    #md-preview {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(244, 63, 94, 0.3) rgba(0, 0, 0, 0.2);
     }
 </style>
 
-<script>
-    // ── MARKDOWN LIVE EDITOR ─────────────────────────────────────────
-    const mdEditor      = document.getElementById('md-editor') as HTMLTextAreaElement | null;
-    const mdPreview     = document.getElementById('md-preview') as HTMLElement | null;
-    const toggleBtn     = document.getElementById('toggle-preview') as HTMLButtonElement | null;
-    const editorContainer = document.getElementById('editor-container') as HTMLElement | null;
-
-    function renderMarkdown(text: string): string {
-        if (!text.trim()) return '<p class="text-tertiary text-sm italic">El contenido aparecerá aquí mientras escribes...</p>';
-        
-        const lines = text.split('\n');
-        let html = '';
-        let inList = false;
-
-        for (let i = 0; i < lines.length; i++) {
-            let line = lines[i].trim();
-            
-            if (!line) {
-                if (inList) { html += '</ul>'; inList = false; }
-                continue;
-            }
-
-            // Regex flexible: Busca de 1 a 6 '#' al inicio, opcionalmente seguidos de espacios
-            const titleMatch = line.match(/^(#{1,6})\s*(.*)/);
-
-            if (titleMatch) {
-                if (inList) { html += '</ul>'; inList = false; }
-                const level = titleMatch[1].length;
-                const content = titleMatch[2].trim();
-                html += `<h${level}>${content}</h${level}>`;
-            } else if (line.startsWith('> ')) {
-                if (inList) { html += '</ul>'; inList = false; }
-                html += `<blockquote>${line.substring(2).trim()}</blockquote>`;
-            } else if (line.startsWith('- ')) {
-                if (!inList) { html += '<ul>'; inList = true; }
-                html += `<li>${line.substring(2).trim()}</li>`;
-            } else {
-                if (inList) { html += '</ul>'; inList = false; }
-                const parsed = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                html += `<p>${parsed}</p>`;
-            }
-        }
-        
-        if (inList) html += '</ul>';
-        return html;
-    }
-
-    const updatePreview = () => {
-        if (mdEditor && mdPreview) {
-            const newHTML = renderMarkdown(mdEditor.value);
-            if (mdPreview.innerHTML !== newHTML) {
-                mdPreview.innerHTML = newHTML;
-            }
-        }
-    };
-
-    // Múltiples disparadores para asegurar que siempre esté al día
-    mdEditor?.addEventListener('input', updatePreview);
-    mdEditor?.addEventListener('keyup', updatePreview);
-    mdEditor?.addEventListener('change', updatePreview);
-    mdEditor?.addEventListener('click', updatePreview);
+<script is:inline>
+    // ── GESTIÓN DEL EDITOR Y FORMULARIO ──
     
-    // Intervalo de seguridad para cuando pegas texto o editas
-    setInterval(updatePreview, 300);
-    updatePreview();
+    function initEditor() {
+        const mdEditor    = document.getElementById('md-editor');
+        const mdPreview   = document.getElementById('md-preview');
+        const toggleBtn   = document.getElementById('toggle-preview');
+        const editorContainer = document.getElementById('editor-container');
+        const form        = document.getElementById('news-form');
+        const submitBtn   = document.getElementById('save-news-btn');
 
-    // Botones de formato rápido
-    document.querySelectorAll('.fmt-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (!mdEditor) return;
-            const action = (btn as HTMLElement).dataset.action;
-            const start  = mdEditor.selectionStart;
-            const end    = mdEditor.selectionEnd;
-            const sel    = mdEditor.value.substring(start, end);
-            let insert   = '';
-            let offset   = 0;
+        if (!form) return;
 
-            if (action === 'heading') { insert = `\n\n## ${sel || 'Subtítulo'}\n\n`; offset = 4; }
-            if (action === 'bold')    { insert = `**${sel || 'texto'}**`; offset = 2; }
-            if (action === 'quote')   { insert = `\n\n> ${sel || 'Cita destacada'}\n\n`; offset = 4; }
-            if (action === 'list')    { insert = `\n\n- ${sel || 'Elemento'}\n- \n\n`; offset = 4; }
-
-            mdEditor.value = mdEditor.value.substring(0, start) + insert + mdEditor.value.substring(end);
-            mdEditor.focus();
-            mdEditor.selectionStart = mdEditor.selectionEnd = start + insert.length - (action === 'bold' ? 2 : offset);
-            if (mdPreview) mdPreview.innerHTML = renderMarkdown(mdEditor.value);
-        });
-    });
-
-    // Toggle solo editor / split pane
-    let splitMode = true;
-    toggleBtn?.addEventListener('click', () => {
-        splitMode = !splitMode;
-        if (editorContainer) {
-            editorContainer.className = splitMode
-                ? 'grid grid-cols-2 divide-x divide-white/10'
-                : 'grid grid-cols-1';
-        }
-        const previewPanel = mdPreview?.parentElement?.parentElement as HTMLElement | null;
-        if (previewPanel) previewPanel.style.display = splitMode ? '' : 'none';
-        if (toggleBtn) {
-            toggleBtn.innerHTML = splitMode
-                ? '<span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa'
-                : '<span class="material-symbols-outlined text-[14px]">edit</span> Split Editor';
-        }
-    });
-</script>
-
-<script>
-    // ── GESTIÓN INTEGRAL DEL EDITOR Y FORMULARIO ─────────────────────
-    document.addEventListener('DOMContentLoaded', () => {
-        const form          = document.getElementById('news-form') as HTMLFormElement | null;
-        const submitBtn     = document.getElementById('submit-btn') as HTMLButtonElement | null;
-        const statusMsg     = document.getElementById('status-msg') as HTMLParagraphElement | null;
-        const editSlugInput = document.getElementById('edit-slug') as HTMLInputElement | null;
-        
-        const mdEditor        = document.getElementById('md-editor') as HTMLTextAreaElement | null;
-        const mdPreview       = document.getElementById('md-preview') as HTMLElement | null;
-        const toggleBtn       = document.getElementById('toggle-preview') as HTMLButtonElement | null;
-        const editorContainer = document.getElementById('editor-container') as HTMLElement | null;
-
-        // --- MOTOR DE RENDERIZADO AVANZADO ---
-        function renderMarkdown(text: string): string {
-            if (!text || !text.trim()) return '<p class="text-tertiary text-sm italic">El contenido aparecerá aquí mientras escribes...</p>';
-            
-            // Reemplazos de elementos de bloque
-            let html = text
-                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-                .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
-                .replace(/^\s*-\s(.*$)/gim, '<ul><li>$1</li></ul>')
-                .replace(/^\s*\d\.\s(.*$)/gim, '<ol><li>$1</li></ol>')
-                .replace(/---/g, '<hr class="border-white/10 my-8" />')
-                .replace(/```([\s\S]*?)```/g, '<pre class="bg-black/30 p-4 rounded-lg my-4 font-mono text-xs overflow-x-auto text-primary-container">$1</pre>');
-
-            // Reemplazos de elementos inline
-            html = html
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="rounded-xl my-6 border border-white/10 shadow-2xl" />')
-                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-primary-container underline" target="_blank">$1</a>')
-                .replace(/`(.*?)`/g, '<code class="bg-white/10 px-1.5 py-0.5 rounded text-sm font-mono text-pink-300">$1</code>');
-
-            // Limpieza de párrafos y listas
-            const paragraphs = html.split(/\n\s*\n/);
-            return paragraphs.map(p => {
-                if (p.startsWith('<')) return p; // Ya es un bloque HTML
-                return `<p>${p.replace(/\n/g, '<br>')}</p>`;
-            }).join('').replace(/<\/ul><ul>/g, '').replace(/<\/ol><ol>/g, '');
+        if (submitBtn) {
+            submitBtn.onclick = function() { window.submitAdminForm(); };
         }
 
         let lastContent = '';
-        const updatePreview = () => {
-            if (mdEditor && mdPreview) {
-                const currentContent = mdEditor.value;
-                if (currentContent !== lastContent) {
-                    lastContent = currentContent;
-                    mdPreview.innerHTML = renderMarkdown(currentContent);
-                }
+        function updatePreview() {
+            if (!mdEditor || !mdPreview) return;
+            const c = mdEditor.value;
+            if (c !== lastContent) { 
+                lastContent = c; 
+                mdPreview.innerHTML = renderMarkdown(c); 
             }
-        };
-
-        // --- EVENTOS DEL EDITOR ---
+        }
         if (mdEditor) {
             mdEditor.addEventListener('input', updatePreview);
-            mdEditor.addEventListener('keyup', updatePreview);
-            setInterval(updatePreview, 500);
+            setInterval(updatePreview, 1000);
+            updatePreview();
         }
 
-        // --- BOTONES DE FORMATO ---
-        document.querySelectorAll('.fmt-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+        document.querySelectorAll('.fmt-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 if (!mdEditor) return;
-                const action = (btn as HTMLElement).dataset.action;
-                const start  = mdEditor.selectionStart;
-                const end    = mdEditor.selectionEnd;
-                const sel    = mdEditor.value.substring(start, end);
+                const action = btn.dataset.action;
+                const start = mdEditor.selectionStart, end = mdEditor.selectionEnd;
+                const sel = mdEditor.value.substring(start, end);
                 let insert = '';
-                if (action === 'heading') insert = `\n## ${sel || 'Subtítulo'}\n`;
-                if (action === 'bold')    insert = `**${sel || 'texto'}**`;
-                if (action === 'quote')   insert = `\n> ${sel || 'Cita destacada'}\n`;
-                if (action === 'list')    insert = `\n- ${sel || 'Elemento'}\n`;
-
+                if (action === 'heading') insert = '\n## ' + (sel || 'Subtítulo') + '\n';
+                if (action === 'bold')    insert = '**' + (sel || 'texto') + '**';
+                if (action === 'quote')   insert = '\n> ' + (sel || 'Cita destacada') + '\n';
+                if (action === 'list')    insert = '\n- ' + (sel || 'Elemento') + '\n';
                 mdEditor.value = mdEditor.value.substring(0, start) + insert + mdEditor.value.substring(end);
                 mdEditor.focus();
                 updatePreview();
             });
         });
 
-        // --- CARGA AUTOMÁTICA SI VIENE DE EDITAR ---
-        const urlParams = new URLSearchParams(window.location.search);
-        const editSlug = urlParams.get('edit');
-
-        if (editSlug) {
-            console.log("Detectado modo edición para:", editSlug);
-            if (submitBtn) submitBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Actualizar Noticia';
-            if (editSlugInput) editSlugInput.value = editSlug;
-
-            fetch('/api/get-news')
-                .then(res => res.json())
-                .then(data => {
-                    const n = data[editSlug];
-                    if (n) {
-                        // Rellenar campos básicos
-                        const fields = ['title', 'summary', 'category', 'date', 'author', 'image', 'variant'];
-                        fields.forEach(f => {
-                            const el = form?.elements.namedItem(f) as HTMLInputElement;
-                            if (el) el.value = n[f] || '';
-                        });
-
-                        // Convertir bloques a Markdown para el editor
-                        const mdText = (n.content || []).map((b: any) => {
-                            if (b.type === 'heading') return `## ${b.text}`;
-                            if (b.type === 'quote') return `> ${b.text}`;
-                            if (b.type === 'image') return `![${b.alt || ''}](${b.url})`;
-                            if (b.type === 'list') return (b.items || []).map((i: string) => `- ${i}`).join('\n');
-                            return b.text;
-                        }).join('\n\n');
-                        
-                        if (mdEditor) {
-                            mdEditor.value = mdText;
-                            updatePreview();
-                        }
-                    }
-                });
+        let splitMode = true;
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', function() {
+                splitMode = !splitMode;
+                if (editorContainer) editorContainer.className = splitMode ? 'grid grid-cols-2 divide-x divide-white/10' : 'grid grid-cols-1';
+                const previewPane = mdPreview && mdPreview.parentElement;
+                if (previewPane) previewPane.style.display = splitMode ? '' : 'none';
+                toggleBtn.innerHTML = splitMode
+                    ? '<span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa'
+                    : '<span class="material-symbols-outlined text-[14px]">edit</span> Editar';
+            });
         }
 
-        // --- TOGGLE VISTA ---
-        let splitMode = true;
-        toggleBtn?.addEventListener('click', () => {
-            splitMode = !splitMode;
-            if (editorContainer) editorContainer.className = splitMode ? 'grid grid-cols-2 divide-x divide-white/10' : 'grid grid-cols-1';
-            const previewPane = mdPreview?.parentElement;
-            if (previewPane) previewPane.style.display = splitMode ? '' : 'none';
-            if (toggleBtn) toggleBtn.innerHTML = splitMode ? '<span class="material-symbols-outlined text-[14px]">visibility</span> Vista Previa' : '<span class="material-symbols-outlined text-[14px]">edit</span> Editar';
-        });
-
-
-        // --- ENVÍO DEL FORMULARIO ---
-        form?.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const editSlug = editSlugInput?.value;
-            
-            if (submitBtn) {
-                submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
-                submitBtn.style.opacity = '0.7';
-                submitBtn.style.pointerEvents = 'none';
-            }
-
-            const formData = new FormData(form);
-            const getString = (n: string) => (formData.get(n) as string) || '';
-            
-            const rawContent = getString('fullContent');
-            const blocks = rawContent.split(/\n\s*\n/).map(b => b.trim()).filter(b => b);
-            const content = blocks.map(b => {
-                if (b.startsWith('## ')) return { type: 'heading', text: b.substring(3).trim() };
-                if (b.startsWith('> ')) return { type: 'quote', text: b.substring(2).trim() };
-                if (b.startsWith('- ')) return { type: 'list', items: b.split('\n').map(l => l.substring(2).trim()) };
-                return { type: 'paragraph', text: b };
-            });
-
-            const newsData = {
-                title: getString('title'), summary: getString('summary'),
-                category: getString('category'), date: getString('date'),
-                author: getString('author'), image: getString('image'),
-                variant: getString('variant'), content
-            };
-
-            try {
-                const endpoint = editSlug ? '/api/update-news' : '/api/save-news';
-                const body = editSlug ? { slug: editSlug, data: newsData } : newsData;
-                
-                const res = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body)
+        const editSlugFromUrl = new URLSearchParams(window.location.search).get('edit');
+        if (editSlugFromUrl) {
+            if (submitBtn) submitBtn.innerHTML = '<span class="material-symbols-outlined">save</span> Actualizar Noticia';
+            fetch('/api/get-news')
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    const n = data[editSlugFromUrl];
+                    if (!n) return;
+                    ['title','summary','category','date','author','image','variant'].forEach(function(f) {
+                        const el = form.elements.namedItem(f);
+                        if (el) el.value = n[f] || '';
+                    });
+                    const mdText = (n.content || []).map(function(b) {
+                        if (b.type === 'heading') return '#'.repeat(b.level || 2) + ' ' + b.text;
+                        if (b.type === 'list')    return (b.items || []).map(function(i) { return '- ' + i; }).join('\n');
+                        if (b.type === 'quote')   return '> ' + b.text;
+                        if (b.type === 'hr')      return '---';
+                        return b.text;
+                    }).join('\n\n');
+                    if (mdEditor) { mdEditor.value = mdText; updatePreview(); }
                 });
-                const result = await res.json();
-                if (result.success) {
-                    if (statusMsg) {
-                        statusMsg.textContent = "¡Éxito!";
-                        statusMsg.className = "text-center mt-4 text-green-400 opacity-100";
-                    }
-                    setTimeout(() => window.location.href = `/news/${result.slug || editSlug}`, 1500);
-                }
-            } catch (err) {
-                if (statusMsg) {
-                    statusMsg.textContent = "Error al guardar";
-                    statusMsg.className = "text-center mt-4 text-red-400 opacity-100";
-                }
+        }
+    }
+
+    window.submitAdminForm = function() {
+        const form = document.getElementById('news-form');
+        const submitBtn = document.getElementById('save-news-btn');
+        const statusMsg = document.getElementById('status-msg');
+        
+        if (!form) return;
+
+        const editSlug = new URLSearchParams(window.location.search).get('edit') || '';
+
+        if (submitBtn) {
+            submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Guardando...';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.style.pointerEvents = 'none';
+        }
+
+        const fd = new FormData(form);
+        const g = function(k) { return fd.get(k) || ''; };
+        
+        const content = [];
+        let cur = null;
+        const rawContent = g('fullContent');
+
+        rawContent.split('\n').forEach(function(line) {
+            const t = line.trim();
+            if (!t) { cur = null; return; }
+            if (t === '---' || t === '***' || t === '___') { content.push({ type: 'hr' }); cur = null; return; }
+            const hm = line.match(/^(#{1,6})\s+(.*)/);
+            if (hm) {
+                content.push({ type: 'heading', text: hm[2].trim(), level: hm[1].length });
+                cur = null;
+            } else if (line.startsWith('> ')) {
+                content.push({ type: 'quote', text: line.substring(2).trim() });
+                cur = null;
+            } else if (line.startsWith('- ')) {
+                if (cur && cur.type === 'list') { cur.items.push(line.substring(2).trim()); }
+                else { cur = { type: 'list', items: [line.substring(2).trim()] }; content.push(cur); }
+            } else {
+                if (cur && cur.type === 'paragraph') { cur.text += '\n' + line; }
+                else { cur = { type: 'paragraph', text: line }; content.push(cur); }
             }
         });
-    });
+
+        const newsData = {
+            title: g('title'), 
+            summary: g('summary'), 
+            category: g('category'),
+            date: g('date'), 
+            author: g('author'), 
+            image: g('image'),
+            variant: g('variant'), 
+            content: content
+        };
+
+        const endpoint = editSlug ? '/api/update-news' : '/api/save-news';
+        const body = editSlug ? { slug: editSlug, data: newsData } : newsData;
+
+        fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(result) {
+            if (result.success) {
+                const target = editSlug || result.slug;
+                if (statusMsg) {
+                    statusMsg.textContent = '¡Noticia guardada! Redirigiendo...';
+                    statusMsg.className = 'text-center mt-4 text-green-400 opacity-100';
+                }
+                setTimeout(function() { window.location.href = '/news/' + target; }, 1000);
+            } else {
+                throw new Error(result.error || 'Error al guardar');
+            }
+        })
+        .catch(function(err) {
+            if (submitBtn) { 
+                submitBtn.style.opacity = '1'; 
+                submitBtn.style.pointerEvents = ''; 
+                submitBtn.innerHTML = '<span class="material-symbols-outlined">error</span> Reintentar';
+            }
+            if (statusMsg) {
+                statusMsg.textContent = 'Error: ' + err.message;
+                statusMsg.className = 'text-center mt-4 text-red-400 opacity-100';
+            }
+        });
+    };
+
+    function parseInline(t) {
+        return t
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-accent underline">$1</a>');
+    }
+
+    function renderMarkdown(md) {
+        let html = '';
+        const lines = md.split('\n');
+        let inList = false;
+        for (let i=0; i<lines.length; i++) {
+            const t = lines[i].trim();
+            if (!t) { if (inList) html += '</ul>'; inList = false; continue; }
+            if (t.match(/^#{1,6}\s+/)) {
+                if (inList) html += '</ul>'; inList = false;
+                const l = t.match(/^(#{1,6})/)[1].length;
+                html += '<h' + l + '>' + parseInline(t.replace(/^#{1,6}\s+/, '')) + '</h' + l + '>';
+            } else if (t === '---' || t === '***' || t === '___') {
+                if (inList) html += '</ul>'; inList = false;
+                html += '<hr/>';
+            } else if (t.startsWith('> ')) {
+                if (inList) html += '</ul>'; inList = false;
+                html += '<blockquote>' + parseInline(t.substring(2).trim()) + '</blockquote>';
+            } else if (t.startsWith('- ') || t.startsWith('* ')) {
+                if (!inList) { html += '<ul>'; inList = true; }
+                html += '<li><span>' + parseInline(t.substring(2).trim()) + '</span></li>';
+            } else {
+                if (inList) html += '</ul>'; inList = false;
+                html += '<p>' + parseInline(t) + '</p>';
+            }
+        }
+        if (inList) html += '</ul>';
+        return html;
+    }
+
+    document.addEventListener('astro:page-load', initEditor);
+    document.addEventListener('DOMContentLoaded', initEditor);
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(initEditor, 1);
+    }
 </script>
