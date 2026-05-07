@@ -1,9 +1,8 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "/sitemap-index.xml",
-      "permanent": true
+      "destination": "/sitemap-index.xml"
     }
   ]
 }
