@@ -3,7 +3,6 @@ import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import sitemap from '@astrojs/sitemap';
 
 // Plugin personalizado para guardar datos localmente sin necesitar backend
 function localAdminApi() {
@@ -155,19 +154,5 @@ export default defineConfig({
     ]
   },
 
-  integrations: [
-    sitemap({
-        filter: (page) => !page.includes('/admin'),
-        serialize(item) {
-            if (item.url.includes('/news/')) {
-                item.changefreq = 'daily';
-                item.priority = 0.9;
-            } else {
-                item.changefreq = 'weekly';
-                item.priority = 0.7;
-            }
-            return item;
-        }
-    })
-  ]
+  integrations: []
 });
