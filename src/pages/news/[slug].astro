@@ -47,7 +47,23 @@ function renderBlocks(blocks: NewsBlock[]): string {
         if (block.type === 'paragraph') {
             const txt = block.text ?? '';
             if (!txt.trim() || txt.trim() === '---') continue;
-            html += `<p class="article-p">${parseInline(txt)}</p>`;
+
+            // Detectar si el párrafo es en realidad una lista manual (empieza por * o número)
+            const lines = txt.split('\n');
+            const isManualList = lines.every(l => l.trim() === '' || /^[\*\-]\s+/.test(l.trim()) || /^\d+\.\s+/.test(l.trim()));
+
+            if (isManualList && lines.length > 1) {
+                const listItems = lines
+                    .filter(l => l.trim() !== '')
+                    .map(l => {
+                        const content = l.replace(/^[\*\-]\s+/, '').replace(/^\d+\.\s+/, '');
+                        return `<li class="article-li"><span class="article-bullet">—</span><span>${parseInline(content)}</span></li>`;
+                    })
+                    .join('');
+                html += `<ul class="article-ul">${listItems}</ul>`;
+            } else {
+                html += `<p class="article-p">${parseInline(txt)}</p>`;
+            }
         } else if (block.type === 'heading') {
             const lvl = block.level ?? 2;
             const cls = lvl <= 2 ? 'article-h2' : lvl === 3 ? 'article-h3' : 'article-h4';

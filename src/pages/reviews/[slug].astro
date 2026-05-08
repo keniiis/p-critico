@@ -166,9 +166,24 @@ const isoDate = getISODate(review.date);
                 </div>
 
                 <div class="prose prose-invert max-w-none">
-                    {review.fullReview.map((paragraph) => (
-                        <p class="font-body-lg text-body-lg text-tertiary leading-relaxed mb-8 text-lg">{paragraph}</p>
-                    ))}
+                    {review.fullReview.map((paragraph) => {
+                        const lines = paragraph.split('\n');
+                        const isManualList = lines.every(l => l.trim() === '' || /^[\*\-]\s+/.test(l.trim()) || /^\d+\.\s+/.test(l.trim()));
+
+                        if (isManualList && lines.length > 1) {
+                            return (
+                                <ul class="article-ul">
+                                    {lines.filter(l => l.trim() !== '').map(l => (
+                                        <li class="article-li">
+                                            <span class="article-bullet">—</span>
+                                            <span set:html={l.replace(/^[\*\-]\s+/, '').replace(/^\d+\.\s+/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            );
+                        }
+                        return <p class="font-body-lg text-body-lg text-tertiary leading-relaxed mb-8 text-lg" set:html={paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')} />;
+                    })}
                     <blockquote class="border-l-4 border-primary-container pl-8 my-12 italic text-on-surface text-2xl font-display-lg leading-snug">"{review.subtitle}"</blockquote>
                     
                     <div class="mt-20 pt-10 border-t border-white/10">
