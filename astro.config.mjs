@@ -146,7 +146,7 @@ function localAdminApi() {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://paralajecritico.pages.dev',
+  site: 'https://paralajecritico.vercel.app',
   vite: {
     plugins: [
         tailwindcss(),

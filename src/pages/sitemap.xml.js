@@ -2,7 +2,7 @@ import newsData from '../data/news.json';
 import reviewsData from '../data/reviews.json';
 
 export async function GET() {
-  const site = 'https://paralajecritico.pages.dev';
+  const site = 'https://paralajecritico.vercel.app';
   
   // 1. Obtener slugs de noticias y reseñas de los imports (más seguro en Vercel)
   const newsSlugs = Object.keys(newsData);
