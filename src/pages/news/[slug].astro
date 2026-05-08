@@ -65,6 +65,29 @@ function renderBlocks(blocks: NewsBlock[]): string {
 }
 
 const contentHtml = renderBlocks(article.content);
+
+// Función para convertir "05 MAYO, 2026" a "2026-05-05" para Google
+function getISODate(dateStr: string) {
+    try {
+        const months: Record<string, string> = {
+            'ENERO': '01', 'FEBRERO': '02', 'MARZO': '03', 'ABRIL': '04',
+            'MAYO': '05', 'JUNIO': '06', 'JULIO': '07', 'AGOSTO': '08',
+            'SEPTIEMBRE': '09', 'OCTUBRE': '10', 'NOVIEMBRE': '11', 'DICIEMBRE': '12'
+        };
+        const parts = dateStr.toUpperCase().replace(',', '').split(' ');
+        if (parts.length === 3) {
+            const day = parts[0].padStart(2, '0');
+            const month = months[parts[1]] || '01';
+            const year = parts[2];
+            return `${year}-${month}-${day}`;
+        }
+    } catch (e) {
+        return '';
+    }
+    return '';
+}
+
+const isoDate = getISODate(article.date);
 ---
 
 <Layout title={`${article.title} - Noticias de Paralaje Crítico`}>
@@ -78,8 +101,8 @@ const contentHtml = renderBlocks(article.content);
                     <span class="glass-panel px-3 py-1 rounded-full font-label-caps text-[10px] text-primary-container uppercase tracking-widest"
                         >{article.category}</span
                     >
-                    <span class="text-tertiary font-label-caps text-[10px] uppercase tracking-widest"
-                        >{article.date}</span
+                    <time datetime={isoDate} class="text-tertiary font-label-caps text-[10px] uppercase tracking-widest"
+                        >{article.date}</time
                     >
                 </div>
                 <h1 class="font-display-lg text-display-lg text-on-surface leading-tight mb-8 text-gradient">

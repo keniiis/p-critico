@@ -61,7 +61,6 @@ async function getActorImage(name: string) {
 }
 
 const reviewsData: Record<string, Review> = rawReviewsData as Record<string, Review>;
-
 const review = reviewsData[slug as string] || reviewsData["michael-2026"];
 
 const enhancedCast = await Promise.all(
@@ -70,6 +69,33 @@ const enhancedCast = await Promise.all(
         image: await getActorImage(p.actor),
     })),
 );
+
+// Función robusta para convertir fechas a ISO (YYYY-MM-DD)
+function getISODate(dateStr: string) {
+    if (!dateStr) return '';
+    try {
+        const months: Record<string, string> = {
+            'ENERO': '01', 'FEBRERO': '02', 'MARZO': '03', 'ABRIL': '04',
+            'MAYO': '05', 'JUNIO': '06', 'JULIO': '07', 'AGOSTO': '08',
+            'SEPTIEMBRE': '09', 'OCTUBRE': '10', 'NOVIEMBRE': '11', 'DICIEMBRE': '12'
+        };
+        const cleanStr = dateStr.toUpperCase().replace(',', '');
+        const parts = cleanStr.split(' ');
+        
+        // Caso 1: "05 MAYO 2026"
+        if (!isNaN(parseInt(parts[0]))) {
+            return `${parts[2]}-${months[parts[1]] || '01'}-${parts[0].padStart(2, '0')}`;
+        }
+        // Caso 2: "MAYO 05 2026"
+        else {
+            return `${parts[2]}-${months[parts[0]] || '01'}-${parts[1].padStart(2, '0')}`;
+        }
+    } catch (e) {
+        return '';
+    }
+}
+
+const isoDate = getISODate(review.date);
 ---
 
 <script is:inline define:vars={{ trailerUrl: review.trailerUrl }}>
@@ -136,7 +162,7 @@ const enhancedCast = await Promise.all(
                         <span class="font-label-caps text-label-caps text-tertiary block text-[10px]">Escrito por:</span>
                         <span class="font-headline-md text-lg text-on-surface leading-none">{review.author}</span>
                     </div>
-                    <span class="ml-auto text-tertiary font-label-caps text-[10px] tracking-widest uppercase">{review['date']}</span>
+                    <time datetime={isoDate} class="ml-auto text-tertiary font-label-caps text-[10px] tracking-widest uppercase">{review['date']}</time>
                 </div>
 
                 <div class="prose prose-invert max-w-none">
