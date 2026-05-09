@@ -299,11 +299,26 @@
             }
         ],
         "cast": [
-            { "actor": "Karl Urban", "role": "Johnny Cage" },
-            { "actor": "Adeline Rudolph", "role": "Kitana" },
-            { "actor": "Martyn Ford", "role": "Shao Kahn" },
-            { "actor": "Ludi Lin", "role": "Liu Kang" },
-            { "actor": "Chin Han", "role": "Shang Tsung" }
+            {
+                "actor": "Karl Urban",
+                "role": "Johnny Cage"
+            },
+            {
+                "actor": "Adeline Rudolph",
+                "role": "Kitana"
+            },
+            {
+                "actor": "Martyn Ford",
+                "role": "Shao Kahn"
+            },
+            {
+                "actor": "Ludi Lin",
+                "role": "Liu Kang"
+            },
+            {
+                "actor": "Chin Han",
+                "role": "Shang Tsung"
+            }
         ],
         "streaming": "Consultar plataformas",
         "watchOptions": [
@@ -313,5 +328,80 @@
             }
         ],
         "trailerUrl": "https://www.youtube.com/watch?v=-S-TTb0iXzw"
+    },
+    "the-sheep-detectives-2026": {
+        "title": "The Sheep Detectives (2026)",
+        "subtitle": "Un Whodunnit Lanudo con Sorprendente Profundidad",
+        "rating": 9.1,
+        "year": "2026",
+        "director": "",
+        "duration": "109 min",
+        "date": "",
+        "genre": "Comedia de Misterio",
+        "heroImage": "/images/reviews/the-sheep-detectives.webp",
+        "posterImage": "/images/reviews/the-sheep-detectives.avif",
+        "author": "Paralaje Crítico",
+        "fullReview": [],
+        "finalScore": "9.1",
+        "scores": [
+            {
+                "category": "Fotografía",
+                "score": 9,
+                "icon": "movie_filter",
+                "desc": "La fotografía de George Steel captura la campiña inglesa con una calidez casi mágica. El mayor logro técnico es el CGI de las ovejas, que evita el \"valle inquietante\" al crear modelos realistas pero altamente expresivos, permitiendo que cada raza de oveja sea visualmente distinta y táctil."
+            },
+            {
+                "category": "Actuación",
+                "score": 8.5,
+                "icon": "groups",
+                "desc": "Mientras que el elenco de voces es calificado como perfecto, el reparto humano recibe críticas mixtas. Nicholas Braun ha sido señalado como un error de casting en su papel del policía Tim Derry, debido a un acento inglés incómodo y una falta de química con Molly Gordon. No obstante, Emma Thompson eleva cada escena en la que aparece como la abogada Lydia Harbottle."
+            },
+            {
+                "category": "Banda Sonora",
+                "score": 8.8,
+                "icon": "audiotrack",
+                "desc": "a partitura de Christophe Beck se mueve con elegancia entre lo juguetón y lo poético. El uso del tema \"I'm Gonna Be (500 Miles)\" de The Proclaimers cierra la película con una nota de exuberancia que ha sido muy celebrada por el público."
+            },
+            {
+                "category": "Guion",
+                "score": 9.4,
+                "icon": "auto_stories",
+                "desc": "El guion de Craig Mazin es el pilar de la película. Logra estructurar un misterio genuinamente atractivo donde las ovejas no son solo un recurso cómico, sino observadores complejos de la locura humana. La forma en que se maneja la revelación final y los temas de la pérdida es descrita como \"prodigiosa\" para una película familiar."
+            }
+        ],
+        "cast": [
+            {
+                "actor": "Hugh Jackman",
+                "role": "George Hardy"
+            },
+            {
+                "actor": "Nicholas Braun",
+                "role": "Tim Derry"
+            },
+            {
+                "actor": "Nicholas Galitzine",
+                "role": "Elliot Matthews"
+            },
+            {
+                "actor": "Molly Gordon",
+                "role": "Rebecca Hampstead"
+            },
+            {
+                "actor": "Hong Chau",
+                "role": "Beth Pennock"
+            },
+            {
+                "actor": "Emma Thompson",
+                "role": "Lydia Harbottle"
+            }
+        ],
+        "streaming": "https://www.youtube.com/watch?v=pyZI5oM6hWk",
+        "watchOptions": [
+            {
+                "name": "Cines",
+                "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
+            }
+        ],
+        "trailerUrl": ""
     }
 }
