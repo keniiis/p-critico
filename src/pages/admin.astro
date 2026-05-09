@@ -93,18 +93,21 @@ const isDev = import.meta.env.DEV;
                                             <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Título de la Película / Serie</label>
                                             <input required type="text" name="title" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors font-bold text-lg" placeholder="Ej: Oppenheimer" />
                                         </div>
-                                        <div>
-                                            <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Subtítulo o Gancho</label>
-                                            <input required type="text" name="subtitle" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: El hombre que movió el mundo" />
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Subtítulo o Gancho</label>
+                                                <input required type="text" name="subtitle" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: El hombre que movió el mundo" />
+                                            </div>
+                                            <div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Director(a)</label>
+                                                <input required type="text" name="director" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Ej: Christopher Nolan" />
+                                            </div>
                                         </div>
                                         
                                         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                                             <div>
-                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Puntuación Estrellas (0-5)</label>
-                                                <div class="flex items-center gap-3">
-                                                    <input required type="number" step="0.1" min="0" max="5" name="rating" id="rating-stars-input" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center font-bold" placeholder="4.5" />
-                                                    <div id="stars-preview" class="flex text-primary-container text-xl min-w-[100px]"></div>
-                                                </div>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Estrellas (0-5)</label>
+                                                <input required type="number" step="0.5" name="rating" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center font-bold" placeholder="4.5" />
                                             </div>
                                             <div>
                                                 <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Año</label>
@@ -117,17 +120,6 @@ const isDev = import.meta.env.DEV;
                                             <div>
                                                 <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Género</label>
                                                 <input required type="text" name="genre" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary-container transition-colors text-center" placeholder="Drama" />
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div>
-                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Director</label>
-                                                <input required type="text" name="director" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="Christopher Nolan" />
-                                            </div>
-                                            <div>
-                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Fecha (Ej: MAYO 05, 2026)</label>
-                                                <input required type="text" name="date" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary-container transition-colors" placeholder="MAYO 05, 2026" />
                                             </div>
                                         </div>
                                     </div>
@@ -153,7 +145,7 @@ const isDev = import.meta.env.DEV;
                                             </div>
                                             <textarea
                                                 required
-                                                name="fullReview"
+                                                name="review"
                                                 id="md-editor"
                                                 class="w-full h-full bg-transparent px-10 py-8 text-on-surface focus:outline-none font-mono text-sm leading-relaxed resize-none"
                                                 style="overflow-y: scroll !important; height: calc(700px - 40px); display: block;"
@@ -183,7 +175,7 @@ const isDev = import.meta.env.DEV;
                                         </div>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                             <div>
-                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Promedio Técnico Final (0 a 10)</label>
+                                                <label class="block text-tertiary font-label-caps text-[11px] uppercase tracking-widest mb-3">Nota Final (0 a 10)</label>
                                                 <input required type="text" name="finalScore" class="w-full bg-surface-container-high border border-white/10 rounded-xl px-5 py-4 text-primary-container font-bold text-lg focus:outline-none focus:border-primary-container transition-colors" placeholder="8.5" />
                                             </div>
                                             <div>
@@ -438,60 +430,44 @@ const isDev = import.meta.env.DEV;
 
         function renderPreview(text: string): string {
             if (!text.trim()) return '<p class="text-tertiary text-sm italic">Tu crítica se verá así...</p>';
-            
-            // Dividir por bloques de párrafo (doble salto de línea)
             const blocks = text.split(/\n\s*\n/).map(p => p.trim()).filter(p => p);
-            
             return blocks.map(block => {
-                // Títulos ###
-                if (block.startsWith('###')) {
-                    return `<h3 class="article-h3" style="color:white; font-size:1.4rem; font-weight:800; margin-top:1.5rem; margin-bottom:0.5rem;">${block.replace(/^###\s*/, '')}</h3>`;
-                }
-                if (block.startsWith('##')) {
-                    return `<h2 class="article-h2" style="color:white; font-size:1.8rem; font-weight:800; margin-top:2rem; margin-bottom:0.7rem;">${block.replace(/^##\s*/, '')}</h2>`;
-                }
-
-                // Detectar Listas Manuales (* o -)
                 const lines = block.split('\n');
-                const isList = lines.every(l => /^[\*\-]\s+/.test(l.trim()));
-                
-                if (isList && lines.length > 0) {
-                    const items = lines.map(l => {
-                        const content = l.replace(/^[\*\-]\s+/, '')
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/\*(.*?)\*/g, '<em>$1</em>');
-                        return `<li style="display:flex; gap:0.75rem; margin-bottom:0.5rem; color:#a8a8a8;">
-                            <span style="color:#f43f5e; font-weight:bold;">—</span>
-                            <span>${content}</span>
-                        </li>`;
-                    }).join('');
-                    return `<ul style="list-style:none; padding:0; margin-bottom:1.5rem;">${items}</ul>`;
-                }
+                let html = '';
+                let currentParagraph: string[] = [];
 
-                // Párrafo normal
-                const parsed = block
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em>$1</em>');
-                return `<p style="color:#a8a8a8; line-height:1.8; margin-bottom:1.5rem;">${parsed}</p>`;
+                const renderCurrentP = () => {
+                    if (currentParagraph.length === 0) return '';
+                    const isManualList = currentParagraph.every(l => l.trim() === '' || /^[\*\-]\s+/.test(l.trim()) || /^\d+\.\s+/.test(l.trim()));
+                    if (isManualList && currentParagraph.length > 1) {
+                        const listItems = currentParagraph.filter(l => l.trim() !== '').map(l => {
+                            const content = l.replace(/^[\*\-]\s+/, '').replace(/^\d+\.\s+/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
+                            return `<li style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; color: #a8a8a8;"><span style="color: #f43f5e; font-weight: bold;">—</span><span>${content}</span></li>`;
+                        }).join('');
+                        return `<ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">${listItems}</ul>`;
+                    }
+                    const content = currentParagraph.join('<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
+                    return `<p>${content}</p>`;
+                };
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (line.startsWith('### ')) {
+                        html += renderCurrentP();
+                        currentParagraph = [];
+                        html += `<h3 style="color: white; font-size: 1.4rem; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.75rem;">${line.replace('### ', '')}</h3>`;
+                    } else if (line.startsWith('## ')) {
+                        html += renderCurrentP();
+                        currentParagraph = [];
+                        html += `<h2 style="color: white; font-size: 1.8rem; font-weight: bold; margin-top: 2rem; margin-bottom: 1rem;">${line.replace('## ', '')}</h2>`;
+                    } else {
+                        currentParagraph.push(line);
+                    }
+                }
+                html += renderCurrentP();
+                return html;
             }).join('');
         }
-
-        // Estrellas Visuales
-        const starsInput = document.getElementById('rating-stars-input') as HTMLInputElement | null;
-        const starsPreview = document.getElementById('stars-preview') as HTMLElement | null;
-
-        function updateStars(val: number) {
-            if (!starsPreview) return;
-            let stars = '';
-            for (let i = 1; i <= 5; i++) {
-                if (val >= i) stars += 'star ';
-                else if (val >= i - 0.5) stars += 'star_half ';
-                else stars += 'star_outline ';
-            }
-            starsPreview.innerHTML = stars.split(' ').filter(s => s).map(s => `<span class="material-symbols-outlined">${s}</span>`).join('');
-        }
-
-        starsInput?.addEventListener('input', () => updateStars(parseFloat(starsInput.value) || 0));
 
         if (mdEditor && mdPreview) {
             mdEditor.addEventListener('input', () => {
@@ -571,7 +547,7 @@ const isDev = import.meta.env.DEV;
                 heroImage: getString('heroImage'),
                 posterImage: getString('posterImage'),
                 author: getString('author'),
-                fullReview: getString('fullReview').split(/\n\s*\n/).map((p: string) => p.trim()).filter((p: string) => p),
+                fullReview: getString('review').split(/\n\s*\n/).map((p: string) => p.trim()).filter((p: string) => p),
                 finalScore: getString('finalScore'),
                 scores: [
                     { category: "Fotografía", score: getNum('score_foto'), icon: "movie_filter", desc: getString('desc_foto') },
@@ -771,7 +747,6 @@ const isDev = import.meta.env.DEV;
                     set('finalScore',  r.finalScore);
                     set('streaming',   r.streaming);
                     set('fullReview',  (r.fullReview || []).join('\n\n'));
-                    if (starsInput) updateStars(r.rating || 0);
                     set('cast',        (r.cast || []).map((c: any) => `${c.actor} como ${c.role}`).join('\n'));
 
                     r.scores?.forEach((s: any) => {
@@ -839,7 +814,7 @@ const isDev = import.meta.env.DEV;
                 date: getString('date'), genre: getString('genre'),
                 heroImage: getString('heroImage'), posterImage: getString('posterImage'),
                 author: getString('author'), trailerUrl: getString('trailerUrl'),
-                fullReview: getString('fullReview').split(/\n\s*\n/).map((p: string) => p.trim()).filter((p: string) => p),
+                fullReview: getString('fullReview').split('\n\n').map((p: string) => p.trim()).filter((p: string) => p),
                 finalScore: getString('finalScore'), streaming: getString('streaming'),
                 scores: [
                     { category: 'Fotografía',   score: getNum('score_foto'),       icon: 'movie_filter', desc: getString('desc_foto') },

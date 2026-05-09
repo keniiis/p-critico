@@ -332,16 +332,20 @@
     "the-sheep-detectives-2026": {
         "title": "The Sheep Detectives (2026)",
         "subtitle": "Un Whodunnit Lanudo con Sorprendente Profundidad",
-        "rating": 9.1,
+        "rating": 4.5,
         "year": "2026",
-        "director": "",
+        "director": "Kyle Balda",
         "duration": "109 min",
         "date": "",
         "genre": "Comedia de Misterio",
         "heroImage": "/images/reviews/the-sheep-detectives.webp",
-        "posterImage": "/images/reviews/the-sheep-detectives.avif",
+        "posterImage": "/images/reviews/the-sheep-detectives-poster.avif",
         "author": "Paralaje Crítico",
-        "fullReview": [],
+        "fullReview": [
+            "Dirigida por Kyle Balda (Minions) y escrita por Craig Mazin (Chernobyl, The Last of Us), The Sheep Detectives es una de las mayores sorpresas cinematográficas de 2026. Lo que a primera vista parece una premisa absurda —una bandada de ovejas resolviendo el asesinato de su pastor— se transforma en un \"pastoral noir\" que combina el encanto de Babe con la agudeza de Knives Out.",
+            "### Una Premisa Absurda con Ejecución Maestra\nLa historia sigue a un grupo de ovejas en el pueblo inglés de Denbrook que, tras años de escuchar a su pastor George Hardy (Hugh Jackman) leerles novelas de misterio, deciden aplicar lo aprendido para encontrar a su asesino. Mazin logra elevar el guion más allá de la comedia física, explorando temas existenciales como el duelo, la memoria colectiva y la mortalidad, sin tratar nunca a la audiencia infantil de forma condescendiente.",
+            "### El Elenco: Voces que Dan Vida a la Lana\nEl corazón de la película reside en sus interpretaciones vocales. Julia Louis-Dreyfus brilla como Lily, la líder del rebaño, mientras que el resto del elenco aporta humor y calidez a este grupo tan inusual."
+        ],
         "finalScore": "9.1",
         "scores": [
             {
@@ -402,6 +406,6 @@
                 "logo": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPjxwYXRoIGQ9Ik0yMiAxMFY2YTIgMiAwIDAgMC0yLTJINGEyIDIgMCAwIDAtMiAydjRjMS4xIDAgMiAuOSAyIDJzLS45IDItMiAydjRhMiAyIDAgMCAwIDIgMmgxNmEyIDIgMCAwIDAgMi0ydi00Yy0xLjEgMC0yLS45LTItMnMuOS0yIDItMnptLTIgNy40NmMtMS4xOC0uNzMtMi0yLjA2LTItMy40NnMuODItMi43MyAyLTMuNDZWNkg0djQuNTRjMS4xOC43MyAyIDIuMDYgMiAzLjQ2cy0uODIgMi43My0yIDMuNDZWMThoMTZ2LS41NHpNMTEgMTVoMnYyaC0yem0wLTRoMnYyaC0yem0wLTRoMnYyaC0yeiIvPjwvc3ZnPg=="
             }
         ],
-        "trailerUrl": ""
+        "trailerUrl": "https://www.youtube.com/watch?v=pyZI5oM6hWk"
     }
 }

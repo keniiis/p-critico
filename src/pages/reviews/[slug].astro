@@ -166,24 +166,43 @@ const isoDate = getISODate(review.date);
                 </div>
 
                 <div class="prose prose-invert max-w-none">
-                    {review.fullReview.map((paragraph) => {
-                        const lines = paragraph.split('\n');
-                        const isManualList = lines.every(l => l.trim() === '' || /^[\*\-]\s+/.test(l.trim()) || /^\d+\.\s+/.test(l.trim()));
+                    <div set:html={
+                        review.fullReview.map((paragraph) => {
+                            const lines = paragraph.split('\n');
+                            let html = '';
+                            let currentParagraph: string[] = [];
 
-                        if (isManualList && lines.length > 1) {
-                            return (
-                                <ul class="article-ul">
-                                    {lines.filter(l => l.trim() !== '').map(l => (
-                                        <li class="article-li">
-                                            <span class="article-bullet">—</span>
-                                            <span set:html={l.replace(/^[\*\-]\s+/, '').replace(/^\d+\.\s+/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')} />
-                                        </li>
-                                    ))}
-                                </ul>
-                            );
-                        }
-                        return <p class="font-body-lg text-body-lg text-tertiary leading-relaxed mb-8 text-lg" set:html={paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')} />;
-                    })}
+                            const renderCurrentP = () => {
+                                if (currentParagraph.length === 0) return '';
+                                const isManualList = currentParagraph.every(l => l.trim() === '' || /^[\*\-]\s+/.test(l.trim()) || /^\d+\.\s+/.test(l.trim()));
+                                if (isManualList && currentParagraph.length > 1) {
+                                    const listItems = currentParagraph.filter(l => l.trim() !== '').map(l => {
+                                        const content = l.replace(/^[\*\-]\s+/, '').replace(/^\d+\.\s+/, '').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
+                                        return `<li class="article-li"><span class="article-bullet">—</span><span>${content}</span></li>`;
+                                    }).join('');
+                                    return `<ul class="article-ul">${listItems}</ul>`;
+                                }
+                                const content = currentParagraph.join('<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>');
+                                return `<p class="font-body-lg text-body-lg text-tertiary leading-relaxed mb-8 text-lg">${content}</p>`;
+                            };
+
+                            for (const line of lines) {
+                                if (line.startsWith('### ')) {
+                                    html += renderCurrentP();
+                                    currentParagraph = [];
+                                    html += `<h3 class="font-display-lg text-2xl text-on-surface mt-10 mb-4">${line.replace('### ', '')}</h3>`;
+                                } else if (line.startsWith('## ')) {
+                                    html += renderCurrentP();
+                                    currentParagraph = [];
+                                    html += `<h2 class="font-display-lg text-3xl text-on-surface mt-12 mb-6">${line.replace('## ', '')}</h2>`;
+                                } else {
+                                    currentParagraph.push(line);
+                                }
+                            }
+                            html += renderCurrentP();
+                            return html;
+                        }).join('')
+                    } />
                     <blockquote class="border-l-4 border-primary-container pl-8 my-12 italic text-on-surface text-2xl font-display-lg leading-snug">"{review.subtitle}"</blockquote>
                     
                     <div class="mt-20 pt-10 border-t border-white/10">
